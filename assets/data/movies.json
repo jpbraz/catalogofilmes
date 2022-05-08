@@ -1,0 +1,409 @@
+{
+  "movies": [
+    {
+        "adult": false,
+        "backdrop_path": "/aEGiJJP91HsKVTEPy1HhmN0wRLm.jpg",
+        "genre_ids": [
+            28,
+            12
+        ],
+        "id": 335787,
+        "original_language": "en",
+        "original_title": "Uncharted",
+        "overview": "Nathan Drake e seu parceiro canastrão Victor \"Sully\" Sullivan embarcam em uma perigosa busca para encontrar o maior tesouro jamais encontrado. Enquanto isso, eles também rastreiam pistas que podem levar ao irmão perdido de Nathan.",
+        "popularity": 5229.045,
+        "poster_path": "/qNAPgepJ4NHNA74ThVsxQEOUceJ.jpg",
+        "release_date": "2022-02-10",
+        "title": "Uncharted: Fora do Mapa",
+        "video": false,
+        "vote_average": 7.2,
+        "vote_count": 1689
+    },
+    {
+        "adult": false,
+        "backdrop_path": "/egoyMDLqCxzjnSrWOz50uLlJWmD.jpg",
+        "genre_ids": [
+            28,
+            878,
+            35,
+            10751,
+            12
+        ],
+        "id": 675353,
+        "original_language": "en",
+        "original_title": "Sonic the Hedgehog 2",
+        "overview": "Depois de se estabelecer em Green Hills, Sonic está pronto para mais liberdade e deixar sua marca como um herói, e Tom e Maddie concordam em deixá-lo em casa enquanto vão de férias. Mas, assim que eles se foram, Dr. Robotnik volta, desta vez com um novo parceiro, Knuckles, em busca de uma esmeralda que tem o poder de construir e destruir civilizações. Sonic se une a um novo companheiro, Tails, e juntos eles embarcam em uma jornada para encontrar a esmeralda antes que ela caia nas mãos erradas.",
+        "popularity": 7239.369,
+        "poster_path": "/f4SvCKIUrC2cDR7Xo4k1kaGAqQ2.jpg",
+        "release_date": "2022-03-30",
+        "title": "Sonic 2: O Filme",
+        "video": false,
+        "vote_average": 7.7,
+        "vote_count": 958
+    },
+    {
+        "adult": false,
+        "backdrop_path": "/5P8SmMzSNYikXpxil6BYzJ16611.jpg",
+        "genre_ids": [
+            80,
+            9648,
+            53
+        ],
+        "id": 414906,
+        "original_language": "en",
+        "original_title": "The Batman",
+        "overview": "Após dois anos espreitando as ruas como Batman e aterrorizando o mundo do crime, Bruce Wayne se encontra nas profundezas mais sombrias de Gotham City. Com pouquíssimos aliados confiáveis dentro da rede corrupta de autoridades e grandes figuras da cidade, o vigilante solitário se estabeleceu como a personificação da vingança para a população.Agora, quando um assassino tem a elite de Gotham vítima de uma série de tramas sadistas, a trilha de pistas crípticas leva o Maior Detetive do Mundo em uma investigação no submundo, onde encontra Carmine Falcone, Selina Kyle, vulga Mulher-Gato, Oswald Cobblepot, vulgo Pinguim, e Edward Nashton, vulgo Charada. Conforme as evidências atingem um nível pessoal e a dimensão dos planos do responsável se torna mais clara, o Batman deve forjar novas alianças, desmascarar o culpado e trazer justiça ao abuso de poder e corrupção que a tanto tempo atormenta Gotham City.",
+        "popularity": 4988.686,
+        "poster_path": "/wd7b4Nv9QBHDTIjc2m7sr0IUMoh.jpg",
+        "release_date": "2022-03-01",
+        "title": "Batman",
+        "video": false,
+        "vote_average": 7.8,
+        "vote_count": 4287
+    },
+    {
+        "adult": false,
+        "backdrop_path": "/iQFcwSGbZXMkeyKrxbPnwnRo5fl.jpg",
+        "genre_ids": [
+            28,
+            12,
+            878
+        ],
+        "id": 634649,
+        "original_language": "en",
+        "original_title": "Spider-Man: No Way Home",
+        "overview": "Peter Parker é desmascarado e não consegue mais separar sua vida normal dos grandes riscos de ser um super-herói. Quando ele pede ajuda ao Doutor Estranho, os riscos se tornam ainda mais perigosos, e o forçam a descobrir o que realmente significa ser o Homem-Aranha.",
+        "popularity": 3922.553,
+        "poster_path": "/fVzXp3NwovUlLe7fvoRynCmBPNc.jpg",
+        "release_date": "2021-12-15",
+        "title": "Homem-Aranha: Sem Volta Para Casa",
+        "video": false,
+        "vote_average": 8.1,
+        "vote_count": 12431
+    },
+    {
+        "adult": false,
+        "backdrop_path": "/zBG5Mg29NH9xxpWMMG7BIvKwYhL.jpg",
+        "genre_ids": [
+            10749,
+            18
+        ],
+        "id": 829557,
+        "original_language": "pl",
+        "original_title": "365 Days: This Day",
+        "overview": "Em 365 Dias: Hoje, após os acontecimentos de 365 Dias, Laura Biel (Anna-Maria Sieklucka) se casa com Don Massimo Torricelli (Michele Morrone), o chefe da máfia siciliana que a sequestrou. Sua vida parece um conto de fadas: ela tem um marido amoroso, uma casa linda e um bebê a caminho. Mas Massimo tem muitos inimigos, e eles sabem que a melhor maneira de lhe causar dor é ferir aqueles que ama. Depois de um mal-entendido conjugal, Laura e sua melhor amiga, Olga, fogem da Sicília para a Polônia natal. Mas sem a proteção do marido, Laura é sequestrada por Marcelo \"Nacho\" Matos, filho do chefe da máfia rival, e levada para as Ilhas Canárias pela máfia espanhola. Agora Massimo moverá qualquer montanha para resgatá-la. Mas o que o chefe da máfia siciliana não espera é que Laura começa a ter sentimentos pelo seu raptor, lindo e extremamente perigoso, enquanto é mantida refém.",
+        "popularity": 3078.789,
+        "poster_path": "/67vb4sQxJ06o4LvgoxB8Fj6mGqk.jpg",
+        "release_date": "2022-04-27",
+        "title": "365 Dias: Hoje",
+        "video": false,
+        "vote_average": 5.9,
+        "vote_count": 290
+    },
+    {
+        "adult": false,
+        "backdrop_path": "/192vHmAPbk5esL34XMKZ1YLGFjr.jpg",
+        "genre_ids": [
+            28,
+            53,
+            80
+        ],
+        "id": 763285,
+        "original_language": "en",
+        "original_title": "Ambulance",
+        "overview": "O condecorado veterano Will Sharp, desesperado por dinheiro para cobrir as despesas médicas de sua esposa, pede ajuda de uma pessoa que ele sabe que não deveria - seu irmão adotivo Danny. Um criminoso carismático, Danny oferece-lhe uma pontuação: o maior assalto a banco na história de Los Angeles: 32 milhões de dólares. Com a sobrevivência de sua esposa em jogo, Will não pode dizer não. Mas quando sua fuga dá espetacularmente errado, os irmãos desesperados sequestram uma ambulância com um policial ferido lutando por sua vida e a técina de emergência médica Cam Thompson a bordo. Em uma perseguição em alta velocidade que nunca para, Will e Danny devem escapar, manter seus reféns vivos e, de alguma forma, tentar não se matar, ao mesmo tempo em que executam a fuga mais insana que Los Angeles já viu.",
+        "popularity": 3709.034,
+        "poster_path": "/k62v5oVhQ0e1sJWJ9nFpiTfcNoD.jpg",
+        "release_date": "2022-03-16",
+        "title": "Ambulância: Um Dia de Crime",
+        "video": false,
+        "vote_average": 6.9,
+        "vote_count": 442
+    },
+    {
+        "adult": false,
+        "backdrop_path": "/fOy2Jurz9k6RnJnMUMRDAgBwru2.jpg",
+        "genre_ids": [
+            16,
+            10751,
+            35,
+            14
+        ],
+        "id": 508947,
+        "original_language": "en",
+        "original_title": "Turning Red",
+        "overview": "Mei, de treze anos, está experimentando a estranheza de ser uma adolescente com uma reviravolta – quando ela fica muito animada, ela se transforma em um panda vermelho gigante.",
+        "popularity": 2694.37,
+        "poster_path": "/725WE0Qb1BbUF7aGvjiQqzzffpg.jpg",
+        "release_date": "2022-03-10",
+        "title": "Red: Crescer é Uma Fera",
+        "video": false,
+        "vote_average": 7.4,
+        "vote_count": 2014
+    },
+    {
+        "adult": false,
+        "backdrop_path": "/ndCSoasjIZAMMDIuMxuGnNWu4DU.jpg",
+        "genre_ids": [
+            14,
+            28,
+            12
+        ],
+        "id": 453395,
+        "original_language": "en",
+        "original_title": "Doctor Strange in the Multiverse of Madness",
+        "overview": "Doutor Estranho, com a ajuda de aliados místicos antigos e novos, atravessa as perigosas realidades alternativas e alucinantes do Multiverso para enfrentar um novo adversário misterioso.",
+        "popularity": 3715.268,
+        "poster_path": "/hq2igFqb31fDqGotz8ZuUfwKgn8.jpg",
+        "release_date": "2022-05-04",
+        "title": "Doutor Estranho no Multiverso da Loucura",
+        "video": false,
+        "vote_average": 7.6,
+        "vote_count": 499
+    },
+    {
+        "adult": false,
+        "backdrop_path": "/i0zbSmiyyylh7H3Qb4jgscz46Pm.jpg",
+        "genre_ids": [
+            27
+        ],
+        "id": 893370,
+        "original_language": "es",
+        "original_title": "Virus-32",
+        "overview": "",
+        "popularity": 2538.933,
+        "poster_path": "/3CvBuw9aoziJJAbqymmsF2drnzH.jpg",
+        "release_date": "2022-04-21",
+        "title": "Virus-32",
+        "video": false,
+        "vote_average": 6.8,
+        "vote_count": 30
+    },
+    {
+        "adult": false,
+        "backdrop_path": "/2n95p9isIi1LYTscTcGytlI4zYd.jpg",
+        "genre_ids": [
+            18,
+            53,
+            80
+        ],
+        "id": 799876,
+        "original_language": "en",
+        "original_title": "The Outfit",
+        "overview": "Leonard, um alfaiate inglês costumava fazer ternos na mundialmente famosa Savile Row de Londres. Mas depois de uma tragédia pessoal, ele acabou em Chicago, operando uma pequena alfaiataria em uma parte difícil da cidade, onde ele faz roupas bonitas para as únicas pessoas ao redor que podem pagá-las: uma família de gangsters cruéis.",
+        "popularity": 1951.721,
+        "poster_path": "/lZa5EB6PVJBT5mxhgZS5ftqdAm6.jpg",
+        "release_date": "2022-02-25",
+        "title": "The Outfit",
+        "video": false,
+        "vote_average": 7,
+        "vote_count": 169
+    },
+    {
+        "adult": false,
+        "backdrop_path": "/fEe5fe82qHzjO4yej0o79etqsWV.jpg",
+        "genre_ids": [
+            16,
+            35,
+            28,
+            10751,
+            80
+        ],
+        "id": 629542,
+        "original_language": "en",
+        "original_title": "The Bad Guys",
+        "overview": "Nunca houve cinco amigos tão infames quanto Os Caras Malvados – o arrojado batedor de carteiras Sr. Wolf, o arrombador de cofres Mr. Snake, o mestre do disfarce do frio Sr. Shark, o “músculo” curto do Sr. Piranha e a especialista em hacker de língua afiada Sra. Tarantula, também conhecido como “Webs”.",
+        "popularity": 2191.001,
+        "poster_path": "/syKg3OmdtSYmkA7nNdtPUYdSFGL.jpg",
+        "release_date": "2022-03-17",
+        "title": "Os Caras Malvados",
+        "video": false,
+        "vote_average": 7.7,
+        "vote_count": 217
+    },
+    {
+        "adult": false,
+        "backdrop_path": "/x747ZvF0CcYYTTpPRCoUrxA2cYy.jpg",
+        "genre_ids": [
+            878,
+            12,
+            28
+        ],
+        "id": 406759,
+        "original_language": "en",
+        "original_title": "Moonfall",
+        "overview": "Poucas semanas antes do impacto e com a humanidade à beira da aniquilação, a ex-astronauta da NASA Jo Fowler está convencida de que tem a resposta para salvar o planeta, mas apenas um colega do passado, o astronauta Brian Harper, e o teorista K.C. Houseman, acreditam nela. Os improváveis heróis correm contra o tempo para montar uma missão ao espaço, mas lá descobrem que a Lua não é o que parece.",
+        "popularity": 1476.1,
+        "poster_path": "/ACl5NQBHeEvypdVlaaE868bwFs.jpg",
+        "release_date": "2022-02-03",
+        "title": "Moonfall: Ameaça Lunar",
+        "video": false,
+        "vote_average": 6.5,
+        "vote_count": 894
+    },
+    {
+        "adult": false,
+        "backdrop_path": "/3G1Q5xF40HkUBJXxt2DQgQzKTp5.jpg",
+        "genre_ids": [
+            16,
+            35,
+            10751,
+            14
+        ],
+        "id": 568124,
+        "original_language": "en",
+        "original_title": "Encanto",
+        "overview": "Uma garota chamada Mirabel Madrigal cresce como o único membro não mágico de sua família, que vivem escondidos em uma vibrante casa encantada nas montanhas da Colômbia.",
+        "popularity": 1397.351,
+        "poster_path": "/4j0PNHkMr5ax3IA8tjtxcmPU3QT.jpg",
+        "release_date": "2021-11-24",
+        "title": "Encanto",
+        "video": false,
+        "vote_average": 7.7,
+        "vote_count": 6301
+    },
+    {
+        "adult": false,
+        "backdrop_path": "/eQN31P4IEhyp6NkdccvppJnyuJ4.jpg",
+        "genre_ids": [
+            28,
+            12,
+            14,
+            878
+        ],
+        "id": 284052,
+        "original_language": "en",
+        "original_title": "Doctor Strange",
+        "overview": "Após sua carreira ser destruída, um brilhante, porém arrogante, cirurgião ganha uma nova chance em sua vida quando um feiticeiro o treina para se tornar o Mago Supremo.",
+        "popularity": 1821.228,
+        "poster_path": "/iM1hlVGZ5Qwn3gO6ewTszY7OrLY.jpg",
+        "release_date": "2016-10-25",
+        "title": "Doutor Estranho",
+        "video": false,
+        "vote_average": 7.4,
+        "vote_count": 18831
+    },
+    {
+        "adult": false,
+        "backdrop_path": "/hXTWVJMsI9BkxMLliqL1j0FT55t.jpg",
+        "genre_ids": [
+            28
+        ],
+        "id": 606402,
+        "original_language": "ko",
+        "original_title": "야차",
+        "overview": "Durante a investigação de uma equipe de operações secretas em um local de alto risco, um promotor exemplar enfrenta uma guerra entre espiões.",
+        "popularity": 1311.575,
+        "poster_path": "/zL8KPd8Rw6KXgdcgytMbzNNrHmc.jpg",
+        "release_date": "2022-04-08",
+        "title": "Yaksha: Operação Implacável",
+        "video": false,
+        "vote_average": 6.2,
+        "vote_count": 76
+    },
+    {
+        "adult": false,
+        "backdrop_path": "/xicKILMzPn6XZYCOpWwaxlUzg6S.jpg",
+        "genre_ids": [
+            53,
+            28
+        ],
+        "id": 294793,
+        "original_language": "en",
+        "original_title": "All the Old Knives",
+        "overview": "Dois agentes da CIA e ex-namorados são reunidos anos após uma tentativa de resgate fracassada e forçados a obscurecer os limites entre profissão e paixão nesta história profundamente fascinante de espionagem global, dilema moral e traição mortal.",
+        "popularity": 1217.482,
+        "poster_path": "/bfHTsg7YpUd7YkLSXEeTKjeg7BE.jpg",
+        "release_date": "2022-04-08",
+        "title": "Um Jantar Entre Espiões",
+        "video": false,
+        "vote_average": 6,
+        "vote_count": 198
+    },
+    {
+        "adult": false,
+        "backdrop_path": "/iDeWAGnmloZ5Oz3bocDp4rSbUXd.jpg",
+        "genre_ids": [
+            28,
+            53
+        ],
+        "id": 823625,
+        "original_language": "en",
+        "original_title": "Blacklight",
+        "overview": "Confiança, identidade e o perigo do poder sem controle levam um agente secreto ao limite. Travis Block (Liam Neeson) vive e luta nas sombras. Um “consertador” autônomo do governo, Block é um homem perigoso cujas atribuições incluíam extrair agentes de situações ocultas. Quando Block descobre que um programa sombrio chamado Operação Unidade está abatendo cidadãos comuns por razões conhecidas apenas pelo seu supervisor, o chefe do FBI, Robinson (Aidan Quinn), ele pede a ajuda de uma jornalista (Raver-Lampman), mas seu passado e presente colidem quando seu filha e neta são ameaçadas. Agora Block precisa resgatar as pessoas que ama e expor a verdade para uma chance de redenção. Nada nem ninguém está seguro quando os segredos estão escondidos nas sombras.",
+        "popularity": 1038.464,
+        "poster_path": "/qgW5iIe6QUn170omG6tdGS4BB9U.jpg",
+        "release_date": "2022-02-10",
+        "title": "Agente das Sombras",
+        "video": false,
+        "vote_average": 6.2,
+        "vote_count": 336
+    },
+    {
+        "adult": false,
+        "backdrop_path": "/qBLEWvJNVsehJkEJqIigPsWyBse.jpg",
+        "genre_ids": [
+            16,
+            10751,
+            14,
+            35,
+            12
+        ],
+        "id": 585083,
+        "original_language": "en",
+        "original_title": "Hotel Transylvania: Transformania",
+        "overview": "Drac e sua turma acabam sendo transformados em humanos após uma invenção de Van Helsing. Agora, eles precisam viajar até a Floresta Amazônica para encontrar o que pode ser a única solução para reverter a transformação, antes que seus poderes se percam para sempre.",
+        "popularity": 1125.626,
+        "poster_path": "/9PbtCo5IIkd26WPQfZUpPyn6fTz.jpg",
+        "release_date": "2022-02-25",
+        "title": "Hotel Transilvânia: Transformonstrão",
+        "video": false,
+        "vote_average": 7.1,
+        "vote_count": 814
+    },
+    {
+        "adult": false,
+        "backdrop_path": "/ewUqXnwiRLhgmGhuksOdLgh49Ch.jpg",
+        "genre_ids": [
+            28,
+            12,
+            35,
+            878
+        ],
+        "id": 696806,
+        "original_language": "en",
+        "original_title": "The Adam Project",
+        "overview": "Depois de viajar no tempo e ir parar em 2022 sem querer, o piloto de combate Adam Reed se une à sua versão de 12 anos de idade para salvar o futuro.",
+        "popularity": 1087.322,
+        "poster_path": "/11MJy6lkt7yTEIowEPIkaK4B7lM.jpg",
+        "release_date": "2022-03-11",
+        "title": "O Projeto Adam",
+        "video": false,
+        "vote_average": 7,
+        "vote_count": 2072
+    },
+    {
+        "adult": false,
+        "backdrop_path": "/tq3klWQevRK0Or0cGhsw0h3FDWQ.jpg",
+        "genre_ids": [
+            12,
+            16,
+            35,
+            10751,
+            14
+        ],
+        "id": 676705,
+        "original_language": "fr",
+        "original_title": "Pil",
+        "overview": "Pil vive nas ruas da cidade medieval de Roc-en-Brume, junto com suas três doninhas mansas. Ela sobrevive de comida roubada do castelo do sinistro Regente Tristain. Um dia, para escapar de seus guardas, Pil se disfarça de princesa. Assim, ela embarca em uma aventura louca e delirante, junto com Crobar, um grande guarda desajeitado que pensa que ela é uma nobre, e Rigolin, um jovem bobo maluco. Pil vai ter que salvar Roland, herdeiro legítimo do trono sob a maldição de um feitiço. Esta aventura vai virar todo o reino de cabeça para baixo e ensinar a Pil que a nobreza pode ser encontrada em todos nós.",
+        "popularity": 898.352,
+        "poster_path": "/78JfwRiubwX87BYgPXsdFKBf9P5.jpg",
+        "release_date": "2021-08-11",
+        "title": "Pil's Adventures",
+        "video": false,
+        "vote_average": 6.7,
+        "vote_count": 75
+    }
+    ]
+
+}
