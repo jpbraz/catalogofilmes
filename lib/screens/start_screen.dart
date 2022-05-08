@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:catalogo_filmes/utils/app_routes.dart';
 import 'package:flutter/material.dart';
+import '../models/movie.dart';
 
 class StartScreen extends StatelessWidget {
   @override
@@ -13,34 +17,24 @@ class StartScreen extends StatelessWidget {
       ),
       body: Container(
         color: Theme.of(context).colorScheme.primary,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Choose your plataform',
-              style: Theme.of(context).textTheme.headline1,
+        width: double.infinity,
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Container(
+            height: 200,
+            width: 200,
+            child: FloatingActionButton(
+              child: Text(
+                'Start Now',
+                style: Theme.of(context).textTheme.headline1,
+              ),
+              onPressed: () {
+                Navigator.of(context).pushNamed(
+                  AppRoutes.CATALOG,
+                );
+              },
             ),
-            SizedBox(
-              height: 30,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    padding: EdgeInsets.all(5),
-                    child: Image.asset('assets/imgs/netflix_logo.png',
-                        height: 65)),
-                SizedBox(
-                  width: 30,
-                ),
-                Container(
-                    padding: EdgeInsets.all(5),
-                    child:
-                        Image.asset('assets/imgs/prime_logo.png', height: 65)),
-              ],
-            )
-          ],
-        ),
+          ),
+        ]),
       ),
     );
   }

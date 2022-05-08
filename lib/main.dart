@@ -1,5 +1,7 @@
+import 'package:catalogo_filmes/screens/catalog_screen.dart';
 import 'package:flutter/material.dart';
 import './screens/start_screen.dart';
+import './utils/app_routes.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: StartScreen(),
+      initialRoute: '/',
       theme: ThemeData().copyWith(
           colorScheme: ThemeData().colorScheme.copyWith(
                 primary: Colors.black,
@@ -19,9 +21,13 @@ class MyApp extends StatelessWidget {
               ),
           textTheme: ThemeData().textTheme.copyWith(
               headline1: const TextStyle().copyWith(
-                  fontSize: 25,
+                  fontSize: 16,
                   color: Colors.white,
                   fontWeight: FontWeight.bold))),
+      routes: {
+        AppRoutes.HOME: (context) => StartScreen(),
+        AppRoutes.CATALOG: ((context) => CatalogScreen()),
+      },
     );
   }
 }
