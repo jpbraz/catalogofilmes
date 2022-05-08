@@ -38,16 +38,31 @@ class _CatalogcreenState extends State<CatalogScreen> {
         ],
         title: Text('Movie Catalog'),
       ),
-      body: CustomScrollView(slivers: [
-        SliverGrid(
-          gridDelegate:
-              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-          delegate: SliverChildBuilderDelegate((context, index) =>
-              (_movies.length > 0
-                  ? MovieItem(Movie.fromJson(_movies[index]))
-                  : Text('Nenhum filme encontrado!'))),
+      body: SingleChildScrollView(
+        // this will make your body scrollable
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          /// your parameters
+          children: <Widget>[
+            GridView.builder(
+              shrinkWrap: true,
+              itemCount: _movies.length,
+              itemBuilder: (BuildContext context, int index) =>
+                  (_movies.isNotEmpty
+                      ? MovieItem(
+                          Movie.fromJson(_movies[index]),
+                        )
+                      : const Text('Nenhum filme encontrado!')),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 2.0,
+                crossAxisSpacing: 2.0,
+                mainAxisExtent: 300,
+              ),
+            ),
+          ],
         ),
-      ]),
+      ),
     );
   }
 }
