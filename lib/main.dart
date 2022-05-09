@@ -22,9 +22,20 @@ class MyApp extends StatelessWidget {
               ),
           textTheme: ThemeData().textTheme.copyWith(
               headline1: const TextStyle().copyWith(
-                  fontSize: 16,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold))),
+                fontSize: 16,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+              headline2: const TextStyle().copyWith(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              )),
+          iconTheme: ThemeData().iconTheme.copyWith(
+                color: Colors.white,
+              ),
+          inputDecorationTheme: const InputDecorationTheme(
+            hintStyle: TextStyle(color: Colors.white),
+          )),
       routes: {
         AppRoutes.HOME: (context) => StartScreen(),
         AppRoutes.CATALOG: ((context) => CatalogScreen()),
