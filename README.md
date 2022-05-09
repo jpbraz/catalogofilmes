@@ -35,9 +35,9 @@ Projeto da Disciplina IMD0509 UFRN 2022.1 em Flutter.
 ## Check-list
 
 - [ ] Criar projeto no github :heavy_check_mark:
-- [ ] Uso de Widgets, dos mais diversos tipos, visíveis e não visíveis. 
-- [ ] Dividir de maneira adequada (componentes, models, etc) 
-- [ ] Cria Widget próprio
+- [ ] Uso de Widgets, dos mais diversos tipos, visíveis e não visíveis. ✔️
+- [ ] Dividir de maneira adequada (componentes, models, etc) ✔️
+- [ ] Cria Widget próprio ✔️
 - [ ] Troca de informações entre componentes: pai-filho (parâmetro) e filho-pai (funções)
 - [ ] Modelar ao menos três entidades (Ex: Pessoa, Lugar..).
 - [ ] Conter pelo menos um widget Stateful, que modifique a interface quando o estado mudar.
@@ -45,7 +45,7 @@ Projeto da Disciplina IMD0509 UFRN 2022.1 em Flutter.
 - [ ] Conter pelo menos dois componentes visuais que implementam recursos de navegação no aplicativo: TabBar, BottomNavigationBar,
 Drawer, Modal e etc.
 - [ ] Fazer extenso uso de componentes visuais e layouts personalizados. 
-- [ ] Definir cores primária e secundária do tema.
+- [ ] Definir cores primária e secundária do tema. ✔️
 - [ ] Personalizar os componentes, formatos de apresentação dos componentes e seus layout de apresentação.
 
 
