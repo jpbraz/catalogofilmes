@@ -59,48 +59,56 @@ class _CatalogcreenState extends State<CatalogScreen> {
         ],
         title: const Text('Movie Catalog'),
       ),
-      body: SingleChildScrollView(
-        // this will make your body scrollable
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          /// your parameters
-          children: <Widget>[
-            Row(children: <Widget>[
-              Flexible(
-                child: TextField(
-                  autofocus: true,
-                  controller: searchTextController,
-                  decoration: const InputDecoration(
-                    hintText: 'Entre com o título para busca',
+      body: Container(
+        color: Theme.of(context).colorScheme.primary,
+        child: SingleChildScrollView(
+          // this will make your body scrollable
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            /// your parameters
+            children: <Widget>[
+              Row(children: <Widget>[
+                Flexible(
+                  child: TextField(
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.tertiary),
+                    cursorColor: Colors.white,
+                    autofocus: true,
+                    controller: searchTextController,
+                    decoration: const InputDecoration(
+                      hintText: 'Entre com o título para busca',
+                    ),
                   ),
                 ),
+                IconButton(
+                  icon: const Icon(
+                    Icons.search,
+                  ),
+                  tooltip: 'Pesquisar Filme',
+                  onPressed: () {
+                    setState(() {
+                      searchText = searchTextController.text;
+                      SystemChannels.textInput.invokeMethod('TextInput.hide');
+                    });
+                  },
+                ),
+              ]),
+              GridView.builder(
+                shrinkWrap: true,
+                itemCount: _movies_list.length,
+                itemBuilder: (BuildContext context, int index) =>
+                    (_movies.isNotEmpty
+                        ? MovieItem(_movies_list[index])
+                        : const Text('Nenhum filme encontrado!')),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 2.0,
+                  crossAxisSpacing: 2.0,
+                  mainAxisExtent: 300,
+                ),
               ),
-              IconButton(
-                icon: const Icon(Icons.search),
-                tooltip: 'Pesquisar Filme',
-                onPressed: () {
-                  setState(() {
-                    searchText = searchTextController.text;
-                    SystemChannels.textInput.invokeMethod('TextInput.hide');
-                  });
-                },
-              ),
-            ]),
-            GridView.builder(
-              shrinkWrap: true,
-              itemCount: _movies_list.length,
-              itemBuilder: (BuildContext context, int index) =>
-                  (_movies.isNotEmpty
-                      ? MovieItem(_movies_list[index])
-                      : const Text('Nenhum filme encontrado!')),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 2.0,
-                crossAxisSpacing: 2.0,
-                mainAxisExtent: 300,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

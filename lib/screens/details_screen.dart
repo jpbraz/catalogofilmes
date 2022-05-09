@@ -40,6 +40,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
     int percentual = (rate! * 10).toInt();
 
     return Scaffold(
+      backgroundColor: Colors.black,
       body: CustomScrollView(slivers: [
         SliverAppBar(
           floating: false,
@@ -59,9 +60,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
               child: Row(
                 children: [
                   Text("Ano de Lançamento - ",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                  Text(ano, style: TextStyle(fontSize: 15))
+                      style: Theme.of(context).textTheme.headline2),
+                  Text(ano,
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: Theme.of(context).colorScheme.tertiary))
                 ],
               )),
           Container(
@@ -69,31 +72,38 @@ class _DetailsScreenState extends State<DetailsScreen> {
               child: Row(
                 children: [
                   Text("Gênero: ",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                      style: Theme.of(context).textTheme.headline2),
                   Text("FALTA IMPLEMENTAR",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15))
+                      style: Theme.of(context).textTheme.headline2)
                 ],
               )),
           Container(
             margin: const EdgeInsets.all(3),
-            child: Text("Sinopse: ",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+            child:
+                Text("Sinopse: ", style: Theme.of(context).textTheme.headline2),
           ),
           Container(
-            margin: const EdgeInsets.all(3),
-            child:
-                Expanded(child: Text(overview, style: TextStyle(fontSize: 15))),
-          ),
+              height: 95,
+              margin: const EdgeInsets.all(3),
+              child: ListView(
+                children: [
+                  Expanded(
+                      child: Text(overview,
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Theme.of(context).colorScheme.tertiary))),
+                ],
+              )),
           Container(
               margin: const EdgeInsets.all(3),
               child: Row(
                 children: [
                   Text("Rating: ",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                  Text(rate.toString(), style: TextStyle(fontSize: 15))
+                      style: Theme.of(context).textTheme.headline2),
+                  Text(rate.toString(),
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: Theme.of(context).colorScheme.tertiary))
                 ],
               )),
         ]))
