@@ -71,7 +71,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   Text("Gênero: ",
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                  Text(_items[0], style: TextStyle(fontSize: 15))
+                  Text("FALTA IMPLEMENTAR",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15))
                 ],
               )),
           Container(
