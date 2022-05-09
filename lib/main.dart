@@ -1,4 +1,5 @@
 import 'package:catalogo_filmes/screens/catalog_screen.dart';
+import 'package:catalogo_filmes/screens/details_screen.dart';
 import 'package:flutter/material.dart';
 import './screens/start_screen.dart';
 import './utils/app_routes.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
       routes: {
         AppRoutes.HOME: (context) => StartScreen(),
         AppRoutes.CATALOG: ((context) => CatalogScreen()),
+        AppRoutes.DETAILS: ((context) => DetailsScreen())
       },
     );
   }
