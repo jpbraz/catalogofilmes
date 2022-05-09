@@ -11,6 +11,7 @@ class CatalogScreen extends StatefulWidget {
 
 class _CatalogcreenState extends State<CatalogScreen> {
   List _movies = [];
+  List<Movie> _movies_list = [];
 
   @override
   void initState() {
@@ -26,6 +27,26 @@ class _CatalogcreenState extends State<CatalogScreen> {
     setState(() {
       _movies = data["movies"] as List;
     });
+
+    // Criando Lista de objetos do tipo Movie;
+    for (var element in _movies) {
+      _movies_list.add(Movie.fromJson(element));
+    }
+    _movies_list.forEach((element) {
+      print(element.title);
+    });
+    _movies_list.sort((a, b) => a.title!.compareTo(b.title!));
+  }
+
+  // Controle do TextField;
+  final searchTextController = TextEditingController();
+  String searchText = "";
+
+  @override
+  void dispose() {
+    //Dispose the controller when the screen is disposed
+    searchTextController.dispose();
+    super.dispose();
   }
 
   @override
@@ -36,7 +57,7 @@ class _CatalogcreenState extends State<CatalogScreen> {
         actions: [
           Container(padding: EdgeInsets.all(10), child: Icon(Icons.menu))
         ],
-        title: Text('Movie Catalog'),
+        title: const Text('Movie Catalog'),
       ),
       body: SingleChildScrollView(
         // this will make your body scrollable
@@ -44,14 +65,33 @@ class _CatalogcreenState extends State<CatalogScreen> {
         child: Column(
           /// your parameters
           children: <Widget>[
+            Row(children: <Widget>[
+              Flexible(
+                child: TextField(
+                  autofocus: true,
+                  controller: searchTextController,
+                  decoration: const InputDecoration(
+                    hintText: 'Entre com o título para busca',
+                  ),
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.search),
+                tooltip: 'Pesquisar Filme',
+                onPressed: () {
+                  setState(() {
+                    searchText = searchTextController.text;
+                    SystemChannels.textInput.invokeMethod('TextInput.hide');
+                  });
+                },
+              ),
+            ]),
             GridView.builder(
               shrinkWrap: true,
-              itemCount: _movies.length,
+              itemCount: _movies_list.length,
               itemBuilder: (BuildContext context, int index) =>
                   (_movies.isNotEmpty
-                      ? MovieItem(
-                          Movie.fromJson(_movies[index]),
-                        )
+                      ? MovieItem(_movies_list[index])
                       : const Text('Nenhum filme encontrado!')),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
