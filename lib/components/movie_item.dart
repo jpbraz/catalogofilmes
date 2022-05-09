@@ -1,6 +1,7 @@
 import 'package:catalogo_filmes/models/movie.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import '/utils/app_routes.dart';
 
 import '../screens/details_screen.dart';
 
@@ -25,12 +26,9 @@ class MovieItem extends StatelessWidget {
     );
 
     return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => DetailsScreen(movie),
-        ),
-      ),
+      onTap: () {
+        Navigator.of(context).pushNamed(AppRoutes.DETAILS, arguments: movie);
+      },
       child: Container(
         margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(
