@@ -1,7 +1,7 @@
 import 'package:catalogo_filmes/models/movie.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import '/utils/app_routes.dart';
+import 'package:catalogo_filmes/utils/app_routes.dart';
 
 import '../screens/details_screen.dart';
 

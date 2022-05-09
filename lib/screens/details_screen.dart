@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '/models/movie.dart';
-import '/models/genre.dart';
+import 'package:catalogo_filmes/models/movie.dart';
+import 'package:catalogo_filmes/models/genre.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 
