@@ -12,6 +12,7 @@ class CatalogScreen extends StatefulWidget {
 class _CatalogcreenState extends State<CatalogScreen> {
   List _movies = [];
   List<Movie> _movies_list = [];
+  List<Movie> _itens_filtrados = [];
 
   @override
   void initState() {
@@ -27,15 +28,13 @@ class _CatalogcreenState extends State<CatalogScreen> {
     setState(() {
       _movies = data["movies"] as List;
     });
-
     // Criando Lista de objetos do tipo Movie;
     for (var element in _movies) {
       _movies_list.add(Movie.fromJson(element));
     }
-    _movies_list.forEach((element) {
-      print(element.title);
-    });
-    _movies_list.sort((a, b) => a.title!.compareTo(b.title!));
+    _itens_filtrados.addAll(_movies_list);
+
+    _itens_filtrados.sort((a, b) => a.title!.compareTo(b.title!));
   }
 
   // Controle do TextField;
@@ -52,6 +51,7 @@ class _CatalogcreenState extends State<CatalogScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.secondary,
         actions: [
@@ -69,14 +69,31 @@ class _CatalogcreenState extends State<CatalogScreen> {
             children: <Widget>[
               Row(children: <Widget>[
                 Flexible(
-                  child: TextField(
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.tertiary),
-                    cursorColor: Colors.white,
-                    autofocus: true,
-                    controller: searchTextController,
-                    decoration: const InputDecoration(
-                      hintText: 'Entre com o título para busca',
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 10, right: 10, top: 10, bottom: 20),
+                    child: TextField(
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.tertiary),
+                      cursorColor: Colors.white,
+                      autofocus: true,
+                      controller: searchTextController,
+                      decoration: const InputDecoration(
+                        hintText: 'Entre com o título para busca',
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 2.0),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red, width: 2.0),
+                        ),
+                      ),
+                      onEditingComplete: () {
+                        setState(() {
+                          searchText = searchTextController.text;
+                        });
+                        filtrar(searchText);
+                      },
                     ),
                   ),
                 ),
@@ -89,28 +106,47 @@ class _CatalogcreenState extends State<CatalogScreen> {
                     setState(() {
                       searchText = searchTextController.text;
                       SystemChannels.textInput.invokeMethod('TextInput.hide');
+                      filtrar(searchText);
                     });
                   },
                 ),
               ]),
-              GridView.builder(
-                shrinkWrap: true,
-                itemCount: _movies_list.length,
-                itemBuilder: (BuildContext context, int index) =>
-                    (_movies.isNotEmpty
-                        ? MovieItem(_movies_list[index])
-                        : const Text('Nenhum filme encontrado!')),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 2.0,
-                  crossAxisSpacing: 2.0,
-                  mainAxisExtent: 300,
-                ),
-              ),
+              (_itens_filtrados.isEmpty
+                  ? const Padding(
+                      padding: EdgeInsets.only(top: 30),
+                      child: Text(
+                        'Nenhum filme encontrado!',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    )
+                  : GridView.builder(
+                      shrinkWrap: true,
+                      itemCount: _itens_filtrados.length,
+                      itemBuilder: (BuildContext context, int index) =>
+                          MovieItem(_itens_filtrados[index]),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 2.0,
+                        crossAxisSpacing: 2.0,
+                        mainAxisExtent: 300,
+                      ),
+                    )),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void filtrar(String searchText) {
+    _itens_filtrados.clear();
+
+    _itens_filtrados.addAll(
+        _movies_list.where((element) => element.title!.contains(searchText)));
+
+    _itens_filtrados.sort((a, b) => a.title!.compareTo(b.title!));
   }
 }
