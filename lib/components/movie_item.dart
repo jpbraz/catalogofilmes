@@ -16,7 +16,7 @@ class MovieItem extends StatelessWidget {
     String posterPath = movie.posterPath as String;
     String releaseDate = movie.releaseDate as String;
     String ano = releaseDate.substring(0, 4);
-    double? rate = movie.voteAverage;
+    num? rate = movie.voteAverage;
     int percentual = (rate! * 10).toInt();
 
     const boxShadow2 = BoxShadow(

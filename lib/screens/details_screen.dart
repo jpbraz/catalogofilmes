@@ -11,6 +11,7 @@ class DetailsScreen extends StatefulWidget {
 
 class _DetailsScreenState extends State<DetailsScreen> {
   List _items = [];
+  List _genreList = [];
 
   @override
   void initState() {
@@ -22,9 +23,12 @@ class _DetailsScreenState extends State<DetailsScreen> {
   Future<void> readJson() async {
     final String response =
         await rootBundle.loadString('assets/data/my_genre_data.json');
-    final data = await jsonDecode(response);
+    final data = await json.decode(response);
     setState(() {
-      _items = data["items"];
+      _items = data["genres"];
+      for (var genre in _items) {
+        _genreList.add(genre);
+      }
     });
   }
 
@@ -36,7 +40,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
     String releaseDate = movie.releaseDate as String;
     String ano = releaseDate.substring(0, 4);
     String overview = movie.overview as String;
-    double? rate = movie.voteAverage;
+    num? rate = movie.voteAverage;
     int percentual = (rate! * 10).toInt();
 
     return Scaffold(
@@ -87,11 +91,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
               margin: const EdgeInsets.all(3),
               child: ListView(
                 children: [
-                  Expanded(
-                      child: Text(overview,
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: Theme.of(context).colorScheme.tertiary))),
+                  Text(overview,
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: Theme.of(context).colorScheme.tertiary)),
                 ],
               )),
           Container(
