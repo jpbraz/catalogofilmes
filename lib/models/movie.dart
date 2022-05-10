@@ -19,7 +19,7 @@ class Movie {
   Movie(
       {this.adult,
       this.backdropPath,
-      this.genreIds,
+      required this.genreIds,
       this.id,
       this.originalLanguage,
       this.originalTitle,

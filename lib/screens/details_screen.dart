@@ -41,7 +41,19 @@ class _DetailsScreenState extends State<DetailsScreen> {
     String ano = releaseDate.substring(0, 4);
     String overview = movie.overview as String;
     num? rate = movie.voteAverage;
+    List<int> genres = movie.genreIds!;
     int percentual = (rate! * 10).toInt();
+    List<String> genresNames = [];
+
+    setState(() {
+      for (var movieGenre in genres) {
+        for (var genre in _genreList) {
+          if (movieGenre == genre['id']) {
+            genresNames.add(genre['name']);
+          }
+        }
+      }
+    });
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -49,7 +61,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
         SliverAppBar(
           floating: false,
           pinned: true,
-          expandedHeight: 500,
+          expandedHeight: 480,
           flexibleSpace: FlexibleSpaceBar(
             background: Image.network(
               'https://image.tmdb.org/t/p/w220_and_h330_face$posterPath',
@@ -60,7 +72,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
         SliverList(
             delegate: SliverChildListDelegate([
           Container(
-              margin: const EdgeInsets.all(3),
+              margin: const EdgeInsets.only(bottom: 3, top: 10),
               child: Row(
                 children: [
                   Text("Ano de Lançamento - ",
@@ -77,18 +89,48 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 children: [
                   Text("Gênero: ",
                       style: Theme.of(context).textTheme.headline2),
-                  Text("FALTA IMPLEMENTAR",
-                      style: Theme.of(context).textTheme.headline2)
+                  Container(
+                    height: 40,
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: genresNames.length,
+                        itemBuilder: (context, index) => Container(
+                              padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.only(right: 10),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 1.0,
+                                    color:
+                                        Theme.of(context).colorScheme.tertiary,
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15))),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    genresNames[index],
+                                    style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .tertiary,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )),
+                  )
                 ],
               )),
           Container(
-            margin: const EdgeInsets.all(3),
+            margin: const EdgeInsets.only(bottom: 8),
             child:
                 Text("Sinopse: ", style: Theme.of(context).textTheme.headline2),
           ),
           Container(
               height: 95,
-              margin: const EdgeInsets.all(3),
+              margin: const EdgeInsets.only(bottom: 10),
               child: ListView(
                 children: [
                   Text(overview,
