@@ -25,7 +25,7 @@ class MovieItem extends StatelessWidget {
       color: Colors.black54,
     );
 
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         Navigator.of(context).pushNamed(AppRoutes.DETAILS, arguments: movie);
       },
@@ -91,7 +91,7 @@ class MovieItem extends StatelessWidget {
                       fontSize: 14,
                     ),
                   ),
-                  progressColor: Colors.amber,
+                  progressColor: Theme.of(context).colorScheme.secondary,
                   backgroundColor: Colors.white,
                 ),
               ],

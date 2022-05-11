@@ -40,6 +40,14 @@ class _CatalogcreenState extends State<CatalogScreen> {
   // Controle do TextField;
   final searchTextController = TextEditingController();
   String searchText = "";
+  void filtrar(String searchText) {
+    _itens_filtrados.clear();
+
+    _itens_filtrados.addAll(_movies_list.where((element) =>
+        element.title!.toLowerCase().contains(searchText.toLowerCase())));
+
+    _itens_filtrados.sort((a, b) => a.title!.compareTo(b.title!));
+  }
 
   @override
   void dispose() {
@@ -51,7 +59,7 @@ class _CatalogcreenState extends State<CatalogScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.secondary,
         actions: [
@@ -71,21 +79,23 @@ class _CatalogcreenState extends State<CatalogScreen> {
                 Flexible(
                   child: Padding(
                     padding: const EdgeInsets.only(
-                        left: 10, right: 10, top: 10, bottom: 20),
+                        left: 10, right: 10, top: 10, bottom: 15),
                     child: TextField(
                       style: TextStyle(
                           color: Theme.of(context).colorScheme.tertiary),
-                      cursorColor: Colors.white,
-                      autofocus: true,
+                      cursorColor: Theme.of(context).colorScheme.tertiary,
                       controller: searchTextController,
                       decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.only(
+                            left: 10, right: 10, bottom: 5, top: 1),
                         hintText: 'Entre com o título para busca',
                         focusedBorder: OutlineInputBorder(
                           borderSide:
                               BorderSide(color: Colors.white, width: 2.0),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.red, width: 2.0),
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 2.0),
                         ),
                       ),
                       onEditingComplete: () {
@@ -131,7 +141,7 @@ class _CatalogcreenState extends State<CatalogScreen> {
                         crossAxisCount: 2,
                         mainAxisSpacing: 2.0,
                         crossAxisSpacing: 2.0,
-                        mainAxisExtent: 300,
+                        mainAxisExtent: 250,
                       ),
                     )),
             ],
@@ -139,14 +149,5 @@ class _CatalogcreenState extends State<CatalogScreen> {
         ),
       ),
     );
-  }
-
-  void filtrar(String searchText) {
-    _itens_filtrados.clear();
-
-    _itens_filtrados.addAll(
-        _movies_list.where((element) => element.title!.contains(searchText)));
-
-    _itens_filtrados.sort((a, b) => a.title!.compareTo(b.title!));
   }
 }
