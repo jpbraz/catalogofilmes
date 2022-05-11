@@ -105,9 +105,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               });
                             },
                             child: Icon(
-                              Icons.star,
+                              Icons.favorite_sharp,
                               size: 60,
-                              color: Colors.yellow[700],
+                              color: Colors.red[600],
                               semanticLabel: 'Add as favorite',
                             ),
                           ));

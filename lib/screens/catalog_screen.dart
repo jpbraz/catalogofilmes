@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:catalogo_filmes/models/movie.dart';
+import 'package:catalogo_filmes/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../components/movie_item.dart';
@@ -62,10 +63,69 @@ class _CatalogcreenState extends State<CatalogScreen> {
       backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.secondary,
-        actions: [
-          Container(padding: EdgeInsets.all(10), child: Icon(Icons.menu))
-        ],
         title: const Text('Movie Catalog'),
+      ),
+      drawer: Drawer(
+        child: Container(
+          alignment: Alignment.center,
+          color: Theme.of(context).colorScheme.primary,
+          height: 100,
+          padding: EdgeInsets.only(top: 60),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'NerdCatalog',
+                  style: TextStyle(
+                      fontSize: 40,
+                      color: Theme.of(context).colorScheme.tertiary),
+                ),
+              ],
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed(AppRoutes.CATALOG);
+              },
+              child: Container(
+                margin: EdgeInsets.only(top: 60, left: 60),
+                width: 200,
+                child: Row(
+                  children: [
+                    Icon(Icons.book_rounded),
+                    Text(
+                      'Catalog',
+                      style: TextStyle(
+                          fontSize: 27,
+                          color: Theme.of(context).colorScheme.tertiary),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: (() {
+                Navigator.of(context).pushNamed(AppRoutes.FAVORITES);
+              }),
+              child: Container(
+                margin: EdgeInsets.only(top: 10, left: 60),
+                width: 200,
+                child: Row(
+                  children: [
+                    Icon(Icons.favorite),
+                    Text(
+                      'Favorites',
+                      style: TextStyle(
+                          fontSize: 27,
+                          color: Theme.of(context).colorScheme.tertiary),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ]),
+        ),
       ),
       body: Container(
         color: Theme.of(context).colorScheme.primary,
