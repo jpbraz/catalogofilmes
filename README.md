@@ -40,12 +40,15 @@ Projeto da Disciplina IMD0509 UFRN 2022.1 em Flutter.
 - [ ] Cria Widget próprio ✔️
 - [ ] Troca de informações entre componentes: pai-filho (parâmetro) e filho-pai (funções)
 - [ ] Modelar ao menos três entidades (Ex: Pessoa, Lugar..).
-- [ ] Conter pelo menos um widget Stateful, que modifique a interface quando o estado mudar.
+- [ ] Conter pelo menos um widget Stateful, que modifique a interface quando o estado mudar. ✔️
 - [ ] Utilizar, no mínimo, 4 telas (screens) e pelo menos duas devem receber objeto que faça referência a alguma entidade da aplicação (Ex: País, Lugar…). 
 - [ ] Conter pelo menos dois componentes visuais que implementam recursos de navegação no aplicativo: TabBar, BottomNavigationBar,
 Drawer, Modal e etc.
 - [ ] Fazer extenso uso de componentes visuais e layouts personalizados. 
 - [ ] Definir cores primária e secundária do tema. ✔️
 - [ ] Personalizar os componentes, formatos de apresentação dos componentes e seus layout de apresentação.
+
+
+
 
 
