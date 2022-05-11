@@ -10,9 +10,6 @@ class StartScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.secondary,
-        actions: [
-          Container(padding: EdgeInsets.all(10), child: Icon(Icons.menu))
-        ],
         title: Text('NerdCatalog'),
       ),
       body: Container(

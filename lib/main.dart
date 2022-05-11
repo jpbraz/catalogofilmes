@@ -1,6 +1,7 @@
 import 'package:catalogo_filmes/models/favorites.dart';
 import 'package:catalogo_filmes/screens/catalog_screen.dart';
 import 'package:catalogo_filmes/screens/details_screen.dart';
+import 'package:catalogo_filmes/screens/favorites_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:catalogo_filmes/screens/start_screen.dart';
 import 'package:catalogo_filmes/utils/app_routes.dart';
@@ -44,7 +45,8 @@ class MyApp extends StatelessWidget {
       routes: {
         AppRoutes.HOME: (context) => StartScreen(),
         AppRoutes.CATALOG: ((context) => CatalogScreen()),
-        AppRoutes.DETAILS: ((context) => DetailsScreen())
+        AppRoutes.DETAILS: ((context) => DetailsScreen()),
+        AppRoutes.FAVORITES: ((context) => FavoritesScreen()),
       },
     );
   }
