@@ -1,11 +1,16 @@
+import 'package:catalogo_filmes/models/favorites.dart';
 import 'package:catalogo_filmes/screens/catalog_screen.dart';
 import 'package:catalogo_filmes/screens/details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:catalogo_filmes/screens/start_screen.dart';
 import 'package:catalogo_filmes/utils/app_routes.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => Favorites(),
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

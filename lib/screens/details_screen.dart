@@ -1,8 +1,10 @@
+import 'package:catalogo_filmes/models/favorites.dart';
 import 'package:flutter/material.dart';
 import 'package:catalogo_filmes/models/movie.dart';
 import 'package:catalogo_filmes/models/genre.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class DetailsScreen extends StatefulWidget {
   @override
@@ -45,6 +47,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
     int percentual = (rate! * 10).toInt();
     List<String> genresNames = [];
 
+    bool isFavorite = false;
+
     setState(() {
       for (var movieGenre in genres) {
         for (var genre in _genreList) {
@@ -55,104 +59,145 @@ class _DetailsScreenState extends State<DetailsScreen> {
       }
     });
 
+    _favoriteHanler() {
+      setState(() {});
+    }
+
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: CustomScrollView(slivers: [
-        SliverAppBar(
-          floating: false,
-          pinned: true,
-          expandedHeight: 480,
-          flexibleSpace: FlexibleSpaceBar(
-            background: Image.network(
-              'https://image.tmdb.org/t/p/w220_and_h330_face$posterPath',
-              fit: BoxFit.cover,
-            ),
+        backgroundColor: Colors.black,
+        body: CustomScrollView(slivers: [
+          SliverAppBar(
+            floating: false,
+            pinned: true,
+            expandedHeight: 480,
+            flexibleSpace: Stack(children: [
+              FlexibleSpaceBar(
+                background: Image.network(
+                  'https://image.tmdb.org/t/p/w220_and_h330_face$posterPath',
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Positioned(
+                  right: 20,
+                  top: 45,
+                  child: Consumer<Favorites>(builder: (context, icon, child) {
+                    isFavorite = icon.favoriteMovies.contains(movie);
+                    return (isFavorite
+                        ? GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isFavorite = false;
+                                icon.removeFavoriteMovie(movie);
+                              });
+                            },
+                            child: Icon(
+                              Icons.check,
+                              size: 60,
+                              color: Colors.green[600],
+                              semanticLabel: 'Added as favorite',
+                            ),
+                          )
+                        : GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isFavorite = true;
+                                icon.addFavoriteMovie(movie);
+                              });
+                            },
+                            child: Icon(
+                              Icons.star,
+                              size: 60,
+                              color: Colors.yellow[700],
+                              semanticLabel: 'Add as favorite',
+                            ),
+                          ));
+                  }))
+            ]),
           ),
-        ),
-        SliverList(
-            delegate: SliverChildListDelegate([
-          Container(
-              margin: const EdgeInsets.only(bottom: 3, top: 10),
-              child: Row(
-                children: [
-                  Text("Ano de Lançamento - ",
-                      style: Theme.of(context).textTheme.headline2),
-                  Text(ano,
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Theme.of(context).colorScheme.tertiary))
-                ],
-              )),
-          Container(
-              margin: const EdgeInsets.all(3),
-              child: Row(
-                children: [
-                  Text("Gênero: ",
-                      style: Theme.of(context).textTheme.headline2),
-                  Container(
-                    height: 40,
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: genresNames.length,
-                        itemBuilder: (context, index) => Container(
-                              padding: EdgeInsets.all(10),
-                              margin: EdgeInsets.only(right: 10),
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 1.0,
-                                    color:
-                                        Theme.of(context).colorScheme.tertiary,
-                                  ),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15))),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    genresNames[index],
-                                    style: TextStyle(
+          SliverList(
+              delegate: SliverChildListDelegate([
+            Container(
+                margin: const EdgeInsets.only(bottom: 3, top: 10),
+                child: Row(
+                  children: [
+                    Text("Ano de Lançamento - ",
+                        style: Theme.of(context).textTheme.headline2),
+                    Text(ano,
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Theme.of(context).colorScheme.tertiary))
+                  ],
+                )),
+            Container(
+                margin: const EdgeInsets.all(3),
+                child: Row(
+                  children: [
+                    Text("Gênero: ",
+                        style: Theme.of(context).textTheme.headline2),
+                    Container(
+                      height: 40,
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: genresNames.length,
+                          itemBuilder: (context, index) => Container(
+                                padding: EdgeInsets.all(10),
+                                margin: EdgeInsets.only(right: 10),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                      width: 1.0,
                                       color: Theme.of(context)
                                           .colorScheme
                                           .tertiary,
                                     ),
-                                  ),
-                                ],
-                              ),
-                            )),
-                  )
-                ],
-              )),
-          Container(
-            margin: const EdgeInsets.only(bottom: 8),
-            child:
-                Text("Sinopse: ", style: Theme.of(context).textTheme.headline2),
-          ),
-          Container(
-              height: 95,
-              margin: const EdgeInsets.only(bottom: 10),
-              child: ListView(
-                children: [
-                  Text(overview,
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Theme.of(context).colorScheme.tertiary)),
-                ],
-              )),
-          Container(
-              margin: const EdgeInsets.all(3),
-              child: Row(
-                children: [
-                  Text("Rating: ",
-                      style: Theme.of(context).textTheme.headline2),
-                  Text(rate.toString(),
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Theme.of(context).colorScheme.tertiary))
-                ],
-              )),
-        ]))
-      ]),
-    );
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15))),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      genresNames[index],
+                                      style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .tertiary,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )),
+                    )
+                  ],
+                )),
+            Container(
+              margin: const EdgeInsets.only(bottom: 8),
+              child: Text("Sinopse: ",
+                  style: Theme.of(context).textTheme.headline2),
+            ),
+            Container(
+                height: 95,
+                margin: const EdgeInsets.only(bottom: 10),
+                child: ListView(
+                  children: [
+                    Text(overview,
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Theme.of(context).colorScheme.tertiary)),
+                  ],
+                )),
+            Container(
+                margin: const EdgeInsets.all(3),
+                child: Row(
+                  children: [
+                    Text("Rating: ",
+                        style: Theme.of(context).textTheme.headline2),
+                    Text(rate.toString(),
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Theme.of(context).colorScheme.tertiary))
+                  ],
+                )),
+          ]))
+        ]));
   }
 }
