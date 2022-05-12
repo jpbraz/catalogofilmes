@@ -121,7 +121,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 child: Row(
                   children: [
                     Text("Ano de Lançamento - ",
-                        style: Theme.of(context).textTheme.headline2),
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.tertiary,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold)),
                     Text(ano,
                         style: TextStyle(
                             fontSize: 15,
@@ -130,10 +133,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 )),
             Container(
                 margin: const EdgeInsets.all(3),
-                child: Row(
+                child: Column(
                   children: [
-                    Text("Gênero: ",
-                        style: Theme.of(context).textTheme.headline2),
                     Container(
                       height: 40,
                       child: ListView.builder(
@@ -152,45 +153,45 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     ),
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(15))),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      genresNames[index],
-                                      style: TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .tertiary,
-                                      ),
+                                child: Row(children: [
+                                  Text(
+                                    genresNames[index],
+                                    style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .tertiary,
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ]),
                               )),
                     )
                   ],
                 )),
             Container(
-              margin: const EdgeInsets.only(bottom: 8),
+              margin: const EdgeInsets.all(3),
               child: Text("Sinopse: ",
-                  style: Theme.of(context).textTheme.headline2),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      color: Theme.of(context).colorScheme.tertiary)),
             ),
             Container(
-                height: 95,
-                margin: const EdgeInsets.only(bottom: 10),
-                child: ListView(
-                  children: [
-                    Text(overview,
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Theme.of(context).colorScheme.tertiary)),
-                  ],
-                )),
+              margin: const EdgeInsets.all(3),
+              child: Expanded(
+                  child: Text(overview,
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: Theme.of(context).colorScheme.tertiary))),
+            ),
             Container(
                 margin: const EdgeInsets.all(3),
                 child: Row(
                   children: [
                     Text("Rating: ",
-                        style: Theme.of(context).textTheme.headline2),
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Theme.of(context).colorScheme.tertiary,
+                            fontWeight: FontWeight.bold)),
                     Text(rate.toString(),
                         style: TextStyle(
                             fontSize: 15,
