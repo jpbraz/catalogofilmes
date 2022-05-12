@@ -1,19 +1,21 @@
 import 'dart:convert';
+import 'package:catalogo_filmes/components/my_main_drawer.dart';
 import 'package:catalogo_filmes/models/movie.dart';
-import 'package:catalogo_filmes/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../components/movie_item.dart';
+import '../components/card_movie_item.dart';
 
 class CatalogScreen extends StatefulWidget {
+  const CatalogScreen({Key? key}) : super(key: key);
+
   @override
   State<CatalogScreen> createState() => _CatalogcreenState();
 }
 
 class _CatalogcreenState extends State<CatalogScreen> {
   List _movies = [];
-  List<Movie> _movies_list = [];
-  List<Movie> _itens_filtrados = [];
+  List<Movie> moviesList = [];
+  List<Movie> itensFiltrados = [];
 
   @override
   void initState() {
@@ -21,7 +23,6 @@ class _CatalogcreenState extends State<CatalogScreen> {
     readJson();
   }
 
-  @override
   Future<void> readJson() async {
     final String response =
         await rootBundle.loadString('assets/data/movies.json');
@@ -31,23 +32,23 @@ class _CatalogcreenState extends State<CatalogScreen> {
     });
     // Criando Lista de objetos do tipo Movie;
     for (var element in _movies) {
-      _movies_list.add(Movie.fromJson(element));
+      moviesList.add(Movie.fromJson(element));
     }
-    _itens_filtrados.addAll(_movies_list);
+    itensFiltrados.addAll(moviesList);
 
-    _itens_filtrados.sort((a, b) => a.title!.compareTo(b.title!));
+    itensFiltrados.sort((a, b) => a.title!.compareTo(b.title!));
   }
 
   // Controle do TextField;
   final searchTextController = TextEditingController();
   String searchText = "";
   void filtrar(String searchText) {
-    _itens_filtrados.clear();
+    itensFiltrados.clear();
 
-    _itens_filtrados.addAll(_movies_list.where((element) =>
+    itensFiltrados.addAll(moviesList.where((element) =>
         element.title!.toLowerCase().contains(searchText.toLowerCase())));
 
-    _itens_filtrados.sort((a, b) => a.title!.compareTo(b.title!));
+    itensFiltrados.sort((a, b) => a.title!.compareTo(b.title!));
   }
 
   @override
@@ -65,68 +66,7 @@ class _CatalogcreenState extends State<CatalogScreen> {
         backgroundColor: Theme.of(context).colorScheme.secondary,
         title: const Text('Movie Catalog'),
       ),
-      drawer: Drawer(
-        child: Container(
-          alignment: Alignment.center,
-          color: Theme.of(context).colorScheme.primary,
-          height: 100,
-          padding: EdgeInsets.only(top: 60),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'NerdCatalog',
-                  style: TextStyle(
-                      fontSize: 40,
-                      color: Theme.of(context).colorScheme.tertiary),
-                ),
-              ],
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushNamed(AppRoutes.CATALOG);
-              },
-              child: Container(
-                margin: EdgeInsets.only(top: 60, left: 60),
-                width: 200,
-                child: Row(
-                  children: [
-                    Icon(Icons.book_rounded),
-                    Text(
-                      'Catalog',
-                      style: TextStyle(
-                          fontSize: 27,
-                          color: Theme.of(context).colorScheme.tertiary),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: (() {
-                Navigator.of(context).pushNamed(AppRoutes.FAVORITES);
-              }),
-              child: Container(
-                margin: EdgeInsets.only(top: 10, left: 60),
-                width: 200,
-                child: Row(
-                  children: [
-                    Icon(Icons.favorite),
-                    Text(
-                      'Favorites',
-                      style: TextStyle(
-                          fontSize: 27,
-                          color: Theme.of(context).colorScheme.tertiary),
-                    ),
-                  ],
-                ),
-              ),
-            )
-          ]),
-        ),
-      ),
+      drawer: const MyMainDrawer(),
       body: Container(
         color: Theme.of(context).colorScheme.primary,
         child: SingleChildScrollView(
@@ -181,7 +121,7 @@ class _CatalogcreenState extends State<CatalogScreen> {
                   },
                 ),
               ]),
-              (_itens_filtrados.isEmpty
+              (itensFiltrados.isEmpty
                   ? const Padding(
                       padding: EdgeInsets.only(top: 30),
                       child: Text(
@@ -193,9 +133,9 @@ class _CatalogcreenState extends State<CatalogScreen> {
                     )
                   : GridView.builder(
                       shrinkWrap: true,
-                      itemCount: _itens_filtrados.length,
+                      itemCount: itensFiltrados.length,
                       itemBuilder: (BuildContext context, int index) =>
-                          MovieItem(_itens_filtrados[index]),
+                          CardMovieItem(itensFiltrados[index], true, true),
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
