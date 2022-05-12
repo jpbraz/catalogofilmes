@@ -64,142 +64,216 @@ class _DetailsScreenState extends State<DetailsScreen> {
     }
 
     return Scaffold(
-        backgroundColor: Colors.black,
-        body: CustomScrollView(slivers: [
+      backgroundColor: Colors.black,
+      body: CustomScrollView(
+        slivers: [
           SliverAppBar(
+            actions: [
+              Consumer<Favorites>(
+                builder: (context, icon, child) {
+                  isFavorite = icon.favoriteMovies.contains(movie);
+                  return (isFavorite
+                      ? GestureDetector(
+                          onTap: () {
+                            setState(
+                              () {
+                                isFavorite = false;
+                                icon.removeFavoriteMovie(movie);
+                              },
+                            );
+                          },
+                          child: Icon(
+                            Icons.favorite,
+                            size: 40,
+                            color: Colors.red[600],
+                            semanticLabel: 'Added as favorite',
+                          ),
+                        )
+                      : GestureDetector(
+                          onTap: () {
+                            setState(
+                              () {
+                                isFavorite = true;
+                                icon.addFavoriteMovie(movie);
+                              },
+                            );
+                          },
+                          child: const Icon(
+                            Icons.favorite_border,
+                            size: 40,
+                            color: Colors.white,
+                            semanticLabel: 'Add as favorite',
+                          ),
+                        ));
+                },
+              ),
+              const SizedBox(width: 20)
+            ],
             floating: false,
             pinned: true,
             expandedHeight: 480,
-            flexibleSpace: Stack(children: [
-              FlexibleSpaceBar(
-                background: Image.network(
-                  'https://image.tmdb.org/t/p/w220_and_h330_face$posterPath',
-                  fit: BoxFit.cover,
+            flexibleSpace: Stack(
+              children: [
+                FlexibleSpaceBar(
+                  background: Image.network(
+                    'https://image.tmdb.org/t/p/w220_and_h330_face$posterPath',
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
-              Positioned(
+                /*
+                Positioned(
                   right: 20,
                   top: 45,
-                  child: Consumer<Favorites>(builder: (context, icon, child) {
-                    isFavorite = icon.favoriteMovies.contains(movie);
-                    return (isFavorite
-                        ? GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                isFavorite = false;
-                                icon.removeFavoriteMovie(movie);
-                              });
-                            },
-                            child: Icon(
-                              Icons.favorite,
-                              size: 60,
-                              color: Colors.red[600],
-                              semanticLabel: 'Added as favorite',
-                            ),
-                          )
-                        : GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                isFavorite = true;
-                                icon.addFavoriteMovie(movie);
-                              });
-                            },
-                            child: const Icon(
-                              Icons.favorite_border,
-                              size: 60,
-                              color: Colors.white,
-                              semanticLabel: 'Add as favorite',
-                            ),
-                          ));
-                  }))
-            ]),
+                  child: Consumer<Favorites>(
+                    builder: (context, icon, child) {
+                      isFavorite = icon.favoriteMovies.contains(movie);
+                      return (isFavorite
+                          ? GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isFavorite = false;
+                                  icon.removeFavoriteMovie(movie);
+                                });
+                              },
+                              child: Icon(
+                                Icons.favorite,
+                                size: 60,
+                                color: Colors.red[600],
+                                semanticLabel: 'Added as favorite',
+                              ),
+                            )
+                          : GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isFavorite = true;
+                                  icon.addFavoriteMovie(movie);
+                                });
+                              },
+                              child: const Icon(
+                                Icons.favorite_border,
+                                size: 60,
+                                color: Colors.white,
+                                semanticLabel: 'Add as favorite',
+                              ),
+                            ));
+                    },
+                  ),
+                )
+                */
+              ],
+            ),
           ),
           SliverList(
-              delegate: SliverChildListDelegate([
-            Container(
-                margin: const EdgeInsets.only(bottom: 3, top: 10),
-                child: Row(
-                  children: [
-                    Text("Ano de Lançamento - ",
+            delegate: SliverChildListDelegate(
+              [
+                Container(
+                  padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+                  margin: const EdgeInsets.only(bottom: 3, top: 10),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Ano de Lançamento - ",
                         style: TextStyle(
                             color: Theme.of(context).colorScheme.tertiary,
                             fontSize: 15,
-                            fontWeight: FontWeight.bold)),
-                    Text(ano,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        ano,
                         style: TextStyle(
                             fontSize: 15,
-                            color: Theme.of(context).colorScheme.tertiary))
-                  ],
-                )),
-            Container(
-                margin: const EdgeInsets.all(3),
-                child: Column(
-                  children: [
-                    Container(
-                      height: 35,
-                      width: 300,
-                      child: ListView.builder(
+                            color: Theme.of(context).colorScheme.tertiary),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  margin: const EdgeInsets.all(3),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Rating: ",
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Theme.of(context).colorScheme.tertiary,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        rate.toString(),
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Theme.of(context).colorScheme.tertiary,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  margin: const EdgeInsets.all(3),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 40,
+                        child: ListView.builder(
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
                           itemCount: genresNames.length,
                           itemBuilder: (context, index) => Container(
-                                padding: EdgeInsets.all(8),
-                                margin: EdgeInsets.only(right: 5),
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                      width: 1.0,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .tertiary,
-                                    ),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(15))),
-                                child: Row(children: [
-                                  Text(
-                                    genresNames[index],
-                                    style: TextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .tertiary,
-                                    ),
+                            padding: EdgeInsets.all(10),
+                            margin: EdgeInsets.only(right: 10),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 1.0,
+                                  color: Theme.of(context).colorScheme.tertiary,
+                                ),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15))),
+                            child: Row(
+                              children: [
+                                Text(
+                                  genresNames[index],
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.tertiary,
                                   ),
-                                ]),
-                              )),
-                    )
-                  ],
-                )),
-            Container(
-              margin: const EdgeInsets.all(3),
-              child: Text("Sinopse: ",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                      color: Theme.of(context).colorScheme.tertiary)),
-            ),
-            Container(
-              margin: const EdgeInsets.all(3),
-              child: Expanded(
-                  child: Text(overview,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  margin: const EdgeInsets.all(3),
+                  child: Text("Sinopse: ",
                       style: TextStyle(
+                          fontWeight: FontWeight.bold,
                           fontSize: 15,
-                          color: Theme.of(context).colorScheme.tertiary))),
+                          color: Theme.of(context).colorScheme.tertiary)),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(
+                    left: 10,
+                    right: 10,
+                    bottom: 10,
+                  ),
+                  margin: const EdgeInsets.all(3),
+                  child: Expanded(
+                      child: Text(overview,
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Theme.of(context).colorScheme.tertiary))),
+                ),
+              ],
             ),
-            Container(
-                margin: const EdgeInsets.all(3),
-                child: Row(
-                  children: [
-                    Text("Rating: ",
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Theme.of(context).colorScheme.tertiary,
-                            fontWeight: FontWeight.bold)),
-                    Text(rate.toString(),
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Theme.of(context).colorScheme.tertiary))
-                  ],
-                )),
-          ]))
-        ]));
+          )
+        ],
+      ),
+    );
   }
 }
