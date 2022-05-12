@@ -19,23 +19,21 @@ class FavoritesScreen extends StatelessWidget {
       body: Container(
         padding: const EdgeInsets.only(top: 60, left: 10, right: 10),
         color: Theme.of(context).colorScheme.primary,
-        child: SingleChildScrollView(
-          child: Consumer<Favorites>(
-            builder: (context, favorites, child) {
-              return GridView.builder(
-                shrinkWrap: true,
-                itemCount: favorites.favoriteMovies.length,
-                itemBuilder: (BuildContext context, int index) =>
-                    CardMovieItem(favorites.favoriteMovies[index], true, true),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 2.0,
-                  crossAxisSpacing: 2.0,
-                  mainAxisExtent: 250,
-                ),
-              );
-            },
-          ),
+        child: Consumer<Favorites>(
+          builder: (context, favorites, child) {
+            return GridView.builder(
+              shrinkWrap: true,
+              itemCount: favorites.favoriteMovies.length,
+              itemBuilder: (BuildContext context, int index) =>
+                  CardMovieItem(favorites.favoriteMovies[index], true, true),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 2.0,
+                crossAxisSpacing: 2.0,
+                mainAxisExtent: 250,
+              ),
+            );
+          },
         ),
       ),
     );

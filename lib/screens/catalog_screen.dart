@@ -69,64 +69,62 @@ class _CatalogcreenState extends State<CatalogScreen> {
       drawer: const MyMainDrawer(),
       body: Container(
         color: Theme.of(context).colorScheme.primary,
-        child: SingleChildScrollView(
-          // this will make your body scrollable
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            /// your parameters
-            children: <Widget>[
-              Row(children: <Widget>[
-                Flexible(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 10, right: 10, top: 10, bottom: 15),
-                    child: TextField(
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.tertiary),
-                      cursorColor: Theme.of(context).colorScheme.tertiary,
-                      controller: searchTextController,
-                      decoration: const InputDecoration(
-                        contentPadding: EdgeInsets.only(
-                            left: 10, right: 10, bottom: 5, top: 1),
-                        hintText: 'Entre com o título para busca',
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.white, width: 2.0),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.white, width: 2.0),
-                        ),
+        child: Column(
+          /// your parameters
+          children: <Widget>[
+            Row(children: <Widget>[
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 10, right: 10, top: 10, bottom: 15),
+                  child: TextField(
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.tertiary),
+                    cursorColor: Theme.of(context).colorScheme.tertiary,
+                    controller: searchTextController,
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.only(
+                          left: 10, right: 10, bottom: 5, top: 1),
+                      hintText: 'Entre com o título para busca',
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white, width: 2.0),
                       ),
-                      onEditingComplete: () {
-                        setState(() {
-                          searchText = searchTextController.text;
-                        });
-                        filtrar(searchText);
-                      },
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white, width: 2.0),
+                      ),
                     ),
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(
-                    Icons.search,
-                  ),
-                  tooltip: 'Pesquisar Filme',
-                  onPressed: () {
-                    setState(() {
-                      searchText = searchTextController.text;
-                      SystemChannels.textInput.invokeMethod('TextInput.hide');
+                    onEditingComplete: () {
+                      setState(() {
+                        searchText = searchTextController.text;
+                      });
                       filtrar(searchText);
-                    });
-                  },
+                    },
+                  ),
                 ),
-              ]),
-              (itensFiltrados.isEmpty
+              ),
+              IconButton(
+                icon: const Icon(
+                  Icons.search,
+                ),
+                tooltip: 'Pesquisar Filme',
+                onPressed: () {
+                  setState(() {
+                    searchText = searchTextController.text;
+                    SystemChannels.textInput.invokeMethod('TextInput.hide');
+                    filtrar(searchText);
+                  });
+                },
+              ),
+            ]),
+            Container(
+                child: Expanded(
+              child: (itensFiltrados.isEmpty
                   ? const Padding(
-                      padding: EdgeInsets.only(top: 30),
+                      padding: EdgeInsets.only(top: 60),
                       child: Text(
                         'Nenhum filme encontrado!',
                         style: TextStyle(
+                          fontSize: 20,
                           color: Colors.white,
                         ),
                       ),
@@ -144,8 +142,8 @@ class _CatalogcreenState extends State<CatalogScreen> {
                         mainAxisExtent: 250,
                       ),
                     )),
-            ],
-          ),
+            ))
+          ],
         ),
       ),
     );

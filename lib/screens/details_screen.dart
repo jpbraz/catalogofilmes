@@ -130,19 +130,21 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 )),
             Container(
                 margin: const EdgeInsets.all(3),
+                width: double.infinity,
                 child: Row(
                   children: [
                     Text("Gênero: ",
                         style: Theme.of(context).textTheme.headline2),
                     Container(
-                      height: 40,
+                      height: 35,
+                      width: 300,
                       child: ListView.builder(
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
                           itemCount: genresNames.length,
                           itemBuilder: (context, index) => Container(
-                                padding: EdgeInsets.all(10),
-                                margin: EdgeInsets.only(right: 10),
+                                padding: EdgeInsets.all(8),
+                                margin: EdgeInsets.only(right: 5),
                                 decoration: BoxDecoration(
                                     border: Border.all(
                                       width: 1.0,
@@ -152,8 +154,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     ),
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(15))),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
                                       genresNames[index],
