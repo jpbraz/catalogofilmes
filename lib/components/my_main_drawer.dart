@@ -1,5 +1,9 @@
+import 'dart:convert';
+
+import 'package:catalogo_filmes/models/favorites.dart';
 import 'package:catalogo_filmes/utils/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MyMainDrawer extends StatelessWidget {
   const MyMainDrawer({Key? key}) : super(key: key);
@@ -37,7 +41,7 @@ class MyMainDrawer extends StatelessWidget {
                   children: [
                     const Icon(Icons.book_rounded),
                     Text(
-                      'Catalog',
+                      ' Catalog',
                       style: TextStyle(
                           fontSize: 27,
                           color: Theme.of(context).colorScheme.tertiary),
@@ -57,7 +61,7 @@ class MyMainDrawer extends StatelessWidget {
                   children: [
                     const Icon(Icons.favorite),
                     Text(
-                      'Favorites',
+                      ' Favorites',
                       style: TextStyle(
                           fontSize: 27,
                           color: Theme.of(context).colorScheme.tertiary),
@@ -65,6 +69,34 @@ class MyMainDrawer extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+            const SizedBox(
+              height: 80,
+            ),
+            Consumer<Favorites>(
+              builder: (BuildContext context, value, Widget? child) {
+                return GestureDetector(
+                  onTap: (() {
+                    Navigator.of(context).pushNamed(AppRoutes.HOME);
+                    //value.removeAllFavoriteMovie();
+                  }),
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 10, left: 60),
+                    width: 200,
+                    child: Row(
+                      children: [
+                        const Icon(Icons.logout),
+                        Text(
+                          ' Logout',
+                          style: TextStyle(
+                              fontSize: 27,
+                              color: Theme.of(context).colorScheme.tertiary),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
           ],
         ),
