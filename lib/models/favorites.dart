@@ -13,4 +13,9 @@ class Favorites extends ChangeNotifier {
     favoriteMovies.remove(movie);
     notifyListeners();
   }
+
+  void removeAllFavoriteMovie() {
+    favoriteMovies.clear();
+    notifyListeners();
+  }
 }
