@@ -91,9 +91,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               });
                             },
                             child: Icon(
-                              Icons.check,
+                              Icons.favorite,
                               size: 60,
-                              color: Colors.green[600],
+                              color: Colors.red[600],
                               semanticLabel: 'Added as favorite',
                             ),
                           )
@@ -104,10 +104,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 icon.addFavoriteMovie(movie);
                               });
                             },
-                            child: Icon(
-                              Icons.favorite_sharp,
+                            child: const Icon(
+                              Icons.favorite_border,
                               size: 60,
-                              color: Colors.red[600],
+                              color: Colors.white,
                               semanticLabel: 'Add as favorite',
                             ),
                           ));
