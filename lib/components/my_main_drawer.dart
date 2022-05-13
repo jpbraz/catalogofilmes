@@ -77,7 +77,7 @@ class MyMainDrawer extends StatelessWidget {
               builder: (BuildContext context, value, Widget? child) {
                 return GestureDetector(
                   onTap: (() {
-                    Navigator.of(context).pushNamed(AppRoutes.HOME);
+                    Navigator.of(context).popUntil((route) => route.isFirst);
                     //value.removeAllFavoriteMovie();
                   }),
                   child: Container(

@@ -112,55 +112,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
             floating: false,
             pinned: true,
             expandedHeight: 480,
-            flexibleSpace: Stack(
-              children: [
-                FlexibleSpaceBar(
-                  background: Image.network(
-                    'https://image.tmdb.org/t/p/w220_and_h330_face$posterPath',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                /*
-                Positioned(
-                  right: 20,
-                  top: 45,
-                  child: Consumer<Favorites>(
-                    builder: (context, icon, child) {
-                      isFavorite = icon.favoriteMovies.contains(movie);
-                      return (isFavorite
-                          ? GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  isFavorite = false;
-                                  icon.removeFavoriteMovie(movie);
-                                });
-                              },
-                              child: Icon(
-                                Icons.favorite,
-                                size: 60,
-                                color: Colors.red[600],
-                                semanticLabel: 'Added as favorite',
-                              ),
-                            )
-                          : GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  isFavorite = true;
-                                  icon.addFavoriteMovie(movie);
-                                });
-                              },
-                              child: const Icon(
-                                Icons.favorite_border,
-                                size: 60,
-                                color: Colors.white,
-                                semanticLabel: 'Add as favorite',
-                              ),
-                            ));
-                    },
-                  ),
-                )
-                */
-              ],
+            flexibleSpace: FlexibleSpaceBar(
+              background: Image.network(
+                'https://image.tmdb.org/t/p/w220_and_h330_face$posterPath',
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           SliverList(
@@ -257,18 +213,16 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           color: Theme.of(context).colorScheme.tertiary)),
                 ),
                 Container(
-                  padding: const EdgeInsets.only(
-                    left: 10,
-                    right: 10,
-                    bottom: 10,
-                  ),
-                  margin: const EdgeInsets.all(3),
-                  child: Expanded(
-                      child: Text(overview,
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: Theme.of(context).colorScheme.tertiary))),
-                ),
+                    padding: const EdgeInsets.only(
+                      left: 10,
+                      right: 10,
+                      bottom: 10,
+                    ),
+                    margin: const EdgeInsets.all(3),
+                    child: Text(overview,
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Theme.of(context).colorScheme.tertiary))),
               ],
             ),
           )
