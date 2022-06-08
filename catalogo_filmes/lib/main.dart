@@ -3,7 +3,6 @@ import 'package:catalogo_filmes/screens/catalog_screen.dart';
 import 'package:catalogo_filmes/screens/details_screen.dart';
 import 'package:catalogo_filmes/screens/favorites_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:catalogo_filmes/screens/start_screen.dart';
 import 'package:catalogo_filmes/utils/app_routes.dart';
 import 'package:provider/provider.dart';
 
