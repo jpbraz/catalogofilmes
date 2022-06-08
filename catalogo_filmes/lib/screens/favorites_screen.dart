@@ -2,7 +2,7 @@ import 'package:catalogo_filmes/components/drawer.dart';
 import 'package:catalogo_filmes/models/favorites.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../components/card_movie_item.dart';
+import '../components/card_movie_item_old.dart';
 
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({Key? key}) : super(key: key);

@@ -1,151 +1,79 @@
-import 'dart:convert';
-import 'package:catalogo_filmes/components/drawer.dart';
-import 'package:catalogo_filmes/models/movie.dart';
+import 'package:catalogo_filmes/components/movie_card.dart';
+import 'package:catalogo_filmes/providers/catalog_provider.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import '../components/card_movie_item.dart';
+import 'package:provider/provider.dart';
+
+import '../components/drawer.dart';
 
 class CatalogScreen extends StatefulWidget {
-  const CatalogScreen({Key? key}) : super(key: key);
-
   @override
-  State<CatalogScreen> createState() => _CatalogcreenState();
+  State<CatalogScreen> createState() => _CatalogScreenState();
 }
 
-class _CatalogcreenState extends State<CatalogScreen> {
-  List _movies = [];
-  List<Movie> moviesList = [];
-  List<Movie> itensFiltrados = [];
+class _CatalogScreenState extends State<CatalogScreen> {
+  bool _isLoading = false;
 
   @override
   void initState() {
-    super.initState();
-    readJson();
-  }
+    _isLoading = true;
 
-  Future<void> readJson() async {
-    final String response =
-        await rootBundle.loadString('assets/data/movies.json');
-    final data = await jsonDecode(response);
-    setState(() {
-      _movies = data["movies"] as List;
+    Provider.of<CatalogProvider>(context, listen: false)
+        .fetchMovies()
+        .then((_) {
+      setState(() {
+        _isLoading = false;
+      });
     });
-    // Criando Lista de objetos do tipo Movie;
-    for (var element in _movies) {
-      moviesList.add(Movie.fromJson(element));
-    }
-    itensFiltrados.addAll(moviesList);
-
-    itensFiltrados.sort((a, b) => a.title!.compareTo(b.title!));
-  }
-
-  // Controle do TextField;
-  final searchTextController = TextEditingController();
-  String searchText = "";
-  void filtrar(String searchText) {
-    itensFiltrados.clear();
-
-    itensFiltrados.addAll(moviesList.where((element) =>
-        element.title!.toLowerCase().contains(searchText.toLowerCase())));
-
-    itensFiltrados.sort((a, b) => a.title!.compareTo(b.title!));
-  }
-
-  @override
-  void dispose() {
-    //Dispose the controller when the screen is disposed
-    searchTextController.dispose();
-    super.dispose();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    var catalogInfo = context.watch<CatalogProvider>();
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.secondary,
         title: const Text('Movie Catalog'),
       ),
-      drawer: const MyMainDrawer(),
-      body: Container(
-        color: Theme.of(context).colorScheme.primary,
-        child: Column(
-          /// your parameters
-          children: <Widget>[
-            Row(children: <Widget>[
-              Flexible(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 10, right: 10, top: 10, bottom: 15),
-                  child: TextField(
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.tertiary),
-                    cursorColor: Theme.of(context).colorScheme.tertiary,
-                    controller: searchTextController,
-                    decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.only(
-                          left: 10, right: 10, bottom: 5, top: 1),
-                      hintText: 'Entre com o título para busca',
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white, width: 2.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white, width: 2.0),
-                      ),
-                    ),
-                    onEditingComplete: () {
-                      setState(() {
-                        searchText = searchTextController.text;
-                      });
-                      filtrar(searchText);
-                    },
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(
+                  color: Theme.of(context).colorScheme.secondary),
+            )
+          : Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text('Top 250 movies',
+                        style: Theme.of(context).textTheme.headline3),
                   ),
-                ),
-              ),
-              IconButton(
-                icon: const Icon(
-                  Icons.search,
-                ),
-                tooltip: 'Pesquisar Filme',
-                onPressed: () {
-                  setState(() {
-                    searchText = searchTextController.text;
-                    SystemChannels.textInput.invokeMethod('TextInput.hide');
-                    filtrar(searchText);
-                  });
-                },
-              ),
-            ]),
-            Container(
-                child: Expanded(
-              child: (itensFiltrados.isEmpty
-                  ? const Padding(
-                      padding: EdgeInsets.only(top: 60),
-                      child: Text(
-                        'Nenhum filme encontrado!',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                        ),
-                      ),
-                    )
-                  : GridView.builder(
-                      shrinkWrap: true,
-                      itemCount: itensFiltrados.length,
-                      itemBuilder: (BuildContext context, int index) =>
-                          CardMovieItem(itensFiltrados[index], true, true),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Expanded(
+                    child: GridView.builder(
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 2.0,
-                        crossAxisSpacing: 2.0,
-                        mainAxisExtent: 250,
-                      ),
-                    )),
-            ))
-          ],
-        ),
-      ),
+                              crossAxisSpacing: 1,
+                              mainAxisSpacing: 5,
+                              crossAxisCount: 2),
+                      itemCount: catalogInfo.movies.length,
+                      itemBuilder: (context, index) {
+                        return MovieCard(catalogInfo.movies[index]);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+      drawer: const MyMainDrawer(),
     );
   }
 }
