@@ -23,10 +23,36 @@ class CatalogProvider with ChangeNotifier {
         loadedMovies.add(Movie(
             id: movie['id'],
             title: movie['title'],
+            fullTitle: movie['fullTitle'],
+            crew: movie['crew'],
+            rate: movie['imDbRating'],
             year: movie['year'],
             imageUrl: movie['image']));
       }
       _movies = loadedMovies;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  Future<Movie> fetchMovieById(String id) async {
+    try {
+      final response = await http.get(Uri.parse(
+          'https://imdb-api.com/en/API/Title/${dotenv.get('API_KEY')}/$id'));
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+
+      return Movie(
+          id: data['id'],
+          title: data['title'],
+          fullTitle: data['fullTitle'],
+          crew: data['crew'],
+          rate: data['imDbRating'],
+          year: data['year'],
+          imageUrl: data['image'],
+          plot: data['plot'],
+          releaseDate: data['releaseDate'],
+          runTimeStr: data['runTimeStr'],
+          directors: data['directors']);
     } catch (error) {
       throw error;
     }

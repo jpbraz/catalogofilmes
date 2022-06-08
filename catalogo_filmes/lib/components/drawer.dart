@@ -58,8 +58,8 @@ class MyMainDrawer extends StatelessWidget {
                 ),
                 TextButton(
                     onPressed: () {
-                      Navigator.of(context)
-                          .pushReplacementNamed(AppRoutes.FAVORITES);
+                      // Navigator.of(context)
+                      //     .pushReplacementNamed(AppRoutes.FAVORITES);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
