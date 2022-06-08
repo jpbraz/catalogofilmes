@@ -1,4 +1,4 @@
-import 'package:catalogo_filmes/components/my_main_drawer.dart';
+import 'package:catalogo_filmes/components/drawer.dart';
 import 'package:catalogo_filmes/models/favorites.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

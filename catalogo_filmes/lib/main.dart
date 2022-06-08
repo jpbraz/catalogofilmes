@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute: '/catalog',
       theme: ThemeData().copyWith(
           colorScheme: ThemeData().colorScheme.copyWith(
                 primary: Colors.black,
@@ -43,7 +43,6 @@ class MyApp extends StatelessWidget {
             hintStyle: TextStyle(color: Colors.white),
           )),
       routes: {
-        AppRoutes.HOME: (context) => StartScreen(),
         AppRoutes.CATALOG: ((context) => CatalogScreen()),
         AppRoutes.DETAILS: ((context) => DetailsScreen()),
         AppRoutes.FAVORITES: ((context) => FavoritesScreen()),
