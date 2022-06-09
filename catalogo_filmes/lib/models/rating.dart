@@ -9,7 +9,7 @@ Filme
 
 class Rating {
   String id; // ID da avaliação
-  int movieId; // ID do movie selecionado
+  String movieId; // ID do movie selecionado
   double value; // Nota da Avaliação
   String? comments; // Comentários da avaliação
 
