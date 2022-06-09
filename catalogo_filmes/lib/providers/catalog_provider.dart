@@ -40,12 +40,11 @@ class CatalogProvider with ChangeNotifier {
       final response = await http.get(Uri.parse(
           'https://imdb-api.com/en/API/Title/${dotenv.get('API_KEY')}/$id'));
       final data = jsonDecode(response.body) as Map<String, dynamic>;
-
-      return Movie(
+      Movie movie = Movie(
           id: data['id'],
           title: data['title'],
           fullTitle: data['fullTitle'],
-          crew: data['crew'],
+          crew: data['stars'],
           rate: data['imDbRating'],
           year: data['year'],
           imageUrl: data['image'],
@@ -53,6 +52,7 @@ class CatalogProvider with ChangeNotifier {
           releaseDate: data['releaseDate'],
           runTimeStr: data['runTimeStr'],
           directors: data['directors']);
+      return movie;
     } catch (error) {
       throw error;
     }
