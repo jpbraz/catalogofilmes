@@ -15,18 +15,22 @@ class CatalogScreen extends StatefulWidget {
 
 class _CatalogScreenState extends State<CatalogScreen> {
   bool _isLoading = false;
+  bool _isInfoLoaded = false;
 
   @override
   void initState() {
     _isLoading = true;
 
-    Provider.of<CatalogProvider>(context, listen: false)
-        .fetchMovies()
-        .then((_) {
-      setState(() {
-        _isLoading = false;
+    if (!_isInfoLoaded) {
+      Provider.of<CatalogProvider>(context, listen: false)
+          .fetchMovies()
+          .then((_) {
+        setState(() {
+          _isLoading = false;
+          _isInfoLoaded = true;
+        });
       });
-    });
+    }
     super.initState();
   }
 

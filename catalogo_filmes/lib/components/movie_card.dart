@@ -10,26 +10,34 @@ import '../models/movie.dart';
 
 class MovieCard extends StatefulWidget {
   final Movie movie;
-  late final selectedMovie;
 
-  MovieCard(this.movie);
+  const MovieCard(this.movie);
 
   @override
   State<MovieCard> createState() => _MovieCardState();
 }
 
 class _MovieCardState extends State<MovieCard> {
+  bool isDetailsOfMovieLoaded = false;
+  late Movie selectedMovie;
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Provider.of<CatalogProvider>(context, listen: false)
-            .fetchMovieById(widget.movie.id)
-            .then((movie) {
-          widget.selectedMovie = movie;
+        if (!isDetailsOfMovieLoaded) {
+          Provider.of<CatalogProvider>(context, listen: false)
+              .fetchMovieById(widget.movie.id)
+              .then((movie) {
+            selectedMovie = movie;
+            isDetailsOfMovieLoaded = true;
+            Navigator.of(context)
+                .pushNamed(AppRoutes.DETAILS, arguments: selectedMovie);
+          });
+        } else {
           Navigator.of(context)
-              .pushNamed(AppRoutes.DETAILS, arguments: widget.selectedMovie);
-        });
+              .pushNamed(AppRoutes.DETAILS, arguments: selectedMovie);
+        }
       },
       child: Card(
         child: Stack(children: [
@@ -45,7 +53,7 @@ class _MovieCardState extends State<MovieCard> {
           ),
           Positioned(
             child: Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 color: Colors.black87,
                 child: Text(
                   widget.movie.title,
