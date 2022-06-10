@@ -1,7 +1,6 @@
-import 'package:catalogo_filmes/models/favorites.dart';
+import 'package:catalogo_filmes/providers/favorites_provider.dart';
 import 'package:catalogo_filmes/providers/catalog_provider.dart';
 import 'package:catalogo_filmes/screens/catalog_screen.dart';
-import 'package:catalogo_filmes/screens/favorites_screen_old.dart';
 import 'package:flutter/material.dart';
 import 'package:catalogo_filmes/utils/app_routes.dart';
 import 'package:provider/provider.dart';
