@@ -17,6 +17,7 @@ class CatalogProvider with ChangeNotifier {
       final response = await http.get(Uri.parse(
           'https://imdb-api.com/en/API/Top250Movies/${dotenv.get('API_KEY')}'));
       final data = jsonDecode(response.body) as Map<String, dynamic>;
+      final _baseURL = dotenv.get('FIREBASE_URL');
 
       List<Movie> loadedMovies = [];
       for (var movie in data['items']) {

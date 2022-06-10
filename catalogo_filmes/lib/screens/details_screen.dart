@@ -1,5 +1,5 @@
 import 'package:catalogo_filmes/providers/favorites_provider.dart';
-import 'package:catalogo_filmes/providers/playLists_provider.dart';
+import 'package:catalogo_filmes/providers/playlists_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
