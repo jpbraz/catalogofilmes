@@ -7,26 +7,18 @@ Nota
 Filme
 */
 
+import 'movie.dart';
+
 class Rating {
   String id; // ID da avaliação
-  String movieId; // ID do movie selecionado
+  Movie movie; // Movie selecionado
   double value; // Nota da Avaliação
-  String? comments; // Comentários da avaliação
+  String? comment; // Comentários da avaliação
 
   Rating({
     required this.id,
-    required this.movieId,
+    required this.movie,
     required this.value,
-    this.comments,
+    this.comment,
   });
-
-/*
-  void update(Rating rating) {
-    if (this == rating) {
-      movieId = rating.movieId;
-      value = rating.value;
-      comments = rating.comments;
-    }
-  }
-*/
 }
