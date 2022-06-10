@@ -1,4 +1,5 @@
 import 'package:catalogo_filmes/providers/favorites_provider.dart';
+import 'package:catalogo_filmes/providers/playLists_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +16,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var playlists = context.watch<PlayLists>();
     if (!_isMovieInitialized) {
       setState(() {
         _movie = ModalRoute.of(context)!.settings.arguments as Movie;
@@ -94,7 +96,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             icon: const Icon(
                               Icons.playlist_add,
                               size: 40,
-                            ))
+                            )),
                       ],
                     ),
                   ),
