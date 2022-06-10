@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../models/playlist.dart';
 
 class PlayLists with ChangeNotifier {
   final Map<String, Playlist> _listOfPlayLists = {};
+  final _baseURL = dotenv.get('FIREBASE_URL');
 
   Map<String, Playlist> get listOfPlayLists => _listOfPlayLists;
 
