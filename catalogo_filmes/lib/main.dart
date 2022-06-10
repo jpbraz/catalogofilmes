@@ -1,12 +1,13 @@
 import 'package:catalogo_filmes/models/favorites.dart';
 import 'package:catalogo_filmes/providers/catalog_provider.dart';
 import 'package:catalogo_filmes/screens/catalog_screen.dart';
-import 'package:catalogo_filmes/screens/details_screen.dart';
-import 'package:catalogo_filmes/screens/favorites_screen.dart';
+import 'package:catalogo_filmes/screens/favorites_screen_old.dart';
 import 'package:flutter/material.dart';
 import 'package:catalogo_filmes/utils/app_routes.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import 'screens/details_screen.dart';
 
 Future<void> main() async {
   await dotenv.load();
@@ -54,7 +55,7 @@ class MyApp extends StatelessWidget {
         routes: {
           AppRoutes.CATALOG: ((context) => CatalogScreen()),
           AppRoutes.DETAILS: ((context) => DetailsScreen()),
-          AppRoutes.FAVORITES: ((context) => FavoritesScreen()),
+          //AppRoutes.FAVORITES: ((context) => FavoritesScreen()),
         },
       ),
     );
