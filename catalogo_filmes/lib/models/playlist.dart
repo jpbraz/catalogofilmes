@@ -9,13 +9,15 @@ Descrição
 
 import 'movie.dart';
 
-class Lista {
+class Playlist {
+  String id;
   String name;
   String creationDate;
   String? description;
   List<Movie>? movieList;
 
-  Lista({
+  Playlist({
+    required this.id,
     required this.name,
     required this.creationDate,
     this.description,
