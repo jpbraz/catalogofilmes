@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 
 import '../models/movie.dart';
 
+enum Options { create, addTo }
+
 class DetailsScreen extends StatefulWidget {
   @override
   State<DetailsScreen> createState() => _DetailsScreenState();
@@ -91,16 +93,27 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             });
                           },
                         ),
-                        IconButton(
-                            onPressed: () {
+                        PopupMenuButton(
+                          itemBuilder: (context) => [
+                            PopupMenuItem(
+                              child: Text('Create Playlist'),
+                              value: Options.create,
+                            ),
+                            PopupMenuItem(
+                              child: Text('Add to playlist'),
+                              value: Options.addTo,
+                            ),
+                          ],
+                          onSelected: (option) {
+                            if (option == Options.create) {
                               showModalBottomSheet(
                                   context: context,
                                   builder: (context) => NewPlaylist());
-                            },
-                            icon: const Icon(
-                              Icons.playlist_add,
-                              size: 40,
-                            )),
+                            } else if (option == Options.addTo) {
+                              print('add to playlist');
+                            }
+                          },
+                        ),
                       ],
                     ),
                   ),
