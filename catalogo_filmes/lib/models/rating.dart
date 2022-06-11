@@ -7,6 +7,8 @@ Nota
 Filme
 */
 
+import 'dart:convert';
+
 import 'movie.dart';
 
 class Rating {
@@ -21,4 +23,20 @@ class Rating {
     required this.value,
     this.comment,
   });
+
+  factory Rating.fromJson(String id, Map<String, dynamic> json) {
+    Map<String, dynamic> mapMovie = jsonDecode(json['movie']);
+    late Movie localMovie;
+
+    mapMovie.forEach((key, value) {
+      localMovie = Movie.fromJson(key, value);
+    });
+
+    return Rating(
+      id: id,
+      movie: localMovie,
+      value: json['value'],
+      comment: json['comment'],
+    );
+  }
 }
