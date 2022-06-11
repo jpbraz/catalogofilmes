@@ -1,9 +1,8 @@
-import 'dart:math';
-
 import 'package:catalogo_filmes/components/movie_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../controller/firebaseController.dart';
 import '../models/movie.dart';
 import '../models/rating.dart';
 
@@ -43,7 +42,6 @@ class _RatingFormState extends State<RatingForm> {
       _formData['value'] = rating.value;
       _formData['comment'] = rating.comment!;
     } else {
-      _formData['id'] = Random().nextDouble().toString();
       _formData['movie'] = movie;
     }
   }
@@ -82,16 +80,9 @@ class _RatingFormState extends State<RatingForm> {
 
     _formKey.currentState?.save();
 
-    print("Concluir implementação na linha 88. Após ISSUE #15 ");
-
-    /*
-    var provider = Provider.of<RatingProvider>(context, listen: false);
-    if (editMode) {
-      provider.updateRating(_formData).then((_) => Navigator.of(context).pop());
-    } else {
-      provider.saveRating(_formData).then((_) => Navigator.of(context).pop());
-    }
-    */
+    Provider.of<FirebaseController>(context, listen: false)
+        .saveRatingForm(_formData)
+        .then((_) => Navigator.of(context).pop());
   }
 
   @override
@@ -140,11 +131,6 @@ class _RatingFormState extends State<RatingForm> {
                   onSaved: (comment) => _formData['comment'] = comment ?? '',
                   validator: (_comment) {
                     final comment = _comment ?? '';
-                    /*
-                    if (comment.trim().isEmpty) {
-                      return 'Comentário é obrigatório.';
-                    }
-                    */
                     if (comment.trim().length < 5) {
                       return 'Comentário precisa no mínimo de 5 letras.';
                     }
@@ -158,7 +144,7 @@ class _RatingFormState extends State<RatingForm> {
           Center(
             child: ElevatedButton(
               onPressed: _submitForm,
-              child: const Text('Salvar'),
+              child: editMode ? const Text('Atualizar') : const Text('Salvar'),
             ),
           ),
         ],
