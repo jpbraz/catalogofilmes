@@ -143,20 +143,48 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                                   }),
                                               actions: [
                                                 ElevatedButton(
-                                                    onPressed: () {
+                                                    onPressed: () async {
+                                                      try {
+                                                        setState(() {
+                                                          playlists
+                                                              .listOfPlayLists
+                                                              .entries
+                                                              .firstWhere(
+                                                                  (playlist) =>
+                                                                      playlist
+                                                                          .value
+                                                                          .id ==
+                                                                      dropDownValue)
+                                                              .value
+                                                              .addMovieToList(
+                                                                  _movie);
+                                                        });
+
+                                                        await playlists
+                                                            .saveToPlaylist(
+                                                                _movie);
+                                                      } catch (error) {
+                                                        await showDialog<Null>(
+                                                            context: context,
+                                                            builder:
+                                                                (ctx) =>
+                                                                    AlertDialog(
+                                                                      title: Text(
+                                                                          'Ocorreu um erro!'),
+                                                                      content: Text(
+                                                                          'Algo deu errado.'),
+                                                                      actions: [
+                                                                        ElevatedButton(
+                                                                            onPressed: () =>
+                                                                                Navigator.of(context).pop(),
+                                                                            child: Text('Fechar'))
+                                                                      ],
+                                                                    ));
+                                                      } finally {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      }
                                                       //TODO: adicionar ao banco
-                                                      playlists.listOfPlayLists
-                                                          .entries
-                                                          .firstWhere(
-                                                              (playlist) =>
-                                                                  playlist.value
-                                                                      .id ==
-                                                                  dropDownValue)
-                                                          .value
-                                                          .addMovieToList(
-                                                              _movie);
-                                                      Navigator.of(context)
-                                                          .pop();
                                                     },
                                                     child:
                                                         const Text('Confirmar'))

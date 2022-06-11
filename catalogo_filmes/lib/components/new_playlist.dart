@@ -37,12 +37,12 @@ class _NewPlaylistState extends State<NewPlaylist> {
       await showDialog<Null>(
           context: context,
           builder: (ctx) => AlertDialog(
-                title: Text('Ocorreu um erro!'),
-                content: Text('Algo deu errado.'),
+                title: const Text('Ocorreu um erro!'),
+                content: const Text('Algo deu errado.'),
                 actions: [
                   ElevatedButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: Text('Fechar'))
+                      child: const Text('Fechar'))
                 ],
               ));
     } finally {

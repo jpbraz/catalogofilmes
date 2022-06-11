@@ -31,4 +31,16 @@ class Playlist {
   removeMovieFromList(Movie movie) {
     movieList?.remove(movie);
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': this.id,
+      'title': this.name,
+      'creation-date': this.creationDate,
+      'description': this.description,
+      'movies': movieList != null
+          ? movieList!.map((movie) => movie.toJson()).toList()
+          : ''
+    };
+  }
 }

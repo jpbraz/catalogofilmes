@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import '../models/movie.dart';
 import '../models/playlist.dart';
 import 'package:http/http.dart' as http;
 
@@ -35,5 +36,20 @@ class PlayLists with ChangeNotifier {
     _listOfPlayLists
         .removeWhere((playlistKey, _) => playlistKey == playlist.id);
     notifyListeners();
+  }
+
+  Future<void> saveToPlaylist(Movie movie) async {
+    try {
+      final selectedPlaylist = listOfPlayLists.values
+          .firstWhere((playlist) => playlist.movieList!.contains(movie));
+
+      // final targetUrl =
+      //     Uri.https(_baseURL, '/products/${selectedPlaylist.id}.json');
+      // await http.patch(targetUrl,
+      //     body: jsonEncode({selectedPlaylist.id: selectedPlaylist.toJson()}));
+      // notifyListeners();
+    } catch (error) {
+      throw error;
+    }
   }
 }

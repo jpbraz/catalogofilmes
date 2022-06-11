@@ -24,4 +24,8 @@ class Movie {
     this.releaseDate,
     this.directors,
   });
+
+  Map<String, dynamic> toJson() {
+    return {'id': this.id, 'title': this.title};
+  }
 }
