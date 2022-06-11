@@ -144,11 +144,22 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                               actions: [
                                                 ElevatedButton(
                                                     onPressed: () {
-                                                      //TODO Adicionar a playlist
+                                                      //TODO: adicionar ao banco
+                                                      playlists.listOfPlayLists
+                                                          .entries
+                                                          .firstWhere(
+                                                              (playlist) =>
+                                                                  playlist.value
+                                                                      .id ==
+                                                                  dropDownValue)
+                                                          .value
+                                                          .addMovieToList(
+                                                              _movie);
                                                       Navigator.of(context)
                                                           .pop();
                                                     },
-                                                    child: Text('Confirmar'))
+                                                    child:
+                                                        const Text('Confirmar'))
                                               ],
                                             ))));
                               }
