@@ -77,22 +77,7 @@ class FirebaseController {
 
     if (response.statusCode == 200) {
       Map<String, dynamic> json = jsonDecode(response.body);
-
-      Map<String, dynamic> jsonMovie = jsonDecode(json['movie']);
-      //Movie movie = Movie.fromJson(jsonMovie);
-      //TODO com as linhas comentadas após implementação do .fromJson nas classes.
-      //Eliminar linha abaixo. Apenas para teste.
-      Movie movie = CatalogProvider().fetchMovieById('tt0068646') as Movie;
-
-      String _id = id;
-      Movie _movie = movie;
-      double _value = json['value'] as double;
-      String _comment = (json['comment'] != null) ? json['comment'] : null;
-
-      return Rating(id: _id, movie: _movie, value: _value, comment: _comment);
-
-      // return Rating.fromJson(json);
-
+      return Rating.fromJson(id, json);
     } else {
       throw Exception('Failed to load rating');
     }
