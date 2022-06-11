@@ -1,4 +1,5 @@
 import 'package:catalogo_filmes/components/new_playlist.dart';
+import 'package:catalogo_filmes/models/playlist.dart';
 import 'package:catalogo_filmes/providers/favorites_provider.dart';
 import 'package:catalogo_filmes/providers/playlists_provider.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class DetailsScreen extends StatefulWidget {
 class _DetailsScreenState extends State<DetailsScreen> {
   late final Movie _movie;
   bool _isMovieInitialized = false;
-
+  String dropDownValue = 'playlists';
   @override
   Widget build(BuildContext context) {
     if (!_isMovieInitialized) {
@@ -26,6 +27,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
       });
     }
     var favorites = context.watch<Favorites>();
+    var playlists = context.watch<PlayLists>();
+    if (playlists.listOfPlayLists.isNotEmpty) {
+      dropDownValue = playlists.listOfPlayLists.values.first.id;
+    }
     return Scaffold(
       body: Column(
         children: [
@@ -110,7 +115,43 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   context: context,
                                   builder: (context) => NewPlaylist());
                             } else if (option == Options.addTo) {
-                              print('add to playlist');
+                              if (playlists.listOfPlayLists.isNotEmpty) {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => StatefulBuilder(
+                                        builder: ((context, setState) =>
+                                            AlertDialog(
+                                              title:
+                                                  Text('Choose the playlist'),
+                                              content: DropdownButton(
+                                                  value: dropDownValue,
+                                                  items: playlists
+                                                      .listOfPlayLists.values
+                                                      .map((playlist) =>
+                                                          DropdownMenuItem(
+                                                            child: Text(playlist
+                                                                .name
+                                                                .toUpperCase()),
+                                                            value: playlist.id,
+                                                          ))
+                                                      .toList(),
+                                                  onChanged:
+                                                      (String? newValue) {
+                                                    setState(() {
+                                                      dropDownValue = newValue!;
+                                                    });
+                                                  }),
+                                              actions: [
+                                                ElevatedButton(
+                                                    onPressed: () {
+                                                      //TODO Adicionar a playlist
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                    child: Text('Confirmar'))
+                                              ],
+                                            ))));
+                              }
                             }
                           },
                         ),
