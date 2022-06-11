@@ -1,5 +1,6 @@
 import 'package:catalogo_filmes/components/movie_card.dart';
 import 'package:catalogo_filmes/providers/catalog_provider.dart';
+import 'package:catalogo_filmes/providers/playlists_provider.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
