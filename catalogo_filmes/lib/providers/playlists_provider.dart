@@ -38,16 +38,20 @@ class PlayLists with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> saveToPlaylist(Movie movie) async {
+  Future<void> saveToPlaylist(String id, Movie movie) async {
     try {
-      final selectedPlaylist = listOfPlayLists.values
-          .firstWhere((playlist) => playlist.movieList!.contains(movie));
+      final selectedPlaylist = listOfPlayLists[id];
 
-      // final targetUrl =
-      //     Uri.https(_baseURL, '/products/${selectedPlaylist.id}.json');
-      // await http.patch(targetUrl,
-      //     body: jsonEncode({selectedPlaylist.id: selectedPlaylist.toJson()}));
-      // notifyListeners();
+      selectedPlaylist!.addMovieToList(movie);
+      final targetUrl = Uri.https(_baseURL, '/playlists/$id.json');
+      await http.put(targetUrl,
+          body: jsonEncode({
+            'title': selectedPlaylist.name,
+            'description': selectedPlaylist.description,
+            'creation-date': selectedPlaylist.creationDate,
+            'movies': selectedPlaylist.toJson()
+          }));
+      notifyListeners();
     } catch (error) {
       throw error;
     }

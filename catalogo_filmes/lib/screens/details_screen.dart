@@ -145,23 +145,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                                 ElevatedButton(
                                                     onPressed: () async {
                                                       try {
-                                                        setState(() {
-                                                          playlists
-                                                              .listOfPlayLists
-                                                              .entries
-                                                              .firstWhere(
-                                                                  (playlist) =>
-                                                                      playlist
-                                                                          .value
-                                                                          .id ==
-                                                                      dropDownValue)
-                                                              .value
-                                                              .addMovieToList(
-                                                                  _movie);
-                                                        });
-
                                                         await playlists
                                                             .saveToPlaylist(
+                                                                dropDownValue,
                                                                 _movie);
                                                       } catch (error) {
                                                         await showDialog<Null>(
