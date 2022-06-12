@@ -80,7 +80,7 @@ class _RatingFormState extends State<RatingForm> {
 
     _formKey.currentState?.save();
 
-    Provider.of<FirebaseController>(context, listen: false)
+    FirebaseController()
         .saveRatingForm(_formData)
         .then((_) => Navigator.of(context).pop());
   }
@@ -89,65 +89,69 @@ class _RatingFormState extends State<RatingForm> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(15),
-      child: Column(
-        children: [
-          Center(
-            child: MovieCard(movie),
-          ),
-          Form(
-            key: _formKey,
-            child: ListView(
-              children: [
-                TextFormField(
-                  initialValue: _formData['value']?.toString(),
-                  decoration: const InputDecoration(labelText: 'Nota'),
-                  textInputAction: TextInputAction.next,
-                  focusNode: _ratingValueFocus,
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
-                  ),
-                  onFieldSubmitted: (_) {
-                    FocusScope.of(context).requestFocus(_ratingValueFocus);
-                  },
-                  onSaved: (value) =>
-                      _formData['value'] = double.parse(value ?? '0'),
-                  validator: (_value) {
-                    final valueString = _value ?? '';
-                    final value = double.tryParse(valueString) ?? -1;
+      child: Expanded(
+        child: Column(
+          children: [
+            Form(
+              key: _formKey,
+              child: Expanded(
+                child: Column(
+                  children: [
+                    TextFormField(
+                      initialValue: _formData['value']?.toString(),
+                      decoration: const InputDecoration(labelText: 'Nota'),
+                      textInputAction: TextInputAction.next,
+                      focusNode: _ratingValueFocus,
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      onFieldSubmitted: (_) {
+                        FocusScope.of(context).requestFocus(_ratingValueFocus);
+                      },
+                      onSaved: (value) =>
+                          _formData['value'] = double.parse(value ?? '0'),
+                      validator: (_value) {
+                        final valueString = _value ?? '';
+                        final value = double.tryParse(valueString) ?? -1;
 
-                    if (value < 0 || value > 10) {
-                      return 'Informe uma nota entre 0 e 10.';
-                    }
+                        if (value < 0 || value > 10) {
+                          return 'Informe uma nota entre 0 e 10.';
+                        }
 
-                    return null;
-                  },
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      initialValue: _formData['comment']?.toString(),
+                      decoration:
+                          const InputDecoration(labelText: 'Comentário'),
+                      focusNode: _ratingCommentFocus,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: 3,
+                      onSaved: (comment) =>
+                          _formData['comment'] = comment ?? '',
+                      validator: (_comment) {
+                        final comment = _comment ?? '';
+                        if (comment.trim().length < 5) {
+                          return 'Comentário precisa no mínimo de 5 letras.';
+                        }
+
+                        return null;
+                      },
+                    ),
+                  ],
                 ),
-                TextFormField(
-                  initialValue: _formData['comment']?.toString(),
-                  decoration: const InputDecoration(labelText: 'Comentário'),
-                  focusNode: _ratingCommentFocus,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: 3,
-                  onSaved: (comment) => _formData['comment'] = comment ?? '',
-                  validator: (_comment) {
-                    final comment = _comment ?? '';
-                    if (comment.trim().length < 5) {
-                      return 'Comentário precisa no mínimo de 5 letras.';
-                    }
-
-                    return null;
-                  },
-                ),
-              ],
+              ),
             ),
-          ),
-          Center(
-            child: ElevatedButton(
-              onPressed: _submitForm,
-              child: editMode ? const Text('Atualizar') : const Text('Salvar'),
+            Center(
+              child: ElevatedButton(
+                onPressed: _submitForm,
+                child:
+                    editMode ? const Text('Atualizar') : const Text('Salvar'),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
