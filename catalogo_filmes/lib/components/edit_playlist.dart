@@ -9,12 +9,16 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class NewPlaylist extends StatefulWidget {
+class EditPlaylist extends StatefulWidget {
+  Playlist playlist;
+
+  EditPlaylist(this.playlist);
+
   @override
-  State<NewPlaylist> createState() => _NewPlaylistState();
+  State<EditPlaylist> createState() => _EditPlaylistState();
 }
 
-class _NewPlaylistState extends State<NewPlaylist> {
+class _EditPlaylistState extends State<EditPlaylist> {
   final _formData = <String, dynamic>{};
   final _formKey = GlobalKey<FormState>();
 
@@ -25,31 +29,45 @@ class _NewPlaylistState extends State<NewPlaylist> {
     }
 
     _formKey.currentState?.save();
-    try {
-      var newPlaylist = Playlist(
-        id: Random().nextInt(2000).toString(),
-        name: _formData['name'],
-        description: _formData['description'],
-        creationDate: DateFormat('dd-MM-yyyy').format(DateTime.now()),
-        movieList: [],
-      );
-      await Provider.of<PlayLists>(context, listen: false)
-          .addPlayList(newPlaylist);
-    } catch (error) {
-      await showDialog<Null>(
-          context: context,
-          builder: (ctx) => AlertDialog(
-                title: const Text('Ocorreu um erro!'),
-                content: const Text('Algo deu errado.'),
-                actions: [
-                  ElevatedButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: const Text('Fechar'))
-                ],
-              ));
-    } finally {
-      Navigator.of(context).pop();
-    }
+
+    setState(() {
+      widget.playlist.name = _formData['name'];
+      widget.playlist.description = _formData['description'];
+    });
+
+    Navigator.of(context).pop();
+    // try {
+    //   var newPlaylist = Playlist(
+    //     id: Random().nextInt(2000).toString(),
+    //     name: _formData['name'],
+    //     description: _formData['description'],
+    //     creationDate: DateFormat('dd-MM-yyyy').format(DateTime.now()),
+    //     movieList: [],
+    //   );
+    //   await Provider.of<PlayLists>(context, listen: false)
+    //       .addPlayList(newPlaylist);
+    // } catch (error) {
+    //   await showDialog<Null>(
+    //       context: context,
+    //       builder: (ctx) => AlertDialog(
+    //             title: const Text('Ocorreu um erro!'),
+    //             content: const Text('Algo deu errado.'),
+    //             actions: [
+    //               ElevatedButton(
+    //                   onPressed: () => Navigator.of(context).pop(),
+    //                   child: const Text('Fechar'))
+    //             ],
+    //           ));
+    // } finally {
+    //   Navigator.of(context).pop();
+    // }
+  }
+
+  @override
+  void initState() {
+    _formData['name'] = widget.playlist.name;
+    _formData['description'] = widget.playlist.description;
+    super.initState();
   }
 
   @override
@@ -63,7 +81,7 @@ class _NewPlaylistState extends State<NewPlaylist> {
               child: Column(
                 children: [
                   TextFormField(
-                    initialValue: _formData['name']?.toString(),
+                    initialValue: _formData['name'],
                     decoration:
                         const InputDecoration(labelText: 'Nome da playlist'),
                     onSaved: (name) => _formData['name'] = name ?? '',
@@ -82,6 +100,7 @@ class _NewPlaylistState extends State<NewPlaylist> {
                     },
                   ),
                   TextFormField(
+                    initialValue: _formData['description'],
                     maxLines: null,
                     decoration: const InputDecoration(
                       labelText: 'Descrição',
@@ -93,7 +112,7 @@ class _NewPlaylistState extends State<NewPlaylist> {
                     height: 10,
                   ),
                   ElevatedButton(
-                      onPressed: _submitForm, child: const Text('Confirmar'))
+                      onPressed: _submitForm, child: const Text('Atualizar'))
                 ],
               ))),
     );

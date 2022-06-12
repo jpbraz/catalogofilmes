@@ -2,6 +2,7 @@ import 'package:catalogo_filmes/providers/favorites_provider.dart';
 import 'package:catalogo_filmes/providers/catalog_provider.dart';
 import 'package:catalogo_filmes/providers/playlists_provider.dart';
 import 'package:catalogo_filmes/screens/catalog_screen.dart';
+import 'package:catalogo_filmes/screens/movie_details_screen.dart';
 import 'package:catalogo_filmes/screens/playlist_details_screen.dart';
 import 'package:catalogo_filmes/screens/playlists_screen.dart';
 import 'package:flutter/material.dart';
@@ -59,6 +60,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.DETAILS: ((context) => DetailsScreen()),
         AppRoutes.PLAYLISTS: ((context) => PlaylistsScreen()),
         AppRoutes.PLAYLIST_DETAILS: ((context) => PlaylistDetailsScreen()),
+        AppRoutes.MOVIE_DETAILS: ((context) => MovieDetailScreen())
         //AppRoutes.FAVORITES: ((context) => FavoritesScreen()),
       },
     );

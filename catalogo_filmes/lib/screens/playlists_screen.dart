@@ -6,6 +6,8 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
+import '../components/edit_playlist.dart';
+
 class PlaylistsScreen extends StatefulWidget {
   const PlaylistsScreen({Key? key}) : super(key: key);
 
@@ -71,7 +73,15 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
                           Row(
                             children: [
                               IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    showModalBottomSheet(
+                                        context: context,
+                                        builder: (context) {
+                                          return EditPlaylist(playlists
+                                              .listOfPlayLists.values
+                                              .elementAt(index));
+                                        }).then((_) => setState((() {})));
+                                  },
                                   icon: const Icon(Icons.edit)),
                               IconButton(
                                   onPressed: () {
