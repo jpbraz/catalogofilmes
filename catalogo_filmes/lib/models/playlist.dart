@@ -7,6 +7,8 @@ Data de criação
 Descrição
 */
 
+import 'dart:convert';
+
 import 'movie.dart';
 
 class Playlist {
