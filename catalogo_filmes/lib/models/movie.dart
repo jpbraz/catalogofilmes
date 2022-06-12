@@ -25,19 +25,19 @@ class Movie {
     this.directors,
   });
 
-  factory Movie.fromJson(String id, Map<String, dynamic> json) {
-    return Movie(
-      id: id,
-      title: json['title'],
-      fullTitle: json['fullTitle'],
-      crew: json['crew'],
-      rate: json['rate'],
-      year: json['year'],
-      imageUrl: json['imageUrl'],
-      releaseDate: json['releaseDate'],
-      runTimeStr: json['runTimeStr'],
-      plot: json['plot'],
-      directors: json['directors'],
-    );
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'fullTitle': fullTitle,
+      'crew': crew,
+      'rate': rate,
+      'year': year,
+      'imageUrl': imageUrl,
+      'plot': plot,
+      'releaseDate': releaseDate,
+      'runTimeStr': runTimeStr,
+      'directors': directors,
+    };
   }
 }

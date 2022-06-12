@@ -38,6 +38,7 @@ dependencies:
   percent_indicator: ^4.0.1 # Widget CircularPercentIndicator
   flutter_dotenv: ^5.0.2
   http: ^0.13.4
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
