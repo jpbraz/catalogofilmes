@@ -5,9 +5,10 @@ import 'package:catalogo_filmes/providers/playlists_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../components/rating_form.dart';
 import '../models/movie.dart';
 
-enum Options { create, addTo }
+enum Options { create, addTo, rating }
 
 class DetailsScreen extends StatefulWidget {
   @override
@@ -117,13 +118,17 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         ),
                         PopupMenuButton(
                           itemBuilder: (context) => [
-                            PopupMenuItem(
+                            const PopupMenuItem(
                               child: Text('Create Playlist'),
                               value: Options.create,
                             ),
-                            PopupMenuItem(
+                            const PopupMenuItem(
                               child: Text('Add to playlist'),
                               value: Options.addTo,
+                            ),
+                            const PopupMenuItem(
+                              child: Text('Rating'),
+                              value: Options.rating,
                             ),
                           ],
                           onSelected: (option) {
@@ -131,6 +136,12 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               showModalBottomSheet(
                                   context: context,
                                   builder: (context) => NewPlaylist());
+                            } else if (option == Options.rating) {
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) => RatingForm(
+                                        movie: _movie,
+                                      ));
                             } else if (option == Options.addTo) {
                               if (playlists.listOfPlayLists.isNotEmpty) {
                                 showDialog(

@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:catalogo_filmes/models/rating.dart';
-import 'package:catalogo_filmes/providers/catalog_provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
@@ -10,7 +9,8 @@ import '../models/movie.dart';
 
 class FirebaseController {
   FirebaseController();
-  final _baseUrl = dotenv.get('BASE_URL'); // Colocar valor da variável no .env
+  final _baseUrl =
+      dotenv.get('FIREBASE_URL'); // Colocar valor da variável no .env
 
   Future<void> saveRatingForm(Map<String, Object> data) {
     bool hasId = data['id'] != null;
@@ -39,7 +39,7 @@ class FirebaseController {
         }));
     return future.then((response) {
       final id = jsonDecode(response.body)['name'];
-      print(id);
+      print("Avaliaçao gravadas com sucesso. ID retornado: $id");
     });
   }
 
