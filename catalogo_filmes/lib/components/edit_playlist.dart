@@ -30,37 +30,30 @@ class _EditPlaylistState extends State<EditPlaylist> {
 
     _formKey.currentState?.save();
 
-    setState(() {
-      widget.playlist.name = _formData['name'];
-      widget.playlist.description = _formData['description'];
-    });
-
-    Navigator.of(context).pop();
-    // try {
-    //   var newPlaylist = Playlist(
-    //     id: Random().nextInt(2000).toString(),
-    //     name: _formData['name'],
-    //     description: _formData['description'],
-    //     creationDate: DateFormat('dd-MM-yyyy').format(DateTime.now()),
-    //     movieList: [],
-    //   );
-    //   await Provider.of<PlayLists>(context, listen: false)
-    //       .addPlayList(newPlaylist);
-    // } catch (error) {
-    //   await showDialog<Null>(
-    //       context: context,
-    //       builder: (ctx) => AlertDialog(
-    //             title: const Text('Ocorreu um erro!'),
-    //             content: const Text('Algo deu errado.'),
-    //             actions: [
-    //               ElevatedButton(
-    //                   onPressed: () => Navigator.of(context).pop(),
-    //                   child: const Text('Fechar'))
-    //             ],
-    //           ));
-    // } finally {
-    //   Navigator.of(context).pop();
-    // }
+    try {
+      await Provider.of<PlayLists>(context, listen: false)
+          .updatePlaylist(widget.playlist.id)
+          .then((_) {
+        setState(() {
+          widget.playlist.name = _formData['name'];
+          widget.playlist.description = _formData['description'];
+        });
+      });
+    } catch (error) {
+      await showDialog<Null>(
+          context: context,
+          builder: (ctx) => AlertDialog(
+                title: const Text('Ocorreu um erro!'),
+                content: const Text('Algo deu errado.'),
+                actions: [
+                  ElevatedButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Text('Fechar'))
+                ],
+              ));
+    } finally {
+      Navigator.of(context).pop();
+    }
   }
 
   @override
