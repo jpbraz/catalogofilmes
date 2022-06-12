@@ -31,6 +31,9 @@ class _CatalogScreenState extends State<CatalogScreen> {
           _isInfoLoaded = true;
         });
       });
+      Provider.of<PlayLists>(context, listen: false)
+          .fetchPlaylists()
+          .then((_) {});
     }
     super.initState();
   }

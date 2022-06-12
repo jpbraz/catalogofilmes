@@ -32,7 +32,7 @@ class _EditPlaylistState extends State<EditPlaylist> {
 
     try {
       await Provider.of<PlayLists>(context, listen: false)
-          .updatePlaylist(widget.playlist.id)
+          .updatePlaylist(widget.playlist)
           .then((_) {
         setState(() {
           widget.playlist.name = _formData['name'];
