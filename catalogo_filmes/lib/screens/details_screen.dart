@@ -117,11 +117,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         ),
                         PopupMenuButton(
                           itemBuilder: (context) => [
-                            PopupMenuItem(
+                            const PopupMenuItem(
                               child: Text('Create Playlist'),
                               value: Options.create,
                             ),
-                            PopupMenuItem(
+                            const PopupMenuItem(
                               child: Text('Add to playlist'),
                               value: Options.addTo,
                             ),
@@ -138,8 +138,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     builder: (context) => StatefulBuilder(
                                         builder: ((context, setState) =>
                                             AlertDialog(
-                                              title:
-                                                  Text('Choose the playlist'),
+                                              title: const Text(
+                                                  'Choose the playlist'),
                                               content: DropdownButton(
                                                   value: dropDownValue,
                                                   items: playlists
@@ -172,22 +172,22 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                                             builder:
                                                                 (ctx) =>
                                                                     AlertDialog(
-                                                                      title: Text(
+                                                                      title: const Text(
                                                                           'Ocorreu um erro!'),
-                                                                      content: Text(
-                                                                          'Algo deu errado.'),
+                                                                      content:
+                                                                          const Text(
+                                                                              'Algo deu errado.'),
                                                                       actions: [
                                                                         ElevatedButton(
                                                                             onPressed: () =>
                                                                                 Navigator.of(context).pop(),
-                                                                            child: Text('Fechar'))
+                                                                            child: const Text('Fechar'))
                                                                       ],
                                                                     ));
                                                       } finally {
                                                         Navigator.of(context)
                                                             .pop();
                                                       }
-                                                      //TODO: adicionar ao banco
                                                     },
                                                     child:
                                                         const Text('Confirmar'))
