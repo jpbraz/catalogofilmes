@@ -40,7 +40,7 @@ class Playlist {
       'description': this.description,
       'movies': movieList != null
           ? movieList!.map((movie) => movie.toJson()).toList()
-          : ''
+          : []
     };
   }
 }

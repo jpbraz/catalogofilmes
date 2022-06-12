@@ -27,10 +27,12 @@ class _NewPlaylistState extends State<NewPlaylist> {
     _formKey.currentState?.save();
     try {
       var newPlaylist = Playlist(
-          id: Random().nextInt(2000).toString(),
-          name: _formData['name'],
-          description: _formData['description'],
-          creationDate: DateFormat('dd-MM-yyyy').format(DateTime.now()));
+        id: Random().nextInt(2000).toString(),
+        name: _formData['name'],
+        description: _formData['description'],
+        creationDate: DateFormat('dd-MM-yyyy').format(DateTime.now()),
+        movieList: [],
+      );
       await Provider.of<PlayLists>(context, listen: false)
           .addPlayList(newPlaylist);
     } catch (error) {

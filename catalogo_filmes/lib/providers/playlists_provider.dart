@@ -43,13 +43,10 @@ class PlayLists with ChangeNotifier {
       final selectedPlaylist = listOfPlayLists[id];
 
       selectedPlaylist!.addMovieToList(movie);
-      final targetUrl = Uri.https(_baseURL, '/playlists/$id.json');
-      await http.put(targetUrl,
+      final targetUrl = Uri.parse('$_baseURL/playlists/$id');
+      await http.patch(targetUrl,
           body: jsonEncode({
-            'title': selectedPlaylist.name,
-            'description': selectedPlaylist.description,
-            'creation-date': selectedPlaylist.creationDate,
-            'movies': selectedPlaylist.toJson()
+            'movies': selectedPlaylist.movieList,
           }));
       notifyListeners();
     } catch (error) {
