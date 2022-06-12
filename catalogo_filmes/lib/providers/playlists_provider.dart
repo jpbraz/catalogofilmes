@@ -57,6 +57,23 @@ class PlayLists with ChangeNotifier {
     }
   }
 
+  Future<void> updatePlaylist(String id) async {
+    try {
+      final selectedPlaylist = listOfPlayLists[id];
+
+      final targetUrl = Uri.parse('$_baseURL/playlists/$id.json');
+
+      await http.patch(targetUrl,
+          body: jsonEncode({
+            'title': selectedPlaylist?.name,
+            'description': selectedPlaylist?.description,
+          }));
+      notifyListeners();
+    } catch (error) {
+      throw error;
+    }
+  }
+
   Future<void> fetchPlaylists() async {
     final response = await http.get(
       Uri.parse('$_baseURL/playlists.json'),
