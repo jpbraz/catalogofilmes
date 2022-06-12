@@ -45,4 +45,23 @@ class Playlist {
           : []
     };
   }
+
+  factory Playlist.fromJson(String id, Map<String, dynamic> json) {
+    List<Movie> localMovieList = [];
+
+    Map<String, dynamic> mapMovieList = jsonDecode(json['movieList']);
+
+    mapMovieList.forEach((key, value) {
+      Movie movie = Movie.fromJson(key, value);
+      localMovieList.add(movie);
+    });
+
+    return Playlist(
+      id: id,
+      name: json['name'],
+      creationDate: json['creationDate'],
+      description: json['description'],
+      movieList: localMovieList,
+    );
+  }
 }
