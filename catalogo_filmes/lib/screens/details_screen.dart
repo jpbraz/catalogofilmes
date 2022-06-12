@@ -17,7 +17,24 @@ class DetailsScreen extends StatefulWidget {
 class _DetailsScreenState extends State<DetailsScreen> {
   late final Movie _movie;
   bool _isMovieInitialized = false;
+  bool _isLoading = false;
+
   String dropDownValue = 'playlists';
+
+  @override
+  void initState() {
+    _isLoading = true;
+
+    if (!_isMovieInitialized) {
+      Provider.of<PlayLists>(context, listen: false).fetchPlaylists().then((_) {
+        setState(() {
+          _isLoading = false;
+          _isMovieInitialized = true;
+        });
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (!_isMovieInitialized) {

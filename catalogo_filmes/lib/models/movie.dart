@@ -26,6 +26,18 @@ class Movie {
   });
 
   Map<String, dynamic> toJson() {
-    return {'id': this.id, 'title': this.title};
+    return {
+      'id': id,
+      'title': title,
+      'fullTitle': fullTitle,
+      'crew': crew,
+      'rate': rate,
+      'year': year,
+      'imageUrl': imageUrl,
+      'plot': plot,
+      'releaseDate': releaseDate,
+      'runTimeStr': runTimeStr,
+      'directors': directors,
+    };
   }
 }

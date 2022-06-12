@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:catalogo_filmes/providers/catalog_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -43,7 +44,9 @@ class PlayLists with ChangeNotifier {
       final selectedPlaylist = listOfPlayLists[id];
 
       selectedPlaylist!.addMovieToList(movie);
-      final targetUrl = Uri.parse('$_baseURL/playlists/$id');
+
+      final targetUrl = Uri.parse('$_baseURL/playlists/$id.json');
+
       await http.patch(targetUrl,
           body: jsonEncode({
             'movies': selectedPlaylist.movieList,
@@ -52,5 +55,43 @@ class PlayLists with ChangeNotifier {
     } catch (error) {
       throw error;
     }
+  }
+
+  Future<void> fetchPlaylists() async {
+    final response = await http.get(
+      Uri.parse('$_baseURL/playlists.json'),
+    );
+    final data = jsonDecode(response.body);
+
+    for (var playlist in data.keys) {
+      final loadedPlaylist = Playlist(
+        id: playlist,
+        name: data[playlist]['title'],
+        description: data[playlist]['description'],
+        creationDate: data[playlist]['creation-date'],
+        movieList: getMovies(data[playlist]['movies']),
+      );
+      _listOfPlayLists[playlist] = loadedPlaylist;
+    }
+  }
+
+  getMovies(data) {
+    List<Movie> movies = [];
+
+    for (var movie in data) {
+      movies.add(Movie(
+          id: movie['id'],
+          title: movie['title'],
+          fullTitle: movie['fullTitle'],
+          crew: movie['crew'],
+          rate: movie['rate'],
+          year: movie['year'],
+          imageUrl: movie['imageUrl'],
+          plot: movie['plot'],
+          releaseDate: movie['releaseDate'],
+          directors: movie['directors']));
+    }
+
+    return movies;
   }
 }
