@@ -1,6 +1,4 @@
-import 'package:catalogo_filmes/components/movie_card.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../controller/firebaseController.dart';
 import '../models/movie.dart';
@@ -74,7 +72,7 @@ class _RatingFormState extends State<RatingForm> {
     final isValid = _formKey.currentState?.validate() ?? false;
 
     if (!isValid) {
-      print("Formulário invélido");
+      print("Formulário inválido");
       return;
     }
 
@@ -89,61 +87,55 @@ class _RatingFormState extends State<RatingForm> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(15),
-      child: Expanded(
-        child: Column(
-          children: [
-            Form(
-              key: _formKey,
-              child: Expanded(
-                child: Column(
-                  children: [
-                    TextFormField(
-                      initialValue: _formData['value']?.toString(),
-                      decoration: const InputDecoration(labelText: 'Nota'),
-                      textInputAction: TextInputAction.next,
-                      focusNode: _ratingValueFocus,
-                      keyboardType: const TextInputType.numberWithOptions(
-                        decimal: true,
-                      ),
-                      onFieldSubmitted: (_) {
-                        FocusScope.of(context).requestFocus(_ratingValueFocus);
-                      },
-                      onSaved: (value) =>
-                          _formData['value'] = double.parse(value ?? '0'),
-                      validator: (_value) {
-                        final valueString = _value ?? '';
-                        final value = double.tryParse(valueString) ?? -1;
-
-                        if (value < 0 || value > 10) {
-                          return 'Informe uma nota entre 0 e 10.';
-                        }
-
-                        return null;
-                      },
-                    ),
-                    TextFormField(
-                      initialValue: _formData['comment']?.toString(),
-                      decoration:
-                          const InputDecoration(labelText: 'Comentário'),
-                      focusNode: _ratingCommentFocus,
-                      keyboardType: TextInputType.multiline,
-                      maxLines: 3,
-                      onSaved: (comment) =>
-                          _formData['comment'] = comment ?? '',
-                      validator: (_comment) {
-                        final comment = _comment ?? '';
-                        if (comment.trim().length < 5) {
-                          return 'Comentário precisa no mínimo de 5 letras.';
-                        }
-
-                        return null;
-                      },
-                    ),
-                  ],
-                ),
-              ),
+      child: Form(
+        key: _formKey,
+        child: ListView(
+          padding: const EdgeInsets.all(10),
+          children: <Widget>[
+            Text(
+              movie.title,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headline2,
             ),
-            Center(
+            TextFormField(
+              initialValue: _formData['value']?.toString(),
+              decoration: const InputDecoration(labelText: 'Nota'),
+              textInputAction: TextInputAction.next,
+              focusNode: _ratingValueFocus,
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
+              onFieldSubmitted: (_) {
+                FocusScope.of(context).requestFocus(_ratingValueFocus);
+              },
+              onSaved: (value) =>
+                  _formData['value'] = double.parse(value ?? '0'),
+              validator: (_value) {
+                final valueString = _value ?? '';
+                final value = double.tryParse(valueString) ?? -1;
+                if (value < 0 || value > 10) {
+                  return 'Informe uma nota entre 0 e 10.';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              initialValue: _formData['comment']?.toString(),
+              decoration: const InputDecoration(labelText: 'Comentário'),
+              focusNode: _ratingCommentFocus,
+              keyboardType: TextInputType.multiline,
+              maxLines: 3,
+              onSaved: (comment) => _formData['comment'] = comment ?? '',
+              validator: (_comment) {
+                final comment = _comment ?? '';
+                if (comment.trim().length > 255) {
+                  return 'Comentário precisa no máximo 255 letras.';
+                }
+                return null;
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 15),
               child: ElevatedButton(
                 onPressed: _submitForm,
                 child:
