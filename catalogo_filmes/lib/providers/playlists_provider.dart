@@ -57,6 +57,23 @@ class PlayLists with ChangeNotifier {
     }
   }
 
+  Future<void> updatePlaylist(Playlist playlist) async {
+    try {
+      final playlistId = playlist.id;
+
+      final targetUrl = Uri.parse('$_baseURL/playlists/{$playlistId.json');
+
+      await http.patch(targetUrl,
+          body: jsonEncode({
+            'title': playlist.name,
+            'description': playlist.description,
+          }));
+      notifyListeners();
+    } catch (error) {
+      throw error;
+    }
+  }
+
   Future<void> fetchPlaylists() async {
     final response = await http.get(
       Uri.parse('$_baseURL/playlists.json'),
@@ -77,6 +94,10 @@ class PlayLists with ChangeNotifier {
 
   getMovies(data) {
     List<Movie> movies = [];
+
+    if (data == null) {
+      return movies;
+    }
 
     for (var movie in data) {
       movies.add(Movie(

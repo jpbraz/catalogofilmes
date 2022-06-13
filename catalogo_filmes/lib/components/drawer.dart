@@ -28,59 +28,91 @@ class MyMainDrawer extends StatelessWidget {
               padding: EdgeInsets.only(top: 50),
               color: Theme.of(context).colorScheme.primary,
               height: MediaQuery.of(context).size.height * 0.857,
-              child: Column(children: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.of(context)
-                          .pushReplacementNamed(AppRoutes.CATALOG);
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Catalog',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 30,
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushReplacementNamed(AppRoutes.CATALOG);
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('Catalog',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30,
+                                  color: Theme.of(context).colorScheme.tertiary,
+                                )),
+                            const SizedBox(
+                              width: 32,
+                            ),
+                            Icon(
+                              Icons.menu_book_rounded,
+                              size: 40,
                               color: Theme.of(context).colorScheme.tertiary,
-                            )),
-                        SizedBox(
-                          width: 30,
-                        ),
-                        Icon(
-                          Icons.menu_book_rounded,
-                          size: 40,
-                          color: Theme.of(context).colorScheme.tertiary,
-                        )
-                      ],
-                    )),
-                SizedBox(
-                  height: 30,
-                ),
-                TextButton(
-                    onPressed: () {
-                      // Navigator.of(context)
-                      //     .pushReplacementNamed(AppRoutes.FAVORITES);
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Favorites',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 30,
+                            )
+                          ],
+                        )),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          // Navigator.of(context)
+                          //     .pushReplacementNamed(AppRoutes.FAVORITES);
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('Favorites',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30,
+                                  color: Theme.of(context).colorScheme.tertiary,
+                                )),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Icon(
+                              Icons.favorite,
+                              size: 40,
                               color: Theme.of(context).colorScheme.tertiary,
-                            )),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Icon(
-                          Icons.favorite,
-                          size: 40,
-                          color: Theme.of(context).colorScheme.tertiary,
-                        )
-                      ],
-                    ))
-              ]),
+                            )
+                          ],
+                        )),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushReplacementNamed(AppRoutes.PLAYLISTS);
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('Playlists',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30,
+                                  color: Theme.of(context).colorScheme.tertiary,
+                                )),
+                            const SizedBox(
+                              width: 12,
+                            ),
+                            Icon(
+                              Icons.playlist_play,
+                              size: 45,
+                              color: Theme.of(context).colorScheme.tertiary,
+                            )
+                          ],
+                        )),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                  ]),
             ),
           ],
         ),
