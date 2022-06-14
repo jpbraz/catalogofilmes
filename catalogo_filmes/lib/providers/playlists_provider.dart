@@ -34,12 +34,6 @@ class PlayLists with ChangeNotifier {
   }
 
   Future<void> removePlayList(Playlist playlist) async {
-    final response =
-        await http.delete(Uri.parse('$_baseURL/playlists/${playlist.id}.json'));
-    if (response.statusCode >= 400) {
-      throw 'Erro ao remover playlist';
-    }
-
     _listOfPlayLists
         .removeWhere((playlistKey, _) => playlistKey == playlist.id);
     notifyListeners();
