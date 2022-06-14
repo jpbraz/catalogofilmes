@@ -248,7 +248,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               ),
             ),
             Container(
-              padding: const EdgeInsets.only(left: 10),
+              padding: const EdgeInsets.only(left: 10, top: 10),
               color: Theme.of(context).colorScheme.primary,
               height: MediaQuery.of(context).size.height * 0.4,
               width: MediaQuery.of(context).size.width,

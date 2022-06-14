@@ -44,10 +44,12 @@ class MyApp extends StatelessWidget {
                   fontFamily: 'Lato'),
               headline2: const TextStyle().copyWith(
                   fontSize: 18,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Lato'),
               headline3: const TextStyle().copyWith(
                   fontSize: 26,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Lato')), //verificar, nao esta funcionando ainda
           iconTheme: ThemeData().iconTheme.copyWith(

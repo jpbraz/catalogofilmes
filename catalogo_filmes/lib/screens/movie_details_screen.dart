@@ -69,7 +69,7 @@ class MovieDetailScreen extends StatelessWidget {
               ),
             ),
             Container(
-              padding: const EdgeInsets.only(left: 10),
+              padding: const EdgeInsets.only(left: 10, top: 10),
               color: Theme.of(context).colorScheme.primary,
               height: MediaQuery.of(context).size.height * 0.4,
               width: MediaQuery.of(context).size.width,
@@ -78,42 +78,42 @@ class MovieDetailScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Título Completo: ${movie.title}',
+                      'Full Title: ${movie.title}',
                       style: Theme.of(context).textTheme.headline2,
                     ),
                     const SizedBox(
                       height: 20,
                     ),
                     Text(
-                      'Ano: ${movie.year}',
+                      'Year: ${movie.year}',
                       style: Theme.of(context).textTheme.headline2,
                     ),
                     const SizedBox(
                       height: 20,
                     ),
                     Text(
-                      'Diretores: ${movie.directors}',
+                      'Directors: ${movie.directors}',
                       style: Theme.of(context).textTheme.headline2,
                     ),
                     const SizedBox(
                       height: 20,
                     ),
                     Text(
-                      'Elenco: ${movie.crew}',
+                      'Cast: ${movie.crew}',
                       style: Theme.of(context).textTheme.headline2,
                     ),
                     const SizedBox(
                       height: 20,
                     ),
                     Text(
-                      'Nota IMDb: ${movie.rate}',
+                      'IMDb rate: ${movie.rate}',
                       style: Theme.of(context).textTheme.headline2,
                     ),
                     const SizedBox(
                       height: 20,
                     ),
                     Text(
-                      'Sinopse: ${movie.plot}',
+                      'Plot: ${movie.plot}',
                       style: Theme.of(context).textTheme.headline2,
                     ),
                   ],

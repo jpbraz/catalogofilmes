@@ -29,7 +29,7 @@ class _PlaylistDetailsScreenState extends State<PlaylistDetailsScreen> {
           child: playlist.movieList!.isEmpty
               ? const Center(
                   child: Text(
-                    'Nenhum filme encontrado!',
+                    'This playlist doesn\'t have a movie!',
                     style: TextStyle(fontSize: 24, color: Colors.white),
                   ),
                 )
