@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 
 import '../components/drawer.dart';
 import '../providers/favorites_provider.dart';
+import '../providers/favorites_provider.dart';
 
 class CatalogScreen extends StatefulWidget {
   @override
