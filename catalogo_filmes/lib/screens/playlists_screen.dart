@@ -29,7 +29,7 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
         child: playlists.listOfPlayLists.isEmpty
             ? const Center(
                 child: Text(
-                  'Nenhuma playlist criada!',
+                  'You dont have any playlist!',
                   style: TextStyle(fontSize: 24, color: Colors.white),
                 ),
               )
@@ -63,7 +63,7 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
                                   style: Theme.of(context).textTheme.headline2,
                                 ),
                                 Text(
-                                  'criação: ${playlists.listOfPlayLists.values.elementAt(index).creationDate}',
+                                  'creation: ${playlists.listOfPlayLists.values.elementAt(index).creationDate}',
                                   style: TextStyle(
                                       color: Colors.grey[400], fontSize: 10),
                                 )

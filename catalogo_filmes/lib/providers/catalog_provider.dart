@@ -33,17 +33,18 @@ class CatalogProvider with ChangeNotifier {
             imageUrl: movie['image']));
       }
       _movies = loadedMovies;
+      notifyListeners();
     } catch (error) {
       throw error;
     }
   }
 
-  Future<Movie> fetchMovieById(String id) async {
+  Future<void> fetchMovieById(String id) async {
     try {
       final response = await http.get(Uri.parse(
           'https://imdb-api.com/en/API/Title/${dotenv.get('API_KEY')}/$id'));
       final data = jsonDecode(response.body) as Map<String, dynamic>;
-      Movie movie = Movie(
+      Movie newMovie = Movie(
           id: data['id'],
           title: data['title'],
           fullTitle: data['fullTitle'],
@@ -55,7 +56,9 @@ class CatalogProvider with ChangeNotifier {
           releaseDate: data['releaseDate'],
           runTimeStr: data['runTimeStr'],
           directors: data['directors']);
-      return movie;
+      _movies[_movies.indexOf(
+          _movies.firstWhere((movie) => movie.id == newMovie.id))] = newMovie;
+      notifyListeners();
     } catch (error) {
       throw error;
     }

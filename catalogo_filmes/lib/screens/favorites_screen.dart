@@ -25,7 +25,7 @@ class FavoritesScreen extends StatelessWidget {
             return favorites.favoriteMovies.isEmpty
                 ? const Center(
                     child: Text(
-                      'Nenhum filme favoritado!',
+                      'You dont have any favorite movie!',
                       style: TextStyle(fontSize: 24, color: Colors.white),
                     ),
                   )
