@@ -48,6 +48,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
     });
   }
 
+  void deleteRating(String id) async {
+    await FirebaseController().deleteRatingInFirebase(id);
+    setState(() {
+      ratings;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     if (!_isMovieInitialized) {
@@ -342,6 +349,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                                   movie: _movie,
                                                   rating: currentItem,
                                                 ));
+                                      },
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: IconButton(
+                                      icon: const Icon(Icons.delete, size: 20),
+                                      onPressed: () {
+                                        deleteRating(currentItem.id);
                                       },
                                     ),
                                   )
