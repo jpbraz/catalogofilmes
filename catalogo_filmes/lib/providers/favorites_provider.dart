@@ -8,12 +8,13 @@ import 'package:http/http.dart' as http;
 
 class Favorites extends ChangeNotifier {
   List<Movie> favoriteMovies = [];
-  late String id = '';
 
   final _baseURL = dotenv.get('FIREBASE_URL');
 
-  void addFavoriteMovie(Movie movie) {
-    if (id.isEmpty) {
+  void addFavoriteMovie(Movie movie) async {
+    String id = await getID();
+
+    if (id == '') {
       favoriteMovies.add(movie);
       http.post(
         Uri.parse('$_baseURL/favorites.json'),
@@ -34,8 +35,11 @@ class Favorites extends ChangeNotifier {
     notifyListeners();
   }
 
-  void removeFavoriteMovie(Movie movie) {
+  void removeFavoriteMovie(Movie movie) async {
     favoriteMovies.removeWhere((element) => element.id == movie.id);
+
+    String id = await getID();
+
     http.patch(
       Uri.parse('$_baseURL/favorites/$id.json'),
       body: jsonEncode({
@@ -61,9 +65,7 @@ class Favorites extends ChangeNotifier {
       return;
     }
 
-    id = extractedData.keys
-        .toString()
-        .substring(1, extractedData.keys.toString().length - 1);
+    String id = await getID();
 
     favoriteMovies.clear();
     for (var movie in extractedData[id]['movies']) {
@@ -82,6 +84,22 @@ class Favorites extends ChangeNotifier {
         ),
       );
     }
+  }
+
+  Future<String> getID() async {
+    final response = await http.get(
+      Uri.parse('$_baseURL/favorites.json'),
+    );
+
+    final extractedData = json.decode(response.body);
+
+    if (extractedData == null) {
+      return '';
+    }
+
+    final id = extractedData.keys.toList()[0];
+
+    return id;
   }
 
   bool hasMovie(Movie movie) {
