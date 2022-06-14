@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 
 import '../components/rating_form.dart';
 import '../models/movie.dart';
+import '../models/rating.dart';
+import '../controller/firebaseController.dart';
 
 enum Options { create, addTo, rating }
 
@@ -19,12 +21,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
   late final Movie _movie;
   bool _isMovieInitialized = false;
   bool _isLoading = false;
+  late List<Rating> ratings;
 
   String dropDownValue = 'playlists';
 
   @override
   void initState() {
     _isLoading = true;
+    ratings = [];
 
     if (!_isMovieInitialized) {
       Provider.of<PlayLists>(context, listen: false).fetchPlaylists().then((_) {
@@ -36,6 +40,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
     }
   }
 
+  void getRating(Movie movie) async {
+    List<Rating> aux =
+        await FirebaseController().getRatingsInFirebaseByMovie(movie);
+    setState(() {
+      ratings = aux;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     if (!_isMovieInitialized) {
@@ -44,6 +56,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
         _isMovieInitialized = true;
       });
     }
+    getRating(_movie);
     var favorites = context.watch<Favorites>();
     var playlists = context.watch<PlayLists>();
     if (playlists.listOfPlayLists.isNotEmpty) {
@@ -215,6 +228,116 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         ],
                       ),
                     ),
+                  ),
+                  top: 0,
+                )
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.only(left: 10),
+            color: Theme.of(context).colorScheme.primary,
+            height: MediaQuery.of(context).size.height * 0.4,
+            width: MediaQuery.of(context).size.width,
+            child: ListView(children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Título Completo: ${_movie.title}',
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Ano: ${_movie.year}',
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Diretores: ${_movie.directors}',
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Elenco: ${_movie.crew}',
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Nota IMDb: ${_movie.rate}',
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Sinopse: ${_movie.plot}',
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  RichText(
+                    text: TextSpan(children: [
+                      TextSpan(
+                        text: "Comentários: ",
+                        style: Theme.of(context).textTheme.headline2,
+                      ),
+                      WidgetSpan(
+                        child: IconButton(
+                          icon: Icon(Icons.add, size: 20),
+                          padding: const EdgeInsets.only(left: 200, top: 25),
+                          onPressed: () {
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (context) => RatingForm(
+                                      movie: _movie,
+                                    ));
+                          },
+                        ),
+                      ),
+                    ]),
+                  ),
+				  Column(children: [
+                    ListView.builder(
+                      itemCount: ratings.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        Rating currentItem = ratings[index];
+                        return Row(
+                          children: [
+                            Expanded(
+                                child: Text(
+                              "${currentItem.value.toString()} - \"${currentItem.comment}\"",
+                              style: Theme.of(context).textTheme.headline2,
+                            )),
+                            SizedBox(
+                              width: 50,
+                              height: 5,
+                            ),
+                            Expanded(
+                              child: IconButton(
+                                icon: Icon(Icons.edit, size: 20),
+                                onPressed: () {
+                                  showModalBottomSheet(
+                                      context: context,
+                                      builder: (context) => RatingForm(
+                                            movie: _movie,
+                                            rating: currentItem,
+                                          ));
+                                },
+                              ),
+                            )
+                          ],
+                        );
+                      },
+                    )
+                  ])
                     top: 0,
                   )
                 ],
