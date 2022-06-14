@@ -206,16 +206,16 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                                               (ctx) =>
                                                                   AlertDialog(
                                                                     title: const Text(
-                                                                        'Ocorreu um erro!'),
+                                                                        'An error occurred!'),
                                                                     content:
                                                                         const Text(
-                                                                            'Algo deu errado.'),
+                                                                            'Something went wrong.'),
                                                                     actions: [
                                                                       ElevatedButton(
                                                                           onPressed: () => Navigator.of(context)
                                                                               .pop(),
                                                                           child:
-                                                                              const Text('Fechar'))
+                                                                              const Text('Close'))
                                                                     ],
                                                                   ));
                                                     } finally {
@@ -223,8 +223,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                                           .pop();
                                                     }
                                                   },
-                                                  child:
-                                                      const Text('Confirmar'))
+                                                  child: const Text('Confirm'))
                                             ],
                                           )),
                                     ),
@@ -252,54 +251,54 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Título Completo: ${_movie.title}',
+                        'Full Title: ${_movie.title}',
                         style: Theme.of(context).textTheme.headline2,
                       ),
                       const SizedBox(
                         height: 20,
                       ),
                       Text(
-                        'Ano: ${_movie.year}',
+                        'Year: ${_movie.year}',
                         style: Theme.of(context).textTheme.headline2,
                       ),
                       const SizedBox(
                         height: 20,
                       ),
                       Text(
-                        'Diretores: ${_movie.directors}',
+                        'Directors: ${_movie.directors}',
                         style: Theme.of(context).textTheme.headline2,
                       ),
                       const SizedBox(
                         height: 20,
                       ),
                       Text(
-                        'Elenco: ${_movie.crew}',
+                        'Cast: ${_movie.crew}',
                         style: Theme.of(context).textTheme.headline2,
                       ),
                       const SizedBox(
                         height: 20,
                       ),
                       Text(
-                        'Nota IMDb: ${_movie.rate}',
+                        'IMDb rate: ${_movie.rate}',
                         style: Theme.of(context).textTheme.headline2,
                       ),
                       const SizedBox(
                         height: 20,
                       ),
                       Text(
-                        'Sinopse: ${_movie.plot}',
+                        'Plot: ${_movie.plot}',
                         style: Theme.of(context).textTheme.headline2,
                       ),
                       RichText(
                         text: TextSpan(
                           children: [
                             TextSpan(
-                              text: "Comentários: ",
+                              text: "Commentaries: ",
                               style: Theme.of(context).textTheme.headline2,
                             ),
                             WidgetSpan(
                               child: IconButton(
-                                icon: Icon(Icons.add, size: 20),
+                                icon: const Icon(Icons.add, size: 20),
                                 padding:
                                     const EdgeInsets.only(left: 200, top: 25),
                                 onPressed: () {
@@ -329,13 +328,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     style:
                                         Theme.of(context).textTheme.headline2,
                                   )),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 50,
                                     height: 5,
                                   ),
                                   Expanded(
                                     child: IconButton(
-                                      icon: Icon(Icons.edit, size: 20),
+                                      icon: const Icon(Icons.edit, size: 20),
                                       onPressed: () {
                                         showModalBottomSheet(
                                             context: context,

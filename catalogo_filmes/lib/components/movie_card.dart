@@ -21,20 +21,43 @@ class _MovieCardState extends State<MovieCard> {
   bool isDetailsOfMovieLoaded = false;
   late Movie selectedMovie;
   bool isLoading = false;
+
+  @override
+  void initState() {
+    isDetailsOfMovieLoaded =
+        Provider.of<CatalogProvider>(context, listen: false)
+            .movies
+            .any((movie) {
+      if (movie.id == widget.movie.id) {
+        if (movie.plot != null) {
+          return true;
+        }
+      }
+      return false;
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    var catalog = context.watch<CatalogProvider>();
     return InkWell(
       onTap: () {
         if (!isDetailsOfMovieLoaded) {
-          Provider.of<CatalogProvider>(context, listen: false)
-              .fetchMovieById(widget.movie.id)
-              .then((movie) {
-            selectedMovie = movie;
-            isDetailsOfMovieLoaded = true;
+          catalog.fetchMovieById(widget.movie.id).then((_) {
+            setState(() {
+              selectedMovie = catalog.movies
+                  .firstWhere((movie) => movie.id == widget.movie.id);
+              isDetailsOfMovieLoaded = true;
+            });
             Navigator.of(context)
                 .pushNamed(AppRoutes.DETAILS, arguments: selectedMovie);
           });
         } else {
+          setState(() {
+            selectedMovie = catalog.movies
+                .firstWhere((movie) => movie.id == widget.movie.id);
+          });
           Navigator.of(context)
               .pushNamed(AppRoutes.DETAILS, arguments: selectedMovie);
         }

@@ -41,12 +41,12 @@ class _EditPlaylistState extends State<EditPlaylist> {
       await showDialog<Null>(
           context: context,
           builder: (ctx) => AlertDialog(
-                title: const Text('Ocorreu um erro!'),
-                content: const Text('Algo deu errado.'),
+                title: const Text('An error occurred!'),
+                content: const Text('Something went wrong.'),
                 actions: [
                   ElevatedButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: const Text('Fechar'))
+                      child: const Text('Close'))
                 ],
               ));
     } finally {
@@ -74,17 +74,17 @@ class _EditPlaylistState extends State<EditPlaylist> {
                   TextFormField(
                     initialValue: _formData['name'],
                     decoration:
-                        const InputDecoration(labelText: 'Nome da playlist'),
+                        const InputDecoration(labelText: 'Playlist name'),
                     onSaved: (name) => _formData['name'] = name ?? '',
                     validator: (_name) {
                       final name = _name ?? '';
 
                       if (name.trim().isEmpty) {
-                        return 'Nome é obrigatório';
+                        return 'Name is required';
                       }
 
                       if (name.trim().length < 3) {
-                        return 'Nome precisa no mínimo de 3 letras.';
+                        return 'The playlist name needs at least 3 characters';
                       }
 
                       return null;
@@ -94,7 +94,7 @@ class _EditPlaylistState extends State<EditPlaylist> {
                     initialValue: _formData['description'],
                     maxLines: null,
                     decoration: const InputDecoration(
-                      labelText: 'Descrição',
+                      labelText: 'Description',
                     ),
                     onSaved: (description) =>
                         _formData['description'] = description ?? '',
@@ -103,7 +103,7 @@ class _EditPlaylistState extends State<EditPlaylist> {
                     height: 10,
                   ),
                   ElevatedButton(
-                      onPressed: _submitForm, child: const Text('Atualizar'))
+                      onPressed: _submitForm, child: const Text('Update'))
                 ],
               ))),
     );

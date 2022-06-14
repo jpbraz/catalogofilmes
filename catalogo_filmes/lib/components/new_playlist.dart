@@ -39,12 +39,12 @@ class _NewPlaylistState extends State<NewPlaylist> {
       await showDialog<Null>(
           context: context,
           builder: (ctx) => AlertDialog(
-                title: const Text('Ocorreu um erro!'),
-                content: const Text('Algo deu errado.'),
+                title: const Text('An error occurred!'),
+                content: const Text('Something went wrong.'),
                 actions: [
                   ElevatedButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: const Text('Fechar'))
+                      child: const Text('Close'))
                 ],
               ));
     } finally {
@@ -57,7 +57,7 @@ class _NewPlaylistState extends State<NewPlaylist> {
     return SingleChildScrollView(
       child: Container(
           padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom + 20),
+              bottom: MediaQuery.of(context).viewInsets.bottom + 20, left: 10),
           child: Form(
               key: _formKey,
               child: Column(
@@ -65,17 +65,17 @@ class _NewPlaylistState extends State<NewPlaylist> {
                   TextFormField(
                     initialValue: _formData['name']?.toString(),
                     decoration:
-                        const InputDecoration(labelText: 'Nome da playlist'),
+                        const InputDecoration(labelText: 'Playlist name'),
                     onSaved: (name) => _formData['name'] = name ?? '',
                     validator: (_name) {
                       final name = _name ?? '';
 
                       if (name.trim().isEmpty) {
-                        return 'Nome é obrigatório';
+                        return 'Name is required';
                       }
 
                       if (name.trim().length < 3) {
-                        return 'Nome precisa no mínimo de 3 letras.';
+                        return 'The playlist name needs at least 3 characters.';
                       }
 
                       return null;
@@ -84,7 +84,7 @@ class _NewPlaylistState extends State<NewPlaylist> {
                   TextFormField(
                     maxLines: null,
                     decoration: const InputDecoration(
-                      labelText: 'Descrição',
+                      labelText: 'Description',
                     ),
                     onSaved: (description) =>
                         _formData['description'] = description ?? '',
@@ -93,7 +93,7 @@ class _NewPlaylistState extends State<NewPlaylist> {
                     height: 10,
                   ),
                   ElevatedButton(
-                      onPressed: _submitForm, child: const Text('Confirmar'))
+                      onPressed: _submitForm, child: const Text('Confirm'))
                 ],
               ))),
     );

@@ -17,24 +17,29 @@ class CatalogScreen extends StatefulWidget {
 
 class _CatalogScreenState extends State<CatalogScreen> {
   bool _isLoading = false;
-  bool _isInfoLoaded = false;
 
   @override
   void initState() {
     _isLoading = true;
 
-    if (!_isInfoLoaded) {
+    if (Provider.of<CatalogProvider>(context, listen: false).movies.isEmpty) {
       Provider.of<CatalogProvider>(context, listen: false)
           .fetchMovies()
           .then((_) {
         setState(() {
           _isLoading = false;
-          _isInfoLoaded = true;
         });
       });
       Provider.of<PlayLists>(context, listen: false).fetchPlaylists();
       Provider.of<Favorites>(context, listen: false).fetchFavorites();
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
     }
+    Provider.of<PlayLists>(context, listen: false)
+        .fetchPlaylists()
+        .then((_) {});
     super.initState();
   }
 
@@ -62,7 +67,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
                     child: Text('Top 250 movies',
                         style: Theme.of(context).textTheme.headline3),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Expanded(

@@ -99,7 +99,7 @@ class _RatingFormState extends State<RatingForm> {
             ),
             TextFormField(
               initialValue: _formData['value']?.toString(),
-              decoration: const InputDecoration(labelText: 'Nota'),
+              decoration: const InputDecoration(labelText: 'Rate'),
               textInputAction: TextInputAction.next,
               focusNode: _ratingValueFocus,
               keyboardType: const TextInputType.numberWithOptions(
@@ -114,14 +114,14 @@ class _RatingFormState extends State<RatingForm> {
                 final valueString = _value ?? '';
                 final value = double.tryParse(valueString) ?? -1;
                 if (value < 0 || value > 10) {
-                  return 'Informe uma nota entre 0 e 10.';
+                  return 'Insert a value between 0 and 10.';
                 }
                 return null;
               },
             ),
             TextFormField(
               initialValue: _formData['comment']?.toString(),
-              decoration: const InputDecoration(labelText: 'Comentário'),
+              decoration: const InputDecoration(labelText: 'Commentary'),
               focusNode: _ratingCommentFocus,
               keyboardType: TextInputType.multiline,
               maxLines: 3,
@@ -129,7 +129,7 @@ class _RatingFormState extends State<RatingForm> {
               validator: (_comment) {
                 final comment = _comment ?? '';
                 if (comment.trim().length > 255) {
-                  return 'Comentário precisa no máximo 255 letras.';
+                  return 'Commentary max lenght is 255 characters';
                 }
                 return null;
               },
@@ -138,8 +138,7 @@ class _RatingFormState extends State<RatingForm> {
               padding: const EdgeInsets.only(top: 15),
               child: ElevatedButton(
                 onPressed: _submitForm,
-                child:
-                    editMode ? const Text('Atualizar') : const Text('Salvar'),
+                child: editMode ? const Text('Update') : const Text('Save'),
               ),
             ),
           ],
