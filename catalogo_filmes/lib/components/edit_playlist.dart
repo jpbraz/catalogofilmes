@@ -31,14 +31,12 @@ class _EditPlaylistState extends State<EditPlaylist> {
     _formKey.currentState?.save();
 
     try {
-      await Provider.of<PlayLists>(context, listen: false)
-          .updatePlaylist(widget.playlist)
-          .then((_) {
-        setState(() {
-          widget.playlist.name = _formData['name'];
-          widget.playlist.description = _formData['description'];
-        });
+      setState(() {
+        widget.playlist.name = _formData['name'];
+        widget.playlist.description = _formData['description'];
       });
+      await Provider.of<PlayLists>(context, listen: false)
+          .updatePlaylist(widget.playlist);
     } catch (error) {
       await showDialog<Null>(
           context: context,

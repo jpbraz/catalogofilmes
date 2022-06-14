@@ -73,6 +73,7 @@ class PlayLists with ChangeNotifier {
           body: jsonEncode({
             'title': playlist.name,
             'description': playlist.description,
+            'movies': playlist.movieList,
           }));
       notifyListeners();
     } catch (error) {
