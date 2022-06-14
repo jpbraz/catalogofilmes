@@ -1,4 +1,3 @@
-import 'dart:_http';
 import 'dart:convert';
 
 import 'package:catalogo_filmes/models/movie.dart';
@@ -26,9 +25,7 @@ class Favorites extends ChangeNotifier {
     final response = await http.delete(
       Uri.parse('$_baseURL/favorites/${movie.id}.json'),
     );
-    if (response.statusCode >= 400) {
-      throw HttpException('Could not delete favorite');
-    }
+
     favoriteMovies.remove(movie);
     notifyListeners();
   }
