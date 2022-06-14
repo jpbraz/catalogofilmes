@@ -33,7 +33,13 @@ class PlayLists with ChangeNotifier {
     }
   }
 
-  void removePlayList(Playlist playlist) {
+  Future<void> removePlayList(Playlist playlist) async {
+    final response =
+        await http.delete(Uri.parse('$_baseURL/playlists/${playlist.id}.json'));
+    if (response.statusCode >= 400) {
+      throw 'Erro ao remover playlist';
+    }
+    
     _listOfPlayLists
         .removeWhere((playlistKey, _) => playlistKey == playlist.id);
     notifyListeners();
@@ -50,6 +56,24 @@ class PlayLists with ChangeNotifier {
       await http.patch(targetUrl,
           body: jsonEncode({
             'movies': selectedPlaylist.movieList,
+          }));
+      notifyListeners();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  Future<void> updatePlaylist(Playlist playlist) async {
+    try {
+      final playlistId = playlist.id;
+
+      final targetUrl = Uri.parse('$_baseURL/playlists/$playlistId.json');
+
+      await http.patch(targetUrl,
+          body: jsonEncode({
+            'title': playlist.name,
+            'description': playlist.description,
+            'movies': playlist.movieList,
           }));
       notifyListeners();
     } catch (error) {
@@ -77,6 +101,10 @@ class PlayLists with ChangeNotifier {
 
   getMovies(data) {
     List<Movie> movies = [];
+
+    if (data == null) {
+      return movies;
+    }
 
     for (var movie in data) {
       movies.add(Movie(

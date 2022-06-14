@@ -9,6 +9,8 @@ Descrição
 
 import 'dart:convert';
 
+import 'package:catalogo_filmes/providers/playlists_provider.dart';
+
 import 'movie.dart';
 
 class Playlist {
@@ -30,8 +32,10 @@ class Playlist {
     movieList?.add(movie);
   }
 
-  removeMovieFromList(Movie movie) {
+  removeMovieFromList(Movie movie) async {
     movieList?.remove(movie);
+
+    PlayLists().updatePlaylist(this);
   }
 
   Map<String, dynamic> toJson() {
