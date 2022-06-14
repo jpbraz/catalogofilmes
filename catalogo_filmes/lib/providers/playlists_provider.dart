@@ -61,7 +61,7 @@ class PlayLists with ChangeNotifier {
     try {
       final playlistId = playlist.id;
 
-      final targetUrl = Uri.parse('$_baseURL/playlists/{$playlistId.json');
+      final targetUrl = Uri.parse('$_baseURL/playlists/$playlistId.json');
 
       await http.patch(targetUrl,
           body: jsonEncode({
