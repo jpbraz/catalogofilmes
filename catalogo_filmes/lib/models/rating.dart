@@ -25,12 +25,7 @@ class Rating {
   });
 
   factory Rating.fromJson(String id, Map<String, dynamic> json) {
-    Map<String, dynamic> mapMovie = jsonDecode(json['movie']);
-    late Movie localMovie;
-
-    mapMovie.forEach((key, value) {
-      localMovie = Movie.fromJson(key, value);
-    });
+    Movie localMovie = Movie.fromJson(json['movie']['id'], json['movie']);
 
     return Rating(
       id: id,

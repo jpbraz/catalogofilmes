@@ -82,4 +82,25 @@ class FirebaseController {
       throw Exception('Failed to load rating');
     }
   }
+
+  Future<List<Rating>> getRatingsInFirebaseByMovie(Movie movie) async {
+    final url = "$_baseUrl/ratings_and_reviews.json";
+    final response = await http.get(Uri.parse(url));
+
+    List<Rating> result = [];
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> map = jsonDecode(response.body);
+
+      map.forEach((key, value) {
+        if (value['movie']['id'].toString() == movie.id) {
+          Rating rating = Rating.fromJson(key, value);
+          result.add(rating);
+        }
+      });
+      return result;
+    } else {
+      throw Exception('Failed to load rating');
+    }
+  }
 }
