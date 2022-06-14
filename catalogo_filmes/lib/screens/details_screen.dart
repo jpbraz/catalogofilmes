@@ -62,6 +62,15 @@ class _DetailsScreenState extends State<DetailsScreen> {
     if (playlists.listOfPlayLists.isNotEmpty) {
       dropDownValue = playlists.listOfPlayLists.values.first.id;
     }
+
+    _hasMovie(Movie movie) {
+      final result = favorites.favoriteMovies
+          .where((element) => element.id == movie.id)
+          .toList();
+
+      return result.isNotEmpty;
+    }
+
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -113,7 +122,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             ),
                           ),
                           IconButton(
-                            icon: favorites.favoriteMovies.contains(_movie)
+                            icon: _hasMovie(_movie)
                                 ? Icon(Icons.favorite,
                                     color: Colors.red[800], size: 30)
                                 : const Icon(
@@ -122,7 +131,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   ),
                             onPressed: () {
                               setState(() {
-                                if (favorites.favoriteMovies.contains(_movie)) {
+                                if (_hasMovie(_movie)) {
                                   favorites.removeFavoriteMovie(_movie);
                                 } else {
                                   favorites.addFavoriteMovie(_movie);

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../components/drawer.dart';
+import '../providers/favorites_provider.dart';
 
 class CatalogScreen extends StatefulWidget {
   @override
@@ -31,9 +32,8 @@ class _CatalogScreenState extends State<CatalogScreen> {
           _isInfoLoaded = true;
         });
       });
-      Provider.of<PlayLists>(context, listen: false)
-          .fetchPlaylists()
-          .then((_) {});
+      Provider.of<PlayLists>(context, listen: false).fetchPlaylists();
+      Provider.of<Favorites>(context, listen: false).fetchFavorites();
     }
     super.initState();
   }
