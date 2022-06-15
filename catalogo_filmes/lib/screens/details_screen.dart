@@ -66,7 +66,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
     getRating(_movie);
     var favorites = context.watch<Favorites>();
     var playlists = context.watch<PlayLists>();
-    if (playlists.listOfPlayLists.isNotEmpty) {
+
+    if (playlists.listOfPlayLists.isNotEmpty && dropDownValue == 'playlists') {
       dropDownValue = playlists.listOfPlayLists.values.first.id;
     }
 
