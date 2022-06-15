@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../components/rating_form.dart';
+import '../components/rating_list.dart';
 import '../models/movie.dart';
 import '../models/rating.dart';
 import '../controller/firebaseController.dart';
@@ -45,13 +46,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
         await FirebaseController().getRatingsInFirebaseByMovie(movie);
     setState(() {
       ratings = aux;
-    });
-  }
-
-  void deleteRating(String id) async {
-    await FirebaseController().deleteRatingInFirebase(id);
-    setState(() {
-      ratings;
     });
   }
 
@@ -321,52 +315,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           ],
                         ),
                       ),
-                      Column(
-                        children: [
-                          ListView.builder(
-                            itemCount: ratings.length,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              Rating currentItem = ratings[index];
-                              return Row(
-                                children: [
-                                  Expanded(
-                                      child: Text(
-                                    "${currentItem.value.toString()} - \"${currentItem.comment}\"",
-                                    style:
-                                        Theme.of(context).textTheme.headline2,
-                                  )),
-                                  const SizedBox(
-                                    width: 50,
-                                    height: 5,
-                                  ),
-                                  Expanded(
-                                    child: IconButton(
-                                      icon: const Icon(Icons.edit, size: 20),
-                                      onPressed: () {
-                                        showModalBottomSheet(
-                                            context: context,
-                                            builder: (context) => RatingForm(
-                                                  movie: _movie,
-                                                  rating: currentItem,
-                                                ));
-                                      },
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: IconButton(
-                                      icon: const Icon(Icons.delete, size: 20),
-                                      onPressed: () {
-                                        deleteRating(currentItem.id);
-                                      },
-                                    ),
-                                  )
-                                ],
-                              );
-                            },
-                          )
-                        ],
-                      ),
+                      MyListTileCardRatings(ratings),
                     ],
                   ),
                 ],
