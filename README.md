@@ -7,6 +7,7 @@ Projeto da Disciplina IMD0509 UFRN 2022.1 em Flutter.
 - [Hilton Thallyson](https://github.com/HiltonThallyson)
 - [João Paulo Braz](https://github.com/jpbraz)
 - [Ocenildo Junior](https://github.com/OcenildoJunior)
+- [Cleverton Inácio](https://github.com/clevinacio)
 
 ## Executando o Projeto do Repositório
 1. Crie um projeto novo no diretório de seus projetos com o comando ```flutter create <nome_do_projeto>``` ;
