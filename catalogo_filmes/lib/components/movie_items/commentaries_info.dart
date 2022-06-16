@@ -1,13 +1,11 @@
-import 'package:catalogo_filmes/components/rating_form.dart';
-import 'package:catalogo_filmes/components/rating_list.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:catalogo_filmes/components/movie_items/rating_form.dart';
+import 'package:catalogo_filmes/components/movie_items/rating_list.dart';
 
 import 'package:flutter/material.dart';
 
-import '../controller/firebaseController.dart';
-import '../models/movie.dart';
-import '../models/rating.dart';
+import '../../controller/firebaseController.dart';
+import '../../models/movie.dart';
+import '../../models/rating.dart';
 
 class CommentariesInfo extends StatefulWidget {
   final Movie _movie;

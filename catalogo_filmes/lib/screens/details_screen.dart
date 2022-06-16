@@ -1,11 +1,9 @@
-import 'package:catalogo_filmes/components/commentaries_info.dart';
-import 'package:catalogo_filmes/components/movie_info.dart';
-import 'package:catalogo_filmes/components/movie_menu.dart';
 import 'package:catalogo_filmes/providers/playlists_provider.dart';
-import 'package:catalogo_filmes/screens/movie_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../components/movie_items/movie_info.dart';
+import '../components/movie_items/movie_menu.dart';
 import '../models/movie.dart';
 
 class DetailsScreen extends StatelessWidget {

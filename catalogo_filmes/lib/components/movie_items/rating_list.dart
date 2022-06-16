@@ -1,8 +1,8 @@
-import 'package:catalogo_filmes/components/rating_form.dart';
 import 'package:flutter/material.dart';
 
-import '../controller/firebaseController.dart';
-import '../models/rating.dart';
+import '/components/movie_items/rating_form.dart';
+import '../../controller/firebaseController.dart';
+import '../../models/rating.dart';
 
 class MyListTileCardRatings extends StatelessWidget {
   List<Rating> myList;
@@ -70,8 +70,6 @@ class MyListTileCardRatings extends StatelessWidget {
   }
 
   void _onTapListTile(context, Rating myObject) {
-    // ignore: avoid_print
-    print("Editando id: ${myObject.id.toString()}");
     _openModelForm(context, myObject).then(
       (_) => {
         print("${myObject.id} alterado/fechado com sucesso."),

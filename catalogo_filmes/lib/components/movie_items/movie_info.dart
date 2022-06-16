@@ -1,9 +1,6 @@
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
 import 'package:flutter/material.dart';
 
-import '../models/movie.dart';
+import '../../models/movie.dart';
 import 'commentaries_info.dart';
 
 class MovieInfo extends StatelessWidget {

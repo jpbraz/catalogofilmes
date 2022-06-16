@@ -1,8 +1,9 @@
-import 'package:catalogo_filmes/components/movie_info.dart';
 import 'package:catalogo_filmes/models/movie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+
+import '../components/movie_items/movie_info.dart';
 
 class MovieDetailScreen extends StatelessWidget {
   const MovieDetailScreen({Key? key}) : super(key: key);

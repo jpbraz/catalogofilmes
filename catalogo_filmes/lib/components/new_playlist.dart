@@ -1,13 +1,10 @@
-import 'dart:math';
-
-import 'package:catalogo_filmes/models/playlist.dart';
-import 'package:catalogo_filmes/providers/playlists_provider.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'dart:math';
+
+import '/models/playlist.dart';
+import '/providers/playlists_provider.dart';
 
 class NewPlaylist extends StatefulWidget {
   @override

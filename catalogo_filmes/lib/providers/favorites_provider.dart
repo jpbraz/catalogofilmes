@@ -1,10 +1,10 @@
+import 'package:flutter/material.dart';
 import 'dart:convert';
 
-import 'package:catalogo_filmes/models/movie.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 import 'package:http/http.dart' as http;
+
+import '/models/movie.dart';
 
 class Favorites extends ChangeNotifier {
   List<Movie> favoriteMovies = [];

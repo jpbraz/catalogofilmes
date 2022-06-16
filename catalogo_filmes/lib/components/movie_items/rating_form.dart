@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../controller/firebaseController.dart';
-import '../models/movie.dart';
-import '../models/rating.dart';
+import '../../controller/firebaseController.dart';
+import '../../models/movie.dart';
+import '../../models/rating.dart';
 
 class RatingForm extends StatefulWidget {
   final Movie movie;

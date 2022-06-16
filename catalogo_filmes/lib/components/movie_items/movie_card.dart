@@ -1,12 +1,9 @@
-import 'package:catalogo_filmes/providers/catalog_provider.dart';
-import 'package:catalogo_filmes/utils/app_routes.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/movie.dart';
+import '/providers/catalog_provider.dart';
+import '/utils/app_routes.dart';
+import '../../models/movie.dart';
 
 class MovieCard extends StatefulWidget {
   final Movie movie;

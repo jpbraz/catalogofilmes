@@ -1,16 +1,6 @@
-/*
-#12 - Criar entidade de lista de filmes com seguintes atributos:
-
-Nome
-Lista de filmes
-Data de criação
-Descrição
-*/
-
 import 'dart:convert';
 
-import 'package:catalogo_filmes/providers/playlists_provider.dart';
-
+import '/providers/playlists_provider.dart';
 import 'movie.dart';
 
 class Playlist {

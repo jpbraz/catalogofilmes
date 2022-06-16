@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../components/card_movie_item.dart';
-import '../components/drawer.dart';
+import '../components/movie_items/favorite_movie_item.dart';
+import '../components/navigation/drawer.dart';
 import '../providers/favorites_provider.dart';
 
 class FavoritesScreen extends StatelessWidget {
