@@ -61,6 +61,7 @@ class _NewPlaylistState extends State<NewPlaylist> {
           child: Form(
               key: _formKey,
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   TextFormField(
                     initialValue: _formData['name']?.toString(),

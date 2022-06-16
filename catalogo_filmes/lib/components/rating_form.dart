@@ -30,11 +30,10 @@ class _RatingFormState extends State<RatingForm> {
   void initState() {
     super.initState();
     movie = widget.movie;
-    print("Rating para o movie: ${movie.title}");
+
     if (editMode) {
       rating = widget.rating!;
 
-      print("Editando a avaliação de ID: ${rating.id}");
       _formData['id'] = rating.id;
       _formData['movie'] = rating.movie;
       _formData['value'] = rating.value;
@@ -72,7 +71,6 @@ class _RatingFormState extends State<RatingForm> {
     final isValid = _formKey.currentState?.validate() ?? false;
 
     if (!isValid) {
-      print("Formulário inválido");
       return;
     }
 
@@ -86,11 +84,12 @@ class _RatingFormState extends State<RatingForm> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(15),
+      padding: EdgeInsets.fromLTRB(
+          15, 15, 15, (MediaQuery.of(context).viewInsets.bottom + 10)),
       child: Form(
         key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.all(10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text(
               movie.title,

@@ -1,6 +1,8 @@
 import 'package:catalogo_filmes/components/commentaries_info.dart';
+import 'package:catalogo_filmes/components/movie_info.dart';
 import 'package:catalogo_filmes/components/movie_menu.dart';
 import 'package:catalogo_filmes/providers/playlists_provider.dart';
+import 'package:catalogo_filmes/screens/movie_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,8 +25,8 @@ class DetailsScreen extends StatelessWidget {
       child: Scaffold(
         body: Column(
           children: [
-            MovieMenu(_movie),
-            CommentariesInfo(_movie),
+            Expanded(child: MovieMenu(_movie)),
+            Expanded(child: MovieInfo(_movie)),
           ],
         ),
       ),
