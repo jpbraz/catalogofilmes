@@ -1,3 +1,4 @@
+import 'package:catalogo_filmes/components/playlist_menu.dart';
 import 'package:catalogo_filmes/components/rating_form.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -133,57 +134,12 @@ class _MovieMenuState extends State<MovieMenu> {
                     } else if (option == Options.addTo) {
                       if (playlists.listOfPlayLists.isNotEmpty) {
                         showDialog(
-                          context: context,
-                          builder: (context) => StatefulBuilder(
-                            builder: ((context, setState) => AlertDialog(
-                                  title: const Text('Choose the playlist'),
-                                  content: DropdownButton(
-                                      value: dropDownValue,
-                                      items: playlists.listOfPlayLists.values
-                                          .map((playlist) => DropdownMenuItem(
-                                                child: Text(playlist.name
-                                                    .toUpperCase()),
-                                                value: playlist.id,
-                                              ))
-                                          .toList(),
-                                      onChanged: (String? newValue) {
-                                        setState(() {
-                                          dropDownValue = newValue!;
-                                        });
-                                      }),
-                                  actions: [
-                                    ElevatedButton(
-                                        onPressed: () async {
-                                          try {
-                                            await playlists.saveToPlaylist(
-                                                dropDownValue, widget._movie);
-                                          } catch (error) {
-                                            await showDialog<Null>(
-                                                context: context,
-                                                builder: (ctx) => AlertDialog(
-                                                      title: const Text(
-                                                          'An error occurred!'),
-                                                      content: const Text(
-                                                          'Something went wrong.'),
-                                                      actions: [
-                                                        ElevatedButton(
-                                                            onPressed: () =>
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop(),
-                                                            child: const Text(
-                                                                'Close'))
-                                                      ],
-                                                    ));
-                                          } finally {
-                                            Navigator.of(context).pop();
-                                          }
-                                        },
-                                        child: const Text('Confirm'))
-                                  ],
-                                )),
-                          ),
-                        );
+                            context: context,
+                            builder: (context) => StatefulBuilder(
+                                  builder: ((context, setState) =>
+                                      PlaylistMenuDialog(
+                                          dropDownValue, widget._movie)),
+                                ));
                       }
                     }
                   },
