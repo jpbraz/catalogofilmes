@@ -1,12 +1,3 @@
-/* 
-#13
-Criar entidade para avaliação do filme com os atributos:
-
-Comentário
-Nota
-Filme
-*/
-
 import 'dart:convert';
 
 import 'movie.dart';
