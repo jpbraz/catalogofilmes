@@ -1,12 +1,11 @@
+import 'package:flutter/material.dart';
 import 'dart:convert';
 
-import 'package:catalogo_filmes/providers/catalog_provider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
 
 import '../models/movie.dart';
 import '../models/playlist.dart';
-import 'package:http/http.dart' as http;
 
 class PlayLists with ChangeNotifier {
   final Map<String, Playlist> _listOfPlayLists = {};
@@ -39,7 +38,7 @@ class PlayLists with ChangeNotifier {
     if (response.statusCode >= 400) {
       throw 'Erro ao remover playlist';
     }
-    
+
     _listOfPlayLists
         .removeWhere((playlistKey, _) => playlistKey == playlist.id);
     notifyListeners();

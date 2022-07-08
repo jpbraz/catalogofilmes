@@ -1,14 +1,10 @@
-import 'package:catalogo_filmes/components/movie_card.dart';
-import 'package:catalogo_filmes/providers/catalog_provider.dart';
-import 'package:catalogo_filmes/providers/playlists_provider.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../components/drawer.dart';
-import '../providers/favorites_provider.dart';
+import '../providers/catalog_provider.dart';
+import '../providers/playlists_provider.dart';
+import '../components/movie_items/movie_card.dart';
+import '../components/navigation/drawer.dart';
 import '../providers/favorites_provider.dart';
 
 class CatalogScreen extends StatefulWidget {

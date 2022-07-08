@@ -1,8 +1,5 @@
-import 'package:catalogo_filmes/components/movie_card.dart';
 import 'package:catalogo_filmes/models/playlist.dart';
 import 'package:catalogo_filmes/utils/app_routes.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:flutter/material.dart';
 
@@ -24,7 +21,7 @@ class _PlaylistDetailsScreenState extends State<PlaylistDetailsScreen> {
               playlist.name,
             )),
         body: Container(
-          padding: EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.only(top: 10),
           color: Theme.of(context).colorScheme.primary,
           child: playlist.movieList!.isEmpty
               ? const Center(

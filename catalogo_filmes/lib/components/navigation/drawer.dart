@@ -25,9 +25,9 @@ class MyMainDrawer extends StatelessWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 50),
+              padding: const EdgeInsets.only(top: 50),
               color: Theme.of(context).colorScheme.primary,
-              height: MediaQuery.of(context).size.height * 0.857,
+              height: MediaQuery.of(context).size.height * 0.88745,
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

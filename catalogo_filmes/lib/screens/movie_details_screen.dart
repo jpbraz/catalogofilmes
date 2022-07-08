@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
+import '../components/movie_items/movie_info.dart';
+
 class MovieDetailScreen extends StatelessWidget {
   const MovieDetailScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final Movie movie = ModalRoute.of(context)!.settings.arguments as Movie;
+    final Movie _movie = ModalRoute.of(context)!.settings.arguments as Movie;
 
     return SafeArea(
       child: Scaffold(
@@ -23,7 +25,7 @@ class MovieDetailScreen extends StatelessWidget {
                       shape: BoxShape.rectangle,
                       image: DecorationImage(
                           opacity: 20,
-                          image: NetworkImage(movie.imageUrl),
+                          image: NetworkImage(_movie.imageUrl),
                           fit: BoxFit.fill),
                     ),
                   ),
@@ -32,7 +34,7 @@ class MovieDetailScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(10),
                         color: Colors.black87,
                         child: Text(
-                          movie.title,
+                          _movie.title,
                           style: Theme.of(context).textTheme.headline2,
                         )),
                     bottom: 10,
@@ -40,6 +42,7 @@ class MovieDetailScreen extends StatelessWidget {
                     right: 3,
                   ),
                   Positioned(
+                    top: 0,
                     child: Container(
                       color: Colors.black45,
                       padding:
@@ -63,63 +66,11 @@ class MovieDetailScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    top: 0,
                   )
                 ],
               ),
             ),
-            Container(
-              padding: const EdgeInsets.only(left: 10, top: 10),
-              color: Theme.of(context).colorScheme.primary,
-              height: MediaQuery.of(context).size.height * 0.4,
-              width: MediaQuery.of(context).size.width,
-              child: ListView(children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Full Title: ${movie.title}',
-                      style: Theme.of(context).textTheme.headline2,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'Year: ${movie.year}',
-                      style: Theme.of(context).textTheme.headline2,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'Directors: ${movie.directors}',
-                      style: Theme.of(context).textTheme.headline2,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'Cast: ${movie.crew}',
-                      style: Theme.of(context).textTheme.headline2,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'IMDb rate: ${movie.rate}',
-                      style: Theme.of(context).textTheme.headline2,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'Plot: ${movie.plot}',
-                      style: Theme.of(context).textTheme.headline2,
-                    ),
-                  ],
-                ),
-              ]),
-            ),
+            Expanded(child: MovieInfo(_movie))
           ],
         ),
       ),
