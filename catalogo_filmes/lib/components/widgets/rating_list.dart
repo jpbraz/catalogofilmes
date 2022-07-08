@@ -1,8 +1,8 @@
-import 'package:catalogo_filmes/components/rating_form.dart';
 import 'package:flutter/material.dart';
 
-import '../controller/firebaseController.dart';
-import '../models/rating.dart';
+import '../../controller/firebaseController.dart';
+import '../../models/rating.dart';
+import '../movie_items/rating_form.dart';
 
 class MyListTileCardRatings extends StatelessWidget {
   List<Rating> myList;

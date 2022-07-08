@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/playlist.dart';
-import '../providers/playlists_provider.dart';
+import '../../models/playlist.dart';
+import '../../providers/playlists_provider.dart';
 
 class EditPlaylist extends StatefulWidget {
   Playlist playlist;
