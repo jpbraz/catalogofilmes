@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../components/movie_items/movie_info.dart';
 import '../components/movie_items/movie_menu.dart';
+
 import '../models/movie.dart';
 
 class DetailsScreen extends StatelessWidget {
@@ -23,6 +24,7 @@ class DetailsScreen extends StatelessWidget {
       child: Scaffold(
         body: Column(
           children: [
+          
             Expanded(child: MovieMenu(_movie)),
             Expanded(child: MovieInfo(_movie)),
           ],
