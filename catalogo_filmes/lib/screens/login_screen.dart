@@ -1,10 +1,8 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
+import 'package:provider/provider.dart';
 import '../components/widgets/image_input.dart';
+import '../services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -21,6 +19,8 @@ class _LoginScreenState extends State<LoginScreen> {
   late String _title;
   late String _actionButtonLabel;
   late String _toggleButtonLabel;
+
+  bool loading = false;
 
   @override
   void initState() {
@@ -43,6 +43,30 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _selectImage(File? pickedImage) {
     _pickedImage = pickedImage;
+  }
+
+  login() async {
+    setState(() => loading = true);
+    try {
+      await context.read<AuthService>().login(_email.text, _password.text);
+    } on AuthException catch (e) {
+      setState(() => loading = false);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.message)));
+    }
+  }
+
+  registrar() async {
+    setState(() => loading = true);
+    try {
+      await context
+          .read<AuthService>()
+          .registrar(_email.text, _password.text, _pickedImage!.path);
+    } on AuthException catch (e) {
+      setState(() => loading = false);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.message)));
+    }
   }
 
   @override
@@ -107,7 +131,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         primary: Theme.of(context).colorScheme.secondary),
-                    onPressed: () {},
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        if (_isLogin) {
+                          login();
+                        } else {
+                          registrar();
+                        }
+                      }
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
