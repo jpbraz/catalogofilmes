@@ -1,4 +1,5 @@
 class AppRoutes {
+  static const STARTPAGE = '/startpage';
   static const CATALOG = '/catalog';
   static const DETAILS = '/details';
   static const FAVORITES = '/favorites';

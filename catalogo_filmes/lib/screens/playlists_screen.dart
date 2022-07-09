@@ -1,5 +1,5 @@
 import 'package:catalogo_filmes/components/navigation/drawer.dart';
-import 'package:catalogo_filmes/components/playlists_list.dart';
+import 'package:catalogo_filmes/components/widgets/playlists_list.dart';
 import 'package:catalogo_filmes/providers/playlists_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
