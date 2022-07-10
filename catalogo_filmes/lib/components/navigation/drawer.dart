@@ -1,5 +1,8 @@
 import 'package:catalogo_filmes/utils/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../services/auth_service.dart';
 
 class MyMainDrawer extends StatelessWidget {
   const MyMainDrawer({Key? key}) : super(key: key);
@@ -109,6 +112,57 @@ class MyMainDrawer extends StatelessWidget {
                             )
                           ],
                         )),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Divider(
+                      thickness: 2,
+                      color: Theme.of(context).colorScheme.tertiary,
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Consumer<AuthService>(
+                      builder: (context, auth, child) {
+                        return auth.user!.email!.isNotEmpty
+                            ? Center(
+                                child: Text(
+                                  auth.user!.email!.toString(),
+                                  style: const TextStyle(
+                                      fontSize: 12, color: Colors.white),
+                                ),
+                              )
+                            : const Center(
+                                child: Text(
+                                  'e-mail is null',
+                                  style: TextStyle(
+                                      fontSize: 24, color: Colors.white),
+                                ),
+                              );
+                      },
+                    ),
+                    TextButton(
+                      onPressed: () => context.read<AuthService>().logout(),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Logout',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30,
+                                color: Theme.of(context).colorScheme.tertiary,
+                              )),
+                          const SizedBox(
+                            width: 12,
+                          ),
+                          Icon(
+                            Icons.logout,
+                            size: 45,
+                            color: Theme.of(context).colorScheme.tertiary,
+                          )
+                        ],
+                      ),
+                    ),
                     const SizedBox(
                       height: 30,
                     ),

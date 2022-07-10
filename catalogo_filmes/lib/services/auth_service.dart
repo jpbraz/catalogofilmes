@@ -1,5 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+class AuthException implements Exception {
+  String message;
+  AuthException(this.message);
+}
 
 class AuthService extends ChangeNotifier {
   FirebaseAuth _auth = FirebaseAuth.instance;
@@ -18,5 +24,59 @@ class AuthService extends ChangeNotifier {
       isLoading = false;
       notifyListeners();
     });
+  }
+
+  _getUser() {
+    _user = _auth.currentUser;
+    notifyListeners();
+  }
+
+  registrar(String email, String password, String photoURL) async {
+    try {
+      await _auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) async {
+        _getUser();
+        if (photoURL.isNotEmpty) {
+          //await _user?.updateDisplayName(userName);
+          await _user?.updatePhotoURL(photoURL);
+        }
+        await FirebaseAuth.instance.setLanguageCode("pt-BR");
+        await user?.sendEmailVerification();
+      });
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        throw AuthException('A senha é muito fraca.');
+      } else if (e.code == 'email-already-in-use') {
+        throw AuthException('Este email já está cadastrado.');
+      } else {
+        throw AuthException('Verifique os valores inseridos.');
+      }
+    }
+  }
+
+  login(String email, String password) async {
+    try {
+      await _auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((value) => print(value.toString()));
+      _getUser();
+    } on FirebaseAuthException catch (e) {
+      debugPrint(e.code);
+      if (e.code == 'user-not-found') {
+        throw AuthException('E-mail não encontrado.');
+      } else if (e.code == 'invalid-email') {
+        throw AuthException('E-mail inválido.');
+      } else if (e.code == 'wrong-password') {
+        throw AuthException('Senha incorreta.');
+      } else {
+        throw AuthException('Verifique os valores inseridos.');
+      }
+    }
+  }
+
+  logout() async {
+    await _auth.signOut();
+    _getUser();
   }
 }
