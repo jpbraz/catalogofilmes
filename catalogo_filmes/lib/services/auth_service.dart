@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +11,7 @@ class AuthException implements Exception {
 }
 
 class AuthService extends ChangeNotifier {
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   User? _user;
   bool isLoading = true;
 
@@ -40,6 +43,7 @@ class AuthService extends ChangeNotifier {
         if (photoURL.isNotEmpty) {
           //await _user?.updateDisplayName(userName);
           await _user?.updatePhotoURL(photoURL);
+          await _uploadUserPhoto(photoURL);
         }
         await FirebaseAuth.instance.setLanguageCode("pt-BR");
         await user?.sendEmailVerification();
@@ -78,5 +82,13 @@ class AuthService extends ChangeNotifier {
   logout() async {
     await _auth.signOut();
     _getUser();
+  }
+
+  _uploadUserPhoto(String photoUrl) async {
+    final storageRef = FirebaseStorage.instance.ref('users-images');
+    final imageRef = storageRef.child('${_user!.uid}.jpg');
+    final imageFile = File(photoUrl);
+
+    await imageRef.putFile(imageFile);
   }
 }
