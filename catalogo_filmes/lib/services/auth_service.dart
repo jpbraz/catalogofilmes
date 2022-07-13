@@ -14,6 +14,7 @@ class AuthException implements Exception {
 class AuthService extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User? _user;
+  late File _profilePicture;
   bool isLoading = true;
   final storageRef = FirebaseStorage.instance.ref('users-images');
 
@@ -22,6 +23,7 @@ class AuthService extends ChangeNotifier {
   }
 
   User? get user => _user;
+  File get profilePicture => _profilePicture;
 
   _authCheck() {
     _auth.authStateChanges().listen((User? user) {
@@ -45,7 +47,7 @@ class AuthService extends ChangeNotifier {
         if (photoURL.isNotEmpty) {
           //await _user?.updateDisplayName(userName);
           await _user?.updatePhotoURL(photoURL);
-          await _uploadUserPhoto(photoURL);
+          await uploadUserPhoto(photoURL);
         }
         await FirebaseAuth.instance.setLanguageCode("pt-BR");
         await user?.sendEmailVerification();
@@ -67,7 +69,6 @@ class AuthService extends ChangeNotifier {
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) => print(value.toString()));
       _getUser();
-      await _downloadUserPhoto();
     } on FirebaseAuthException catch (e) {
       debugPrint(e.code);
       if (e.code == 'user-not-found') {
@@ -87,18 +88,19 @@ class AuthService extends ChangeNotifier {
     _getUser();
   }
 
-  _uploadUserPhoto(String photoUrl) async {
+  uploadUserPhoto(String photoUrl) async {
     final imageRef = storageRef.child('${_user!.uid}.jpg');
     final imageFile = File(photoUrl);
 
     await imageRef.putFile(imageFile);
   }
 
-  _downloadUserPhoto() async {
+  downloadUserPhoto() async {
     final dir = await getApplicationDocumentsDirectory();
     final fileRef = storageRef.child('${_user!.uid}.jpg');
     final file = File('${dir.path}/${fileRef.name}');
 
-    await fileRef.writeToFile(file);
+    await fileRef.writeToFile(file).then((_) => _profilePicture = file);
+    notifyListeners();
   }
 }

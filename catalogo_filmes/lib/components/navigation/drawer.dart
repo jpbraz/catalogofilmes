@@ -13,8 +13,6 @@ class MyMainDrawer extends StatefulWidget {
 }
 
 class _MyMainDrawerState extends State<MyMainDrawer> {
-  late File _profilePicture;
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -42,7 +40,11 @@ class _MyMainDrawerState extends State<MyMainDrawer> {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ProfileInfo(),
+                    Consumer<AuthService>(
+                      builder: ((context, auth, child) {
+                        return ProfileInfo(auth.profilePicture);
+                      }),
+                    ),
                     TextButton(
                         onPressed: () {
                           Navigator.of(context)
