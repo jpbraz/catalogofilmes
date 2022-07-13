@@ -16,7 +16,7 @@ class FavoritesScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.secondary,
         title: const Text('Favorite Movies'),
       ),
-      drawer: const MyMainDrawer(),
+      drawer: MyMainDrawer(),
       body: Container(
         padding: const EdgeInsets.only(top: 60, left: 10, right: 10),
         color: Theme.of(context).colorScheme.primary,

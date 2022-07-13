@@ -83,7 +83,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
                 ],
               ),
             ),
-      drawer: const MyMainDrawer(),
+      drawer: MyMainDrawer(),
     );
   }
 }

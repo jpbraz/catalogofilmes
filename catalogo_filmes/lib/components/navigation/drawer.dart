@@ -1,11 +1,19 @@
+import 'dart:io';
+
 import 'package:catalogo_filmes/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../services/auth_service.dart';
+import '../widgets/profile_info.dart';
 
-class MyMainDrawer extends StatelessWidget {
-  const MyMainDrawer({Key? key}) : super(key: key);
+class MyMainDrawer extends StatefulWidget {
+  @override
+  State<MyMainDrawer> createState() => _MyMainDrawerState();
+}
+
+class _MyMainDrawerState extends State<MyMainDrawer> {
+  late File _profilePicture;
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +38,11 @@ class MyMainDrawer extends StatelessWidget {
             Container(
               padding: const EdgeInsets.only(top: 50),
               color: Theme.of(context).colorScheme.primary,
-              height: MediaQuery.of(context).size.height * 0.88745,
+              height: MediaQuery.of(context).size.height * 0.7,
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    ProfileInfo(),
                     TextButton(
                         onPressed: () {
                           Navigator.of(context)
@@ -59,7 +68,7 @@ class MyMainDrawer extends StatelessWidget {
                           ],
                         )),
                     const SizedBox(
-                      height: 30,
+                      height: 10,
                     ),
                     TextButton(
                         onPressed: () {
@@ -86,7 +95,7 @@ class MyMainDrawer extends StatelessWidget {
                           ],
                         )),
                     const SizedBox(
-                      height: 30,
+                      height: 10,
                     ),
                     TextButton(
                         onPressed: () {
@@ -113,14 +122,14 @@ class MyMainDrawer extends StatelessWidget {
                           ],
                         )),
                     const SizedBox(
-                      height: 30,
+                      height: 10,
                     ),
                     Divider(
                       thickness: 2,
                       color: Theme.of(context).colorScheme.tertiary,
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 10,
                     ),
                     Consumer<AuthService>(
                       builder: (context, auth, child) {
@@ -164,7 +173,7 @@ class MyMainDrawer extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 10,
                     ),
                   ]),
             ),

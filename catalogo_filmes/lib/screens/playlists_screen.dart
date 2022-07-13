@@ -26,7 +26,7 @@ class PlaylistsScreen extends StatelessWidget {
                   : PlaylistList());
         }),
       ),
-      drawer: const MyMainDrawer(),
+      drawer: MyMainDrawer(),
     );
   }
 }

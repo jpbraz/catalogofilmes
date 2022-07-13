@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 
 class AuthException implements Exception {
   String message;
@@ -14,6 +15,7 @@ class AuthService extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User? _user;
   bool isLoading = true;
+  final storageRef = FirebaseStorage.instance.ref('users-images');
 
   AuthService() {
     _authCheck();
@@ -65,6 +67,7 @@ class AuthService extends ChangeNotifier {
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) => print(value.toString()));
       _getUser();
+      await _downloadUserPhoto();
     } on FirebaseAuthException catch (e) {
       debugPrint(e.code);
       if (e.code == 'user-not-found') {
@@ -85,10 +88,17 @@ class AuthService extends ChangeNotifier {
   }
 
   _uploadUserPhoto(String photoUrl) async {
-    final storageRef = FirebaseStorage.instance.ref('users-images');
     final imageRef = storageRef.child('${_user!.uid}.jpg');
     final imageFile = File(photoUrl);
 
     await imageRef.putFile(imageFile);
+  }
+
+  _downloadUserPhoto() async {
+    final dir = await getApplicationDocumentsDirectory();
+    final fileRef = storageRef.child('${_user!.uid}.jpg');
+    final file = File('${dir.path}/${fileRef.name}');
+
+    await fileRef.writeToFile(file);
   }
 }
