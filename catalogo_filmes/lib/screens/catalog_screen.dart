@@ -1,3 +1,4 @@
+import 'package:catalogo_filmes/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +19,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
   @override
   void initState() {
     _isLoading = true;
-
+    Provider.of<AuthService>(context, listen: false).downloadUserPhoto();
     if (Provider.of<CatalogProvider>(context, listen: false).movies.isEmpty) {
       Provider.of<CatalogProvider>(context, listen: false)
           .fetchMovies()
@@ -83,7 +84,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
                 ],
               ),
             ),
-      drawer: const MyMainDrawer(),
+      drawer: MyMainDrawer(),
     );
   }
 }

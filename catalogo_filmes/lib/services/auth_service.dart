@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 
 class AuthException implements Exception {
   String message;
@@ -13,13 +14,16 @@ class AuthException implements Exception {
 class AuthService extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User? _user;
+  late File _profilePicture;
   bool isLoading = true;
+  final storageRef = FirebaseStorage.instance.ref('users-images');
 
   AuthService() {
     _authCheck();
   }
 
   User? get user => _user;
+  File get profilePicture => _profilePicture;
 
   _authCheck() {
     _auth.authStateChanges().listen((User? user) {
@@ -43,7 +47,7 @@ class AuthService extends ChangeNotifier {
         if (photoURL.isNotEmpty) {
           //await _user?.updateDisplayName(userName);
           await _user?.updatePhotoURL(photoURL);
-          await _uploadUserPhoto(photoURL);
+          await uploadUserPhoto(photoURL);
         }
         await FirebaseAuth.instance.setLanguageCode("pt-BR");
         await user?.sendEmailVerification();
@@ -84,11 +88,19 @@ class AuthService extends ChangeNotifier {
     _getUser();
   }
 
-  _uploadUserPhoto(String photoUrl) async {
-    final storageRef = FirebaseStorage.instance.ref('users-images');
+  uploadUserPhoto(String photoUrl) async {
     final imageRef = storageRef.child('${_user!.uid}.jpg');
     final imageFile = File(photoUrl);
 
     await imageRef.putFile(imageFile);
+  }
+
+  downloadUserPhoto() async {
+    final dir = await getApplicationDocumentsDirectory();
+    final fileRef = storageRef.child('${_user!.uid}.jpg');
+    final file = File('${dir.path}/${fileRef.name}');
+
+    await fileRef.writeToFile(file).then((_) => _profilePicture = file);
+    notifyListeners();
   }
 }
