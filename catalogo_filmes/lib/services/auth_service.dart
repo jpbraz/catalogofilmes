@@ -52,6 +52,11 @@ class AuthService extends ChangeNotifier {
         }
         await FirebaseAuth.instance.setLanguageCode("pt-BR");
         await user?.sendEmailVerification();
+        await user?.updateDisplayName(userName);
+        await downloadUserPhoto();
+        await user?.reload().then((_) => _user = _auth.currentUser);
+
+        notifyListeners();
       });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -70,6 +75,8 @@ class AuthService extends ChangeNotifier {
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) => print(value.toString()));
       _getUser();
+      downloadUserPhoto();
+      notifyListeners();
     } on FirebaseAuthException catch (e) {
       debugPrint(e.code);
       if (e.code == 'user-not-found') {
@@ -85,8 +92,9 @@ class AuthService extends ChangeNotifier {
   }
 
   logout() async {
-    await _auth.signOut();
-    _getUser();
+    await _auth.signOut().then((_) {
+      _getUser();
+    });
   }
 
   uploadUserPhoto(String photoUrl) async {
