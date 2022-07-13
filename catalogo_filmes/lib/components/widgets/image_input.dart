@@ -82,21 +82,32 @@ class _ImageInputState extends State<ImageInput> {
     return GestureDetector(
       onTap: () => _takePicture(),
       onLongPress: () => _pickImageInGallery(),
-      child: Container(
-        width: 150,
-        height: 150,
-        decoration: BoxDecoration(
-          border: Border.all(width: 1, color: Colors.grey),
-        ),
-        alignment: Alignment.center,
-        child: _storedImage != null
-            ? Image.file(
-                _storedImage!,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              )
-            : const Text('Nenhuma Imagem!'),
-      ),
+      child: CircleAvatar(
+          radius: 72,
+          child: _storedImage == null
+              ? const Text(
+                  'Upload image',
+                  style: TextStyle(fontSize: 16, color: Colors.black54),
+                )
+              : null,
+          backgroundImage:
+              _storedImage != null ? FileImage(_storedImage!) : null,
+          backgroundColor: Colors.grey[300]),
+      // child: Container(
+      //   width: 150,
+      //   height: 150,
+      //   decoration: BoxDecoration(
+      //     border: Border.all(width: 1, color: Colors.grey),
+      //   ),
+      //   alignment: Alignment.center,
+      //   child: _storedImage != null
+      //       ? Image.file(
+      //           _storedImage!,
+      //           width: double.infinity,
+      //           fit: BoxFit.cover,
+      //         )
+      //       : const Text('Nenhuma Imagem!'),
+      // ),
     );
   }
 }

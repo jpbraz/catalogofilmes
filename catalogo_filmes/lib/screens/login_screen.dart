@@ -13,6 +13,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _email = TextEditingController();
   final _password = TextEditingController();
+  final _userName = TextEditingController();
   late File? _pickedImage;
 
   bool _isLogin = true;
@@ -59,14 +60,35 @@ class _LoginScreenState extends State<LoginScreen> {
   registrar() async {
     setState(() => loading = true);
     try {
-      await context
-          .read<AuthService>()
-          .registrar(_email.text, _password.text, _pickedImage!.path);
+      await context.read<AuthService>().registrar(
+          _email.text, _password.text, _pickedImage!.path, _userName.text);
     } on AuthException catch (e) {
       setState(() => loading = false);
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.message)));
     }
+  }
+
+  Widget _buildSignUpNameAndPhotoFields(Function selectImage) {
+    return Column(
+      children: [
+        ImageInput(selectImage),
+        Padding(
+          padding: const EdgeInsets.only(left: 24, right: 24, top: 15),
+          child: TextFormField(
+            controller: _userName,
+            decoration: const InputDecoration(
+                border: OutlineInputBorder(), labelText: 'Username'),
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'Insert your username!';
+              }
+              return null;
+            },
+          ),
+        ),
+      ],
+    );
   }
 
   @override
@@ -92,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ? const SizedBox(
                         height: 0,
                       )
-                    : ImageInput(_selectImage),
+                    : _buildSignUpNameAndPhotoFields(_selectImage),
                 Padding(
                   padding: const EdgeInsets.only(left: 24, right: 24, top: 15),
                   child: TextFormField(

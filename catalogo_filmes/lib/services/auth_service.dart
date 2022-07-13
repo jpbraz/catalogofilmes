@@ -38,7 +38,8 @@ class AuthService extends ChangeNotifier {
     notifyListeners();
   }
 
-  registrar(String email, String password, String photoURL) async {
+  registrar(
+      String email, String password, String photoURL, String userName) async {
     try {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
