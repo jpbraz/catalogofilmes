@@ -19,7 +19,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
   @override
   void initState() {
     _isLoading = true;
-    // Provider.of<AuthService>(context, listen: false).downloadUserPhoto();
+    Provider.of<AuthService>(context, listen: false).downloadUserPhoto();
     if (Provider.of<CatalogProvider>(context, listen: false).movies.isEmpty) {
       Provider.of<CatalogProvider>(context, listen: false)
           .fetchMovies()
