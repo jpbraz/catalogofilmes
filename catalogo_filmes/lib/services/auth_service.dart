@@ -14,7 +14,7 @@ class AuthException implements Exception {
 class AuthService extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User? _user;
-  late File _profilePicture;
+  File _profilePicture = File('image/person-icon.png');
   bool isLoading = true;
   final storageRef = FirebaseStorage.instance.ref('users-images');
 
@@ -24,6 +24,7 @@ class AuthService extends ChangeNotifier {
 
   User? get user => _user;
   File get profilePicture => _profilePicture;
+  FirebaseAuth get auth => _auth;
 
   _authCheck() {
     _auth.authStateChanges().listen((User? user) {
@@ -46,8 +47,6 @@ class AuthService extends ChangeNotifier {
           .then((value) async {
         _getUser();
         if (photoURL.isNotEmpty) {
-          //await _user?.updateDisplayName(userName);
-          await _user?.updatePhotoURL(photoURL);
           await uploadUserPhoto(photoURL);
         }
         await FirebaseAuth.instance.setLanguageCode("pt-BR");
@@ -100,6 +99,11 @@ class AuthService extends ChangeNotifier {
   uploadUserPhoto(String photoUrl) async {
     final imageRef = storageRef.child('${_user!.uid}.jpg');
     final imageFile = File(photoUrl);
+
+    final imageUrl = await imageRef.getDownloadURL().then((value) {
+      debugPrint("[IMAGE] URL: $value");
+      _user?.updatePhotoURL(value);
+    });
 
     await imageRef.putFile(imageFile);
   }

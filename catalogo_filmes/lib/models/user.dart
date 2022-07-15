@@ -2,7 +2,7 @@ import 'movie.dart';
 import 'playlist.dart';
 import 'rating.dart';
 
-class User {
+class UserApp {
   String uid; // User ID do Firebase
   String userName; // Nome
   String? profilePictureUrl; // Foto do Usuário
@@ -10,10 +10,19 @@ class User {
   List<Rating>? ratings; //Lista de Avaliações;
   List<Playlist>? playlists; //Lista de PlayLists;
 
-  User({
+  UserApp({
     required this.uid,
     required this.userName,
+    this.profilePictureUrl,
   });
+
+  factory UserApp.fromJson(String id, Map<String, dynamic> json) {
+    return UserApp(
+      uid: json['uid'],
+      userName: json['userName'],
+      profilePictureUrl: json["profilePictureUrl"],
+    );
+  }
 
   addMovieToListOfFavorites(Movie movie) {
     favorites?.add(movie);

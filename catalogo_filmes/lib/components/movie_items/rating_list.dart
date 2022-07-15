@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../services/auth_service.dart';
 import '/components/movie_items/rating_form.dart';
 import '../../controller/firebaseController.dart';
 import '../../models/rating.dart';
@@ -22,30 +24,48 @@ class MyListTileCardRatings extends StatelessWidget {
           elevation: 2,
           shadowColor: Colors.grey,
           color: Theme.of(context).colorScheme.primary,
-          child: ListTile(
-            isThreeLine: true,
-            onTap: () => _onTapListTile(context, myObject),
-            title: Text(
-              myObject.value.toStringAsFixed(1),
-              style: Theme.of(context).textTheme.headline2,
-            ),
-            subtitle: Text(myObject.comment!,
-                style: Theme.of(context).textTheme.headline1),
-            leading: SizedBox(
-              height: 50,
-              width: 50,
-              child: Image.network(
-                'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png',
-                fit: BoxFit.cover,
-              ),
-            ),
-            trailing: IconButton(
-              onPressed: () => _removeWithSnackBar(context, 'Remove', myObject),
-              icon: const Icon(
-                Icons.delete,
-                color: Colors.red,
-              ),
-            ),
+          child: Consumer<AuthService>(
+            builder: (context, auth, child) {
+              String userIDentifier = auth.user!.uid;
+              return ListTile(
+                isThreeLine: true,
+                onTap: () => userIDentifier == myObject.userApp.uid
+                    ? _onTapListTile(context, myObject)
+                    : _snackMessage(
+                        context, 'Não pode alterar objeto de outro usuário'),
+                title: Text(
+                  myObject.value.toStringAsFixed(1),
+                  style: Theme.of(context).textTheme.headline2,
+                ),
+                subtitle: Text(myObject.comment!,
+                    style: Theme.of(context).textTheme.headline1),
+                leading: SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: myObject.userApp.profilePictureUrl !=
+                          null //auth.user!.photoURL != null
+                      ? Image(
+                          image: NetworkImage(myObject.userApp
+                              .profilePictureUrl!), //NetworkImage(auth.user!.photoURL!),
+                          fit: BoxFit.cover,
+                        )
+                      : const Image(
+                          image: AssetImage('image/person-icon.png'),
+                          fit: BoxFit.cover,
+                        ),
+                ),
+                trailing: IconButton(
+                  onPressed: () => userIDentifier == myObject.userApp.uid
+                      ? _removeWithSnackBar(context, 'Remove', myObject)
+                      : _snackMessage(
+                          context, 'Não pode excluir objeto de outro usuário'),
+                  icon: const Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                  ),
+                ),
+              );
+            },
           ),
         );
       },
@@ -58,7 +78,7 @@ class MyListTileCardRatings extends StatelessWidget {
       action: SnackBarAction(
         label: label,
         onPressed: () {
-          controller.deleteRatingInFirebase(myObject.id);
+          controller.deleteRatingInFirebase(myObject);
           return;
           // Some code to undo the change.
         },
@@ -89,4 +109,11 @@ class MyListTileCardRatings extends StatelessWidget {
           contentPadding: EdgeInsets.zero,
         ),
       );
+
+  void _snackMessage(context, String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 }

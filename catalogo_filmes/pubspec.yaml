@@ -73,6 +73,7 @@ flutter:
       - .env
       - assets/data/movies.json
       - assets/data/my_genre_data.json
+      - assets/image/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
