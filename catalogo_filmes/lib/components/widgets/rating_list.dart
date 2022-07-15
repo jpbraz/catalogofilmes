@@ -49,7 +49,7 @@ class MyListTileCardRatings extends StatelessWidget {
       action: SnackBarAction(
         label: label,
         onPressed: () {
-          controller.deleteRatingInFirebase(myObject.id);
+          controller.deleteRatingInFirebase(myObject);
           return;
           // Some code to undo the change.
         },
