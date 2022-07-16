@@ -56,12 +56,13 @@ class FirebaseController {
     }
   }
 
-  Future<void> _addRatingInFirebase(String movieID, Rating rating) {
+  Future<void> _addRatingInFirebase(String movieID, Rating rating) async {
     DatabaseReference _databaseRatingRef =
         FirebaseDatabase.instance.ref('/movies/$movieID/ratings');
     DatabaseReference newRatingRef = _databaseRatingRef.push();
 
-    final result = newRatingRef.set(rating.toJson());
+    final result = await newRatingRef.set(rating.toJson());
+    await newRatingRef.update({'id': newRatingRef.key});
 
     return result;
   }
@@ -112,11 +113,24 @@ class FirebaseController {
     List<Rating> ratings = [];
     final _dataBaseRatingsRef =
         FirebaseDatabase.instance.ref('/movies/${movie.id}/ratings');
+
+    /*
     await _dataBaseRatingsRef.once().then((snapshot) {
       if (snapshot != null) {
         print(snapshot);
       }
-    });
+    });*/
+    final snapshot = await _dataBaseRatingsRef.get();
+    if (snapshot.exists) {
+      final data = snapshot.value as Map;
+
+      data.forEach((key, value) {
+        debugPrint("[DATA] forEach in getRatingsInFirebaseByMovie : $value");
+        Rating rating = Rating.fromJson(value['id'] as String, value);
+        ratings.add(rating);
+      });
+    }
+
     return ratings;
   }
 }
