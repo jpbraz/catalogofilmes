@@ -8,7 +8,6 @@ import 'package:http/http.dart' as http;
 import '../models/movie.dart';
 
 class Movies with ChangeNotifier {
-  // final _baseURL = dotenv.get('FIREBASE_URL');
   final _databaseMovieRef = FirebaseDatabase.instance.ref('/movies');
 
   Future<void> addMovie(Movie movie) async {

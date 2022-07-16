@@ -21,21 +21,20 @@ class _CommentariesInfoState extends State<CommentariesInfo> {
   @override
   void initState() {
     ratings = [];
-
+    getRating(widget._movie);
     super.initState();
   }
 
   void getRating(Movie movie) async {
-    List<Rating> aux =
-        await FirebaseController().getRatingsInFirebaseByMovie(movie);
-    setState(() {
-      ratings = aux;
+    await FirebaseController().getRatingsInFirebaseByMovie(movie).then((value) {
+      setState(() {
+        ratings = value;
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    getRating(widget._movie);
     return Column(
       children: [
         IconButton(

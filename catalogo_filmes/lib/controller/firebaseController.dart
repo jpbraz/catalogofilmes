@@ -69,19 +69,13 @@ class FirebaseController {
 
   Future<void> _updateRatingInFirebase(
       String ratingID, Rating rating, String movieID) async {
-    final url = "$_baseUrl/movies/$movieID/ratings/$ratingID.json";
-    await http
-        .patch(
-          Uri.parse(url),
-          body: jsonEncode(
-            {
-              "value": rating.value,
-              "comment": rating.comment,
-            },
-          ),
-        )
-        .then((response) => print(
-            "Status: ${response.statusCode.toString()} = ${response.reasonPhrase.toString()}"));
+    DatabaseReference _databaseRatingRef =
+        FirebaseDatabase.instance.ref('/movies/$movieID/ratings/$ratingID');
+
+    await _databaseRatingRef.update({
+      'value': rating.value,
+      'comment': rating.comment,
+    });
   }
 
   Future<void> deleteRatingInFirebase(Rating rating) async {
@@ -114,12 +108,6 @@ class FirebaseController {
     final _dataBaseRatingsRef =
         FirebaseDatabase.instance.ref('/movies/${movie.id}/ratings');
 
-    /*
-    await _dataBaseRatingsRef.once().then((snapshot) {
-      if (snapshot != null) {
-        print(snapshot);
-      }
-    });*/
     final snapshot = await _dataBaseRatingsRef.get();
     if (snapshot.exists) {
       final data = snapshot.value as Map;

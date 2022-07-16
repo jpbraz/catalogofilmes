@@ -55,16 +55,18 @@ class MyListTileCardRatings extends StatelessWidget {
                           fit: BoxFit.cover,
                         ),
                 ),
-                trailing: IconButton(
-                  onPressed: () => userIDentifier == myObject.userApp.uid
-                      ? _removeWithSnackBar(context, 'Remove', myObject)
-                      : _snackMessage(
-                          context, 'Não pode excluir objeto de outro usuário'),
-                  icon: const Icon(
-                    Icons.delete,
-                    color: Colors.red,
-                  ),
-                ),
+                trailing: userIDentifier == myObject.userApp.uid
+                    ? IconButton(
+                        onPressed: () => userIDentifier == myObject.userApp.uid
+                            ? _removeWithSnackBar(context, 'Remove', myObject)
+                            : _snackMessage(context,
+                                'Não pode excluir objeto de outro usuário'),
+                        icon: const Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                        ),
+                      )
+                    : const SizedBox(),
               );
             },
           ),
