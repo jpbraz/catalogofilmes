@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:catalogo_filmes/models/rating.dart';
 import 'package:catalogo_filmes/providers/movie_provider.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
@@ -56,24 +57,13 @@ class FirebaseController {
   }
 
   Future<void> _addRatingInFirebase(String movieID, Rating rating) {
-    final future = http.patch(
-      Uri.parse('$_baseUrl/movies/$movieID/ratings.json'),
-      body: jsonEncode(
-        {
-          "value": rating.value,
-          "comment": rating.comment,
-          "userApp": {
-            "uid": rating.userApp.uid,
-            "userName": rating.userApp.userName,
-            "profilePictureUrl": rating.userApp.profilePictureUrl,
-          },
-        },
-      ),
-    );
-    return future.then((response) {
-      final id = jsonDecode(response.body)['name'];
-      debugPrint("Avaliaçao gravadas com sucesso. ID retornado: $id");
-    });
+    DatabaseReference _databaseRatingRef =
+        FirebaseDatabase.instance.ref('/movies/$movieID/ratings');
+    DatabaseReference newRatingRef = _databaseRatingRef.push();
+
+    final result = newRatingRef.set(rating.toJson());
+
+    return result;
   }
 
   Future<void> _updateRatingInFirebase(
@@ -119,28 +109,14 @@ class FirebaseController {
   }
 
   Future<List<Rating>> getRatingsInFirebaseByMovie(Movie movie) async {
-    final url = "$_baseUrl/ratings_and_reviews.json";
-    try {
-      final response = await http.get(Uri.parse(url));
-
-      List<Rating> result = [];
-
-      if (response.statusCode == 200 && response.body != "null") {
-        Map<String, dynamic> map = jsonDecode(response.body);
-
-        map.forEach((key, value) {
-          if (value['movie']['id'].toString() == movie.id) {
-            Rating rating = Rating.fromJson(key, value);
-            result.add(rating);
-          }
-        });
-      } else {
-        throw Exception('Failed to load rating');
+    List<Rating> ratings = [];
+    final _dataBaseRatingsRef =
+        FirebaseDatabase.instance.ref('/movies/${movie.id}/ratings');
+    await _dataBaseRatingsRef.once().then((snapshot) {
+      if (snapshot != null) {
+        print(snapshot);
       }
-
-      return result;
-    } catch (error) {
-      rethrow;
-    }
+    });
+    return ratings;
   }
 }

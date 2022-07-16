@@ -7,7 +7,6 @@ class UserApp {
   String userName; // Nome
   String? profilePictureUrl; // Foto do Usuário
   List<Movie>? favorites; //Lista de Filmes Favoritos
-  List<Rating>? ratings; //Lista de Avaliações;
   List<Playlist>? playlists; //Lista de PlayLists;
 
   UserApp({
@@ -15,6 +14,16 @@ class UserApp {
     required this.userName,
     this.profilePictureUrl,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'uid': uid,
+      'userName': userName,
+      'profilePictureUrl': profilePictureUrl,
+      'favorites': favorites,
+      'playlists': playlists,
+    };
+  }
 
   factory UserApp.fromJson(String id, Map<String, dynamic> json) {
     return UserApp(

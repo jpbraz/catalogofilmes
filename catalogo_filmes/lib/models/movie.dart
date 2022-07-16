@@ -45,7 +45,7 @@ class Movie {
     };
   }
 
-  factory Movie.fromJson(String id, Map<String, dynamic> json) {
+  factory Movie.fromJson(String id, Map json) {
     return Movie(
       id: id,
       title: json['title'],

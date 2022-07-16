@@ -13,6 +13,15 @@ class Rating {
     required this.userApp,
   });
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'value': value,
+      'comment': comment,
+      'userApp': userApp.toJson(),
+    };
+  }
+
   factory Rating.fromJson(String id, Map<String, dynamic> json) {
     UserApp localUserApp =
         UserApp.fromJson(json['userApp']['uid'], json['userApp']);
