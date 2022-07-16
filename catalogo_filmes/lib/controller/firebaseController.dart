@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:catalogo_filmes/models/rating.dart';
+import 'package:catalogo_filmes/providers/movie_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
@@ -21,14 +22,10 @@ class FirebaseController {
     bool hasId = data['id'] != null;
     bool hasComment = data['comment'] != null;
     Movie movie = data['movie'] as Movie;
-    final url = '$_baseUrl/movies/${movie.id}.json';
-    final movieResponse = await http.get(Uri.parse(url));
+    final movieFounded = await Movies().getMovie(movie.id);
 
-    if (movieResponse.statusCode == 200 && movieResponse.body != "null") {
-      //TODO - Adicionar comentário no filme
-
-    } else {
-      //TODO - Adicionar filme ao Firebase e adicionar comentário
+    if (movieFounded == null) {
+      Movies().addMovie(movie);
     }
 
     String userName =
@@ -52,15 +49,17 @@ class FirebaseController {
     );
 
     if (hasId) {
-      return _updateRatingInFirebase(rating.id, rating);
+      return _updateRatingInFirebase(rating.id, rating, movie.id);
     } else {
-      return _addRatingInFirebase(movie, rating);
+      return _addRatingInFirebase(movie.id, rating);
     }
   }
 
-  Future<void> _addRatingInFirebase(Movie movie, Rating rating) {
-    final future = http.post(Uri.parse('$_baseUrl/ratings_and_reviews.json'),
-        body: jsonEncode({
+  Future<void> _addRatingInFirebase(String movieID, Rating rating) {
+    final future = http.patch(
+      Uri.parse('$_baseUrl/movies/$movieID/ratings.json'),
+      body: jsonEncode(
+        {
           "value": rating.value,
           "comment": rating.comment,
           "userApp": {
@@ -68,21 +67,23 @@ class FirebaseController {
             "userName": rating.userApp.userName,
             "profilePictureUrl": rating.userApp.profilePictureUrl,
           },
-        }));
+        },
+      ),
+    );
     return future.then((response) {
       final id = jsonDecode(response.body)['name'];
       debugPrint("Avaliaçao gravadas com sucesso. ID retornado: $id");
     });
   }
 
-  Future<void> _updateRatingInFirebase(String id, Rating rating) async {
-    final url = "$_baseUrl/ratings_and_reviews/$id.json";
+  Future<void> _updateRatingInFirebase(
+      String ratingID, Rating rating, String movieID) async {
+    final url = "$_baseUrl/movies/$movieID/ratings/$ratingID.json";
     await http
         .patch(
           Uri.parse(url),
           body: jsonEncode(
             {
-              //"movie": rating.movie,
               "value": rating.value,
               "comment": rating.comment,
             },
