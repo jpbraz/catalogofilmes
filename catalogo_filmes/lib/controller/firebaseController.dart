@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:catalogo_filmes/models/rating.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
@@ -16,9 +17,19 @@ class FirebaseController {
 
   final user = AuthService().auth.currentUser!;
 
-  Future<void> saveRatingForm(Map<String, Object> data) {
+  Future<void> saveRatingForm(Map<String, Object> data) async {
     bool hasId = data['id'] != null;
     bool hasComment = data['comment'] != null;
+    Movie movie = data['movie'] as Movie;
+    final url = '$_baseUrl/movies/${movie.id}.json';
+    final movieResponse = await http.get(Uri.parse(url));
+
+    if (movieResponse.statusCode == 200 && movieResponse.body != "null") {
+      //TODO - Adicionar comentário no filme
+
+    } else {
+      //TODO - Adicionar filme ao Firebase e adicionar comentário
+    }
 
     String userName =
         user.displayName != null ? user.displayName.toString() : 'Sem nome';
@@ -35,7 +46,6 @@ class FirebaseController {
     print("[===DATA]: ${userLocal.profilePictureUrl}");
     final rating = Rating(
       id: hasId ? data['id'] as String : Random().nextDouble().toString(),
-      movie: data['movie'] as Movie,
       value: data['value'] as double,
       comment: hasComment ? data['comment'] as String : null,
       userApp: userLocal,
@@ -44,14 +54,13 @@ class FirebaseController {
     if (hasId) {
       return _updateRatingInFirebase(rating.id, rating);
     } else {
-      return _addRatingInFirebase(rating);
+      return _addRatingInFirebase(movie, rating);
     }
   }
 
-  Future<void> _addRatingInFirebase(Rating rating) {
+  Future<void> _addRatingInFirebase(Movie movie, Rating rating) {
     final future = http.post(Uri.parse('$_baseUrl/ratings_and_reviews.json'),
         body: jsonEncode({
-          "movie": rating.movie,
           "value": rating.value,
           "comment": rating.comment,
           "userApp": {
@@ -62,7 +71,7 @@ class FirebaseController {
         }));
     return future.then((response) {
       final id = jsonDecode(response.body)['name'];
-      print("Avaliaçao gravadas com sucesso. ID retornado: $id");
+      debugPrint("Avaliaçao gravadas com sucesso. ID retornado: $id");
     });
   }
 
@@ -110,22 +119,27 @@ class FirebaseController {
 
   Future<List<Rating>> getRatingsInFirebaseByMovie(Movie movie) async {
     final url = "$_baseUrl/ratings_and_reviews.json";
-    final response = await http.get(Uri.parse(url));
+    try {
+      final response = await http.get(Uri.parse(url));
 
-    List<Rating> result = [];
+      List<Rating> result = [];
 
-    if (response.statusCode == 200) {
-      Map<String, dynamic> map = jsonDecode(response.body);
+      if (response.statusCode == 200 && response.body != "null") {
+        Map<String, dynamic> map = jsonDecode(response.body);
 
-      map.forEach((key, value) {
-        if (value['movie']['id'].toString() == movie.id) {
-          Rating rating = Rating.fromJson(key, value);
-          result.add(rating);
-        }
-      });
+        map.forEach((key, value) {
+          if (value['movie']['id'].toString() == movie.id) {
+            Rating rating = Rating.fromJson(key, value);
+            result.add(rating);
+          }
+        });
+      } else {
+        throw Exception('Failed to load rating');
+      }
+
       return result;
-    } else {
-      throw Exception('Failed to load rating');
+    } catch (error) {
+      rethrow;
     }
   }
 }

@@ -48,7 +48,7 @@ class _CommentariesInfoState extends State<CommentariesInfo> {
                       ));
             },
             icon: const Icon(Icons.add)),
-        MyListTileCardRatings(ratings),
+        MyListTileCardRatings(ratings, widget._movie),
       ],
     );
   }

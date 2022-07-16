@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/movie.dart';
 import '../../services/auth_service.dart';
 import '/components/movie_items/rating_form.dart';
 import '../../controller/firebaseController.dart';
@@ -9,8 +10,8 @@ import '../../models/rating.dart';
 class MyListTileCardRatings extends StatelessWidget {
   List<Rating> myList;
   FirebaseController controller = FirebaseController();
-
-  MyListTileCardRatings(this.myList, {Key? key}) : super(key: key);
+  Movie movie;
+  MyListTileCardRatings(this.myList, this.movie, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +90,10 @@ class MyListTileCardRatings extends StatelessWidget {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  void _onTapListTile(context, Rating myObject) {
+  void _onTapListTile(
+    context,
+    Rating myObject,
+  ) {
     _openModelForm(context, myObject).then(
       (_) => {
         print("${myObject.id} alterado/fechado com sucesso."),
@@ -97,14 +101,18 @@ class MyListTileCardRatings extends StatelessWidget {
     );
   }
 
-  Future<void> _openModelForm(context, Rating myObject) => showDialog(
+  Future<void> _openModelForm(
+    context,
+    Rating myObject,
+  ) =>
+      showDialog(
         context: context,
         builder: (context) => AlertDialog(
           title: const Text('Edit'),
           titlePadding: const EdgeInsets.all(20),
           content: SizedBox(
             width: 500,
-            child: RatingForm(movie: myObject.movie, rating: myObject),
+            child: RatingForm(movie: movie, rating: myObject),
           ),
           contentPadding: EdgeInsets.zero,
         ),

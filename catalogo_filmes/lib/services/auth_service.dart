@@ -100,12 +100,10 @@ class AuthService extends ChangeNotifier {
     final imageRef = storageRef.child('${_user!.uid}.jpg');
     final imageFile = File(photoUrl);
 
-    final imageUrl = await imageRef.getDownloadURL().then((value) {
-      debugPrint("[IMAGE] URL: $value");
-      _user?.updatePhotoURL(value);
-    });
-
     await imageRef.putFile(imageFile);
+
+    final imageUrl = await imageRef.getDownloadURL();
+    _user?.updatePhotoURL(imageUrl);
   }
 
   downloadUserPhoto() async {
