@@ -102,8 +102,12 @@ class AuthService extends ChangeNotifier {
 
     await imageRef.putFile(imageFile);
 
-    final imageUrl = await imageRef.getDownloadURL();
-    _user?.updatePhotoURL(imageUrl);
+    final imageUrl = await imageRef.getDownloadURL().then(
+      (value) {
+        _user?.updatePhotoURL(value);
+      },
+    );
+    //_user?.updatePhotoURL(imageUrl);
   }
 
   downloadUserPhoto() async {
