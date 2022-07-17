@@ -81,20 +81,27 @@ class PlayLists with ChangeNotifier {
   }
 
   Future<void> fetchPlaylists() async {
-    final response = await http.get(
-      Uri.parse('$_baseURL/playlists.json'),
-    );
-    final data = jsonDecode(response.body);
-
-    for (var playlist in data.keys) {
-      final loadedPlaylist = Playlist(
-        id: playlist,
-        name: data[playlist]['title'],
-        description: data[playlist]['description'],
-        creationDate: data[playlist]['creation-date'],
-        movieList: getMovies(data[playlist]['movies']),
+    try {
+      final response = await http.get(
+        Uri.parse('$_baseURL/playlists.json'),
       );
-      _listOfPlayLists[playlist] = loadedPlaylist;
+      if (response.body != "null") {
+        final data = jsonDecode(response.body);
+        for (var playlist in data.keys) {
+          final loadedPlaylist = Playlist(
+            id: playlist,
+            name: data[playlist]['title'],
+            description: data[playlist]['description'],
+            creationDate: data[playlist]['creation-date'],
+            movieList: getMovies(data[playlist]['movies']),
+          );
+          _listOfPlayLists[playlist] = loadedPlaylist;
+        }
+      } else {
+        debugPrint("[fetchPlaylist] response.body is empty");
+      }
+    } catch (error) {
+      rethrow;
     }
   }
 

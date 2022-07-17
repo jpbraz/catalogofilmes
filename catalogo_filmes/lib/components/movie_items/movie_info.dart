@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../models/movie.dart';
-import 'commentaries_info.dart';
+import 'rating_list.dart';
 
 class MovieInfo extends StatelessWidget {
   final Movie _movie;
 
-  MovieInfo(this._movie);
+  const MovieInfo(this._movie, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,7 @@ class MovieInfo extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        CommentariesInfo(_movie),
+        MyListTileCardRatings(_movie),
       ]),
     );
   }

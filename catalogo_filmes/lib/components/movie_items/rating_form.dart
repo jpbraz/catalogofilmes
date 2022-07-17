@@ -35,7 +35,7 @@ class _RatingFormState extends State<RatingForm> {
       rating = widget.rating!;
 
       _formData['id'] = rating.id;
-      _formData['movie'] = rating.movie;
+      _formData['movie'] = movie;
       _formData['value'] = rating.value;
       _formData['comment'] = rating.comment!;
     } else {
@@ -53,7 +53,7 @@ class _RatingFormState extends State<RatingForm> {
       if (arg != null) {
         final rating = arg as Rating;
         _formData['id'] = rating.id;
-        _formData['movie'] = rating.movie;
+        _formData['movie'] = movie;
         _formData['value'] = rating.value;
         _formData['comment'] = rating.comment!;
       }
