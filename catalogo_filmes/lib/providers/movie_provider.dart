@@ -1,9 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'dart:convert';
-
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:http/http.dart' as http;
 
 import '../models/movie.dart';
 
@@ -29,7 +25,8 @@ class Movies with ChangeNotifier {
 
       return loadedMovie;
     } else {
-      debugPrint("[getMovie] response.body is empty");
+      debugPrint(
+          "[INFO] getMovie in movie_provider: there isn't movie with id $id, in firebase_database.");
       return null;
     }
   }
