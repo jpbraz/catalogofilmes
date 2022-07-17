@@ -110,8 +110,7 @@ class FirebaseController {
 
     final snapshot = await _dataBaseRatingsRef.get();
     if (snapshot.exists) {
-      final data = snapshot.value as Map;
-
+      final data = jsonDecode(jsonEncode(snapshot.value));
       data.forEach((key, value) {
         debugPrint("[DATA] forEach in getRatingsInFirebaseByMovie : $value");
         Rating rating = Rating.fromJson(value['id'] as String, value);

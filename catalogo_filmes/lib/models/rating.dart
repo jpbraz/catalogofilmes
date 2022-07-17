@@ -2,7 +2,7 @@ import 'package:catalogo_filmes/models/user.dart';
 
 class Rating {
   String id; // ID da avaliação
-  double value; // Nota da Avaliação
+  num value; // Nota da Avaliação
   String? comment; // Comentários da avaliação
   UserApp userApp;
 
