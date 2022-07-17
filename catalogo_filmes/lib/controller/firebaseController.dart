@@ -40,8 +40,7 @@ class FirebaseController {
       userName: userName,
       profilePictureUrl: photoURL,
     );
-    print(user);
-    print("[===DATA]: ${userLocal.profilePictureUrl}");
+
     final rating = Rating(
       id: hasId ? data['id'] as String : Random().nextDouble().toString(),
       value: data['value'] as double,
@@ -61,10 +60,8 @@ class FirebaseController {
         FirebaseDatabase.instance.ref('/movies/$movieID/ratings');
     DatabaseReference newRatingRef = _databaseRatingRef.push();
 
-    final result = await newRatingRef.set(rating.toJson());
+    await newRatingRef.set(rating.toJson());
     await newRatingRef.update({'id': newRatingRef.key});
-
-    return result;
   }
 
   Future<void> _updateRatingInFirebase(
@@ -78,16 +75,17 @@ class FirebaseController {
     });
   }
 
-  Future<void> deleteRatingInFirebase(Rating rating) async {
-    final url = "$_baseUrl/ratings_and_reviews/${rating.id}.json";
+  Future<void> deleteRatingInFirebase(String movieID, Rating rating) async {
     bool isOwner = rating.userApp.uid == user.uid ? true : false;
     if (isOwner) {
-      return http.delete(Uri.parse(url)).then((response) {
-        print(response.statusCode);
-        if (response.statusCode >= 400) {
-          throw Exception("Could not delete!");
-        }
-      });
+      try {
+        DatabaseReference ref = FirebaseDatabase.instance
+            .ref('/movies/$movieID/ratings/${rating.id}');
+        await ref.remove();
+        debugPrint('[INFO]: Rating removed: ${rating.id}');
+      } catch (e) {
+        rethrow;
+      }
     }
   }
 
@@ -109,13 +107,16 @@ class FirebaseController {
         FirebaseDatabase.instance.ref('/movies/${movie.id}/ratings');
 
     final snapshot = await _dataBaseRatingsRef.get();
-    if (snapshot.exists) {
-      final data = jsonDecode(jsonEncode(snapshot.value));
-      data.forEach((key, value) {
-        debugPrint("[DATA] forEach in getRatingsInFirebaseByMovie : $value");
-        Rating rating = Rating.fromJson(value['id'] as String, value);
-        ratings.add(rating);
-      });
+    try {
+      if (snapshot.exists) {
+        final data = jsonDecode(jsonEncode(snapshot.value));
+        data.forEach((key, value) {
+          Rating rating = Rating.fromJson(value['id'] as String, value);
+          ratings.add(rating);
+        });
+      }
+    } catch (e) {
+      rethrow;
     }
 
     return ratings;
