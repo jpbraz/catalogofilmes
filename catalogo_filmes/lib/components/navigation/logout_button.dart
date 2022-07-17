@@ -9,8 +9,8 @@ class LogoutButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {
-        context.read<AuthService>().logout();
+      onPressed: () async {
+        await context.read<AuthService>().logout();
         Navigator.of(context)
             .pushNamedAndRemoveUntil(AppRoutes.STARTPAGE, (route) => false);
       },

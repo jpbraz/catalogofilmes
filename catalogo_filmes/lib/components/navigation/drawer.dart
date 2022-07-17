@@ -26,16 +26,18 @@ class _MyMainDrawerState extends State<MyMainDrawer> {
         ),
         Consumer<AuthService>(
           builder: ((context, auth, child) {
-            return auth.user!.displayName != null
-                ? ProfileInfo(auth.user!.displayName!, auth.user!.email!,
-                    auth.profilePicture)
-                : Container(
-                    height: 200,
-                    child: Center(
-                      child: CircularProgressIndicator(
-                          color: Theme.of(context).colorScheme.secondary),
-                    ),
-                  );
+            return auth.user != null
+                ? auth.user!.displayName != null
+                    ? ProfileInfo(auth.user!.displayName!, auth.user!.email!,
+                        auth.profilePicture)
+                    : Container(
+                        height: 200,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                              color: Theme.of(context).colorScheme.secondary),
+                        ),
+                      )
+                : const Text('No user');
           }),
         ),
         const SizedBox(height: 10),
