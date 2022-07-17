@@ -1,3 +1,4 @@
+import 'package:catalogo_filmes/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,7 @@ class _NewPlaylistState extends State<NewPlaylist> {
 
   Future<void> _submitForm() async {
     final isValid = _formKey.currentState?.validate() ?? false;
+    final user = AuthService().auth.currentUser!;
     if (!isValid) {
       return;
     }
@@ -29,6 +31,7 @@ class _NewPlaylistState extends State<NewPlaylist> {
         description: _formData['description'],
         creationDate: DateFormat('dd-MM-yyyy').format(DateTime.now()),
         movieList: [],
+        userID: user.uid.toString(),
       );
       await Provider.of<PlayLists>(context, listen: false)
           .addPlayList(newPlaylist);
