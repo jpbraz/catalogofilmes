@@ -1,3 +1,6 @@
+import 'package:catalogo_filmes/screens/notifications_screen.dart';
+import 'package:catalogo_filmes/services/firebase_messaging_service.dart';
+import 'package:catalogo_filmes/services/notification_service.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -24,6 +27,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await dotenv.load();
+  Provider.debugCheckInvalidValueType = null;
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<AuthService>(create: (context) => AuthService()),
     ChangeNotifierProvider<CatalogProvider>(
@@ -31,6 +35,13 @@ Future<void> main() async {
     ),
     ChangeNotifierProvider<Favorites>(create: (context) => Favorites()),
     ChangeNotifierProvider<PlayLists>(create: (context) => PlayLists()),
+    Provider<NotificationService>(
+      create: (context) => NotificationService(),
+    ),
+    Provider<FirebaseMessagingService>(
+      create: (context) =>
+          FirebaseMessagingService(context.read<NotificationService>()),
+    ),
   ], child: MyApp()));
 }
 
@@ -75,7 +86,8 @@ class MyApp extends StatelessWidget {
         AppRoutes.PLAYLISTS: ((context) => PlaylistsScreen()),
         AppRoutes.PLAYLIST_DETAILS: ((context) => PlaylistDetailsScreen()),
         AppRoutes.MOVIE_DETAILS: ((context) => MovieDetailScreen()),
-        AppRoutes.FAVORITES: ((context) => FavoritesScreen())
+        AppRoutes.FAVORITES: ((context) => FavoritesScreen()),
+        AppRoutes.NOTIFICATIONS: ((context) => NotificationsScreen())
       },
     );
   }
