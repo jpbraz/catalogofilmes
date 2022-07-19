@@ -1,4 +1,6 @@
+import 'package:catalogo_filmes/screens/notifications_screen.dart';
 import 'package:catalogo_filmes/services/auth_service.dart';
+import 'package:catalogo_filmes/services/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,6 +9,7 @@ import '../providers/playlists_provider.dart';
 import '../components/movie_items/movie_card.dart';
 import '../components/navigation/drawer.dart';
 import '../providers/favorites_provider.dart';
+import '../services/firebase_messaging_service.dart';
 
 class CatalogScreen extends StatefulWidget {
   @override
@@ -18,6 +21,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
 
   @override
   void initState() {
+    initilizeFirebaseMessaging();
     _isLoading = true;
     Provider.of<AuthService>(context, listen: false).downloadUserPhoto();
     if (Provider.of<CatalogProvider>(context, listen: false).movies.isEmpty) {
@@ -42,12 +46,48 @@ class _CatalogScreenState extends State<CatalogScreen> {
   }
 
   @override
+  initilizeFirebaseMessaging() async {
+    await Provider.of<FirebaseMessagingService>(context, listen: false)
+        .initialize();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var catalogInfo = context.watch<CatalogProvider>();
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.secondary,
+        actions: <Widget>[
+          Stack(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.notifications),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (cxt) {
+                      return const NotificationsScreen();
+                    }),
+                  );
+                },
+              ),
+              Positioned(
+                top: 5,
+                right: 5,
+                child: CircleAvatar(
+                  maxRadius: 10,
+                  backgroundColor: Colors.red.shade800,
+                  child: Text(
+                    '${Provider.of<NotificationService>(context).itemsCount}',
+                    style: const TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
         title: const Text('Movie Catalog'),
       ),
       body: _isLoading
