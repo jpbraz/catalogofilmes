@@ -35,7 +35,7 @@ class CatalogProvider with ChangeNotifier {
       _movies = loadedMovies;
       notifyListeners();
     } catch (error) {
-      throw error;
+      rethrow;
     }
   }
 
