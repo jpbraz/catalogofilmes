@@ -1,122 +1,61 @@
-import 'package:catalogo_filmes/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 
-class MyMainDrawer extends StatelessWidget {
-  const MyMainDrawer({Key? key}) : super(key: key);
+import 'package:provider/provider.dart';
 
+import '/components/navigation/navigation_routes_buttons.dart';
+import '/components/navigation/drawer_header_logo.dart';
+import '/components/navigation/logout_button.dart';
+
+import '../../services/auth_service.dart';
+import '../widgets/profile_info.dart';
+
+class MyMainDrawer extends StatefulWidget {
+  @override
+  State<MyMainDrawer> createState() => _MyMainDrawerState();
+}
+
+class _MyMainDrawerState extends State<MyMainDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
-      child: SafeArea(
-        child: Column(
-          children: [
-            Container(
-              alignment: Alignment.center,
-              height: MediaQuery.of(context).size.height * 0.08,
-              width: MediaQuery.of(context).size.width,
-              color: Theme.of(context).colorScheme.secondary,
-              child: Text(
-                'NerdCatalog',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 42,
-                    color: Theme.of(context).colorScheme.tertiary),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(top: 50),
-              color: Theme.of(context).colorScheme.primary,
-              height: MediaQuery.of(context).size.height * 0.88745,
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextButton(
-                        onPressed: () {
-                          Navigator.of(context)
-                              .pushReplacementNamed(AppRoutes.CATALOG);
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('Catalog',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 30,
-                                  color: Theme.of(context).colorScheme.tertiary,
-                                )),
-                            const SizedBox(
-                              width: 32,
-                            ),
-                            Icon(
-                              Icons.menu_book_rounded,
-                              size: 40,
-                              color: Theme.of(context).colorScheme.tertiary,
-                            )
-                          ],
-                        )),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.of(context)
-                              .pushReplacementNamed(AppRoutes.FAVORITES);
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('Favorites',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 30,
-                                  color: Theme.of(context).colorScheme.tertiary,
-                                )),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Icon(
-                              Icons.favorite,
-                              size: 40,
-                              color: Theme.of(context).colorScheme.tertiary,
-                            )
-                          ],
-                        )),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.of(context)
-                              .pushReplacementNamed(AppRoutes.PLAYLISTS);
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('Playlists',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 30,
-                                  color: Theme.of(context).colorScheme.tertiary,
-                                )),
-                            const SizedBox(
-                              width: 12,
-                            ),
-                            Icon(
-                              Icons.playlist_play,
-                              size: 45,
-                              color: Theme.of(context).colorScheme.tertiary,
-                            )
-                          ],
-                        )),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                  ]),
-            ),
-          ],
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      child: Column(children: [
+        DrawerHeaderLogo(),
+        const SizedBox(
+          height: 15,
         ),
-      ),
+        Consumer<AuthService>(
+          builder: ((context, auth, child) {
+            return auth.user != null
+                ? auth.user!.displayName != null
+                    ? ProfileInfo(auth.user!.displayName!, auth.user!.email!,
+                        auth.profilePicture)
+                    : Container(
+                        height: 200,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                              color: Theme.of(context).colorScheme.secondary),
+                        ),
+                      )
+                : const Text('No user');
+          }),
+        ),
+        const SizedBox(height: 10),
+        Divider(
+          thickness: 2,
+          color: Theme.of(context).colorScheme.tertiary,
+        ),
+        Expanded(child: NavigationRoutesButtons()),
+        Divider(
+          thickness: 2,
+          color: Theme.of(context).colorScheme.tertiary,
+        ),
+        const SizedBox(height: 10),
+        LogoutButton(),
+        const SizedBox(
+          height: 10,
+        ),
+      ]),
     );
   }
 }

@@ -1,26 +1,47 @@
-import 'package:catalogo_filmes/providers/favorites_provider.dart';
-import 'package:catalogo_filmes/providers/catalog_provider.dart';
-import 'package:catalogo_filmes/providers/playlists_provider.dart';
-import 'package:catalogo_filmes/screens/catalog_screen.dart';
-import 'package:catalogo_filmes/screens/favorites_screen.dart';
-import 'package:catalogo_filmes/screens/movie_details_screen.dart';
-import 'package:catalogo_filmes/screens/playlist_details_screen.dart';
-import 'package:catalogo_filmes/screens/playlists_screen.dart';
+import 'package:catalogo_filmes/screens/notifications_screen.dart';
+import 'package:catalogo_filmes/services/firebase_messaging_service.dart';
+import 'package:catalogo_filmes/services/notification_service.dart';
 import 'package:flutter/material.dart';
-import 'package:catalogo_filmes/utils/app_routes.dart';
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'firebase_options.dart';
 
+import './utils/app_routes.dart';
+import './components/widgets/auth_check.dart';
+import './providers/favorites_provider.dart';
+import './providers/catalog_provider.dart';
+import './providers/playlists_provider.dart';
+import './screens/catalog_screen.dart';
+import './screens/favorites_screen.dart';
+import './screens/movie_details_screen.dart';
+import './screens/playlist_details_screen.dart';
+import './screens/playlists_screen.dart';
+import './services/auth_service.dart';
 import 'screens/details_screen.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await dotenv.load();
+  Provider.debugCheckInvalidValueType = null;
   runApp(MultiProvider(providers: [
+    ChangeNotifierProvider<AuthService>(create: (context) => AuthService()),
     ChangeNotifierProvider<CatalogProvider>(
       create: (context) => CatalogProvider(),
     ),
     ChangeNotifierProvider<Favorites>(create: (context) => Favorites()),
     ChangeNotifierProvider<PlayLists>(create: (context) => PlayLists()),
+    Provider<NotificationService>(
+      create: (context) => NotificationService(),
+    ),
+    Provider<FirebaseMessagingService>(
+      create: (context) =>
+          FirebaseMessagingService(context.read<NotificationService>()),
+    ),
   ], child: MyApp()));
 }
 
@@ -29,7 +50,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/catalog',
+      initialRoute: '/startpage',
       theme: ThemeData().copyWith(
           colorScheme: ThemeData().colorScheme.copyWith(
                 primary: Colors.black,
@@ -59,12 +80,14 @@ class MyApp extends StatelessWidget {
             hintStyle: TextStyle(color: Colors.white),
           )),
       routes: {
+        AppRoutes.STARTPAGE: (((context) => AuthCheck())),
         AppRoutes.CATALOG: ((context) => CatalogScreen()),
         AppRoutes.DETAILS: ((context) => DetailsScreen()),
         AppRoutes.PLAYLISTS: ((context) => PlaylistsScreen()),
         AppRoutes.PLAYLIST_DETAILS: ((context) => PlaylistDetailsScreen()),
         AppRoutes.MOVIE_DETAILS: ((context) => MovieDetailScreen()),
-        AppRoutes.FAVORITES: ((context) => FavoritesScreen())
+        AppRoutes.FAVORITES: ((context) => FavoritesScreen()),
+        AppRoutes.NOTIFICATIONS: ((context) => NotificationsScreen())
       },
     );
   }

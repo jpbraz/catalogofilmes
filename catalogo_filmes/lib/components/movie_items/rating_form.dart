@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../controller/firebaseController.dart';
 import '../../models/movie.dart';
 import '../../models/rating.dart';
+import '../../services/notification_service.dart';
 
 class RatingForm extends StatefulWidget {
   final Movie movie;
@@ -35,7 +37,7 @@ class _RatingFormState extends State<RatingForm> {
       rating = widget.rating!;
 
       _formData['id'] = rating.id;
-      _formData['movie'] = rating.movie;
+      _formData['movie'] = movie;
       _formData['value'] = rating.value;
       _formData['comment'] = rating.comment!;
     } else {
@@ -53,7 +55,7 @@ class _RatingFormState extends State<RatingForm> {
       if (arg != null) {
         final rating = arg as Rating;
         _formData['id'] = rating.id;
-        _formData['movie'] = rating.movie;
+        _formData['movie'] = movie;
         _formData['value'] = rating.value;
         _formData['comment'] = rating.comment!;
       }
@@ -79,6 +81,16 @@ class _RatingFormState extends State<RatingForm> {
     FirebaseController()
         .saveRatingForm(_formData)
         .then((_) => Navigator.of(context).pop());
+
+    Provider.of<NotificationService>(context, listen: false)
+        .showLocalNotification(
+      CustomNotification(
+        id: 1,
+        title: 'Novo comentário!',
+        body: 'Novo comentário adicionado ao filme: ${movie.title}',
+        payload: '/notifications-screen',
+      ),
+    );
   }
 
   @override

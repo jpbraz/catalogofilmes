@@ -1,3 +1,5 @@
+import 'package:catalogo_filmes/models/rating.dart';
+
 class Movie {
   String id;
   String title;
@@ -10,6 +12,7 @@ class Movie {
   String? runTimeStr;
   String? plot;
   String? directors;
+  List<Rating>? ratings;
 
   Movie({
     required this.id,
@@ -23,6 +26,7 @@ class Movie {
     this.runTimeStr,
     this.releaseDate,
     this.directors,
+    this.ratings,
   });
 
   Map<String, dynamic> toJson() {
@@ -41,7 +45,7 @@ class Movie {
     };
   }
 
-  factory Movie.fromJson(String id, Map<String, dynamic> json) {
+  factory Movie.fromJson(String id, Map json) {
     return Movie(
       id: id,
       title: json['title'],

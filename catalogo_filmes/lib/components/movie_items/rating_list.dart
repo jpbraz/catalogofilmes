@@ -1,54 +1,109 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../models/movie.dart';
+import '../../services/auth_service.dart';
 import '/components/movie_items/rating_form.dart';
 import '../../controller/firebaseController.dart';
 import '../../models/rating.dart';
 
-class MyListTileCardRatings extends StatelessWidget {
-  List<Rating> myList;
+class MyListTileCardRatings extends StatefulWidget {
+  Movie movie;
+  MyListTileCardRatings(this.movie, {Key? key}) : super(key: key);
+
+  @override
+  State<MyListTileCardRatings> createState() => _MyListTileCardRatingsState();
+}
+
+class _MyListTileCardRatingsState extends State<MyListTileCardRatings> {
   FirebaseController controller = FirebaseController();
 
-  MyListTileCardRatings(this.myList, {Key? key}) : super(key: key);
+  List<Rating> myList = [];
+
+  @override
+  void initState() {
+    updateMyList(widget.movie);
+    super.initState();
+  }
+
+  void updateMyList(Movie movie) async {
+    await controller.getRatingsInFirebaseByMovie(movie).then((value) {
+      setState(() {
+        myList = value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: myList.length,
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        Rating myObject = myList[index];
-        return Card(
-          elevation: 2,
-          shadowColor: Colors.grey,
-          color: Theme.of(context).colorScheme.primary,
-          child: ListTile(
-            isThreeLine: true,
-            onTap: () => _onTapListTile(context, myObject),
-            title: Text(
-              myObject.value.toStringAsFixed(1),
-              style: Theme.of(context).textTheme.headline2,
-            ),
-            subtitle: Text(myObject.comment!,
-                style: Theme.of(context).textTheme.headline1),
-            leading: SizedBox(
-              height: 50,
-              width: 50,
-              child: Image.network(
-                'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png',
-                fit: BoxFit.cover,
+    return Column(
+      children: [
+        IconButton(
+            onPressed: () {
+              showModalBottomSheet(
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (context) => RatingForm(
+                        movie: widget.movie,
+                      )).then((_) => updateMyList(widget.movie));
+            },
+            icon: const Icon(Icons.add)),
+        ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: myList.length,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            Rating myObject = myList[index];
+            return Card(
+              elevation: 2,
+              shadowColor: Colors.grey,
+              color: Theme.of(context).colorScheme.primary,
+              child: Consumer<AuthService>(
+                builder: (context, auth, child) {
+                  String userIDentifier = auth.user!.uid;
+                  return ListTile(
+                    isThreeLine: true,
+                    onTap: () => userIDentifier == myObject.userApp.uid
+                        ? _onTapListTile(context, myObject)
+                        : null,
+                    title: Text(
+                      myObject.value.toStringAsFixed(1),
+                      style: Theme.of(context).textTheme.headline2,
+                    ),
+                    subtitle: Text(myObject.comment!,
+                        style: Theme.of(context).textTheme.headline1),
+                    /*leading: SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: myObject.userApp.profilePictureUrl !=
+                          null //auth.user!.photoURL != null
+                      ? Image(
+                          image: NetworkImage(myObject.userApp
+                              .profilePictureUrl!), //NetworkImage(auth.user!.photoURL!),
+                          fit: BoxFit.cover,
+                        )
+                      : const Image(
+                          image: AssetImage('image/person-icon.png'),
+                          fit: BoxFit.cover,
+                        ),
+                ),*/
+                    trailing: userIDentifier == myObject.userApp.uid
+                        ? IconButton(
+                            onPressed: () => _removeWithSnackBar(
+                                context, 'Remove', myObject),
+                            icon: const Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                            ),
+                          )
+                        : const SizedBox(),
+                  );
+                },
               ),
-            ),
-            trailing: IconButton(
-              onPressed: () => _removeWithSnackBar(context, 'Remove', myObject),
-              icon: const Icon(
-                Icons.delete,
-                color: Colors.red,
-              ),
-            ),
-          ),
-        );
-      },
+            );
+          },
+        ),
+      ],
     );
   }
 
@@ -58,33 +113,41 @@ class MyListTileCardRatings extends StatelessWidget {
       action: SnackBarAction(
         label: label,
         onPressed: () {
-          controller.deleteRatingInFirebase(myObject.id);
+          controller
+              .deleteRatingInFirebase(widget.movie.id, myObject)
+              .then((_) => updateMyList(widget.movie));
           return;
-          // Some code to undo the change.
         },
       ),
     );
-    // Find the ScaffoldMessenger in the widget tree
-    // and use it to show a SnackBar.
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  void _onTapListTile(context, Rating myObject) {
+  void _onTapListTile(
+    context,
+    Rating myObject,
+  ) {
     _openModelForm(context, myObject).then(
-      (_) => {
-        print("${myObject.id} alterado/fechado com sucesso."),
+      (_) {
+        updateMyList(widget.movie);
+        debugPrint(
+            "[INFO] ratingForm of rating ${myObject.id} changed or closed.");
       },
     );
   }
 
-  Future<void> _openModelForm(context, Rating myObject) => showDialog(
+  Future<void> _openModelForm(
+    context,
+    Rating myObject,
+  ) =>
+      showDialog(
         context: context,
         builder: (context) => AlertDialog(
           title: const Text('Edit'),
           titlePadding: const EdgeInsets.all(20),
           content: SizedBox(
             width: 500,
-            child: RatingForm(movie: myObject.movie, rating: myObject),
+            child: RatingForm(movie: widget.movie, rating: myObject),
           ),
           contentPadding: EdgeInsets.zero,
         ),

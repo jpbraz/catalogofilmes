@@ -1,3 +1,5 @@
+import 'package:catalogo_filmes/services/auth_service.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
@@ -10,25 +12,23 @@ import '../models/playlist.dart';
 class PlayLists with ChangeNotifier {
   final Map<String, Playlist> _listOfPlayLists = {};
   final _baseURL = dotenv.get('FIREBASE_URL');
-
+  final DatabaseReference _databasePlaylistsRef =
+      FirebaseDatabase.instance.ref('/playlists');
   Map<String, Playlist> get listOfPlayLists => _listOfPlayLists;
 
   Future<void> addPlayList(Playlist playlist) async {
     try {
-      final response = await http.post(Uri.parse('$_baseURL/playlists.json'),
-          body: jsonEncode({
-            'title': playlist.name,
-            'description': playlist.description,
-            'creation-date': playlist.creationDate,
-            'movies': playlist.movieList,
-          }));
+      DatabaseReference newPlaylistRef = _databasePlaylistsRef.push();
 
-      final id = jsonDecode(response.body)['name'];
-      playlist.id = id;
-      _listOfPlayLists[id] = playlist;
+      await newPlaylistRef.set(playlist.toJson());
+      await newPlaylistRef.update({'id': newPlaylistRef.key});
+
+      final id = newPlaylistRef.key;
+      playlist.id = id.toString();
+      _listOfPlayLists[id.toString()] = playlist;
       notifyListeners();
     } catch (error) {
-      throw error;
+      rethrow;
     }
   }
 
@@ -54,7 +54,7 @@ class PlayLists with ChangeNotifier {
 
       await http.patch(targetUrl,
           body: jsonEncode({
-            'movies': selectedPlaylist.movieList,
+            'movieList': selectedPlaylist.movieList,
           }));
       notifyListeners();
     } catch (error) {
@@ -76,25 +76,32 @@ class PlayLists with ChangeNotifier {
           }));
       notifyListeners();
     } catch (error) {
-      throw error;
+      rethrow;
     }
   }
 
   Future<void> fetchPlaylists() async {
-    final response = await http.get(
-      Uri.parse('$_baseURL/playlists.json'),
-    );
-    final data = jsonDecode(response.body);
+    final user = AuthService().auth.currentUser!;
+    _listOfPlayLists.clear();
 
-    for (var playlist in data.keys) {
-      final loadedPlaylist = Playlist(
-        id: playlist,
-        name: data[playlist]['title'],
-        description: data[playlist]['description'],
-        creationDate: data[playlist]['creation-date'],
-        movieList: getMovies(data[playlist]['movies']),
-      );
-      _listOfPlayLists[playlist] = loadedPlaylist;
+    try {
+      final snapshot = await _databasePlaylistsRef.get();
+
+      if (snapshot.exists) {
+        final data = jsonDecode(jsonEncode(snapshot.value));
+
+        data.forEach((key, value) {
+          if (value['userID'] == user.uid) {
+            final playlist = Playlist.fromJson(value['id'] as String, value);
+            _listOfPlayLists[playlist.id] = playlist;
+          }
+        });
+        debugPrint('[INFO]: ${_listOfPlayLists.length} Playlists loaded');
+      } else {
+        debugPrint("[fetchPlaylist] no playlists found");
+      }
+    } catch (error) {
+      rethrow;
     }
   }
 

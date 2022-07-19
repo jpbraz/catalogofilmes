@@ -9,6 +9,7 @@ class Playlist {
   String creationDate;
   String? description;
   List<Movie>? movieList;
+  String userID;
 
   Playlist({
     required this.id,
@@ -16,6 +17,7 @@ class Playlist {
     required this.creationDate,
     this.description,
     this.movieList,
+    required this.userID,
   });
 
   addMovieToList(Movie movie) {
@@ -30,25 +32,31 @@ class Playlist {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': this.id,
-      'title': this.name,
-      'creation-date': this.creationDate,
-      'description': this.description,
-      'movies': movieList != null
+      'id': id,
+      'name': name,
+      'creationDate': creationDate,
+      'description': description,
+      'movieList': movieList != null
           ? movieList!.map((movie) => movie.toJson()).toList()
-          : []
+          : [],
+      'userID': userID,
     };
   }
 
   factory Playlist.fromJson(String id, Map<String, dynamic> json) {
     List<Movie> localMovieList = [];
 
-    Map<String, dynamic> mapMovieList = jsonDecode(json['movieList']);
+    if (json['movielist'] != null) {
+      localMovieList = json['movielist']
+          .map((movie) => Movie.fromJson(json['id'] as String, movie))
+          .toList();
+    }
+    // Map<String, dynamic> mapMovieList = jsonDecode(json['movieList']);
 
-    mapMovieList.forEach((key, value) {
-      Movie movie = Movie.fromJson(key, value);
-      localMovieList.add(movie);
-    });
+    // mapMovieList.forEach((key, value) {
+    //   Movie movie = Movie.fromJson(key, value);
+    //   localMovieList.add(movie);
+    // });
 
     return Playlist(
       id: id,
@@ -56,6 +64,7 @@ class Playlist {
       creationDate: json['creationDate'],
       description: json['description'],
       movieList: localMovieList,
+      userID: json['userID'],
     );
   }
 }

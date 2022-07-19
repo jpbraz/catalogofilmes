@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '/providers/playlists_provider.dart';
-import '../utils/app_routes.dart';
+import '../../utils/app_routes.dart';
 import 'edit_playlist.dart';
 
 class PlaylistList extends StatefulWidget {

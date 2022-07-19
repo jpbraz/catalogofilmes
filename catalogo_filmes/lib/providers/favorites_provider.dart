@@ -69,20 +69,7 @@ class Favorites extends ChangeNotifier {
 
     favoriteMovies.clear();
     for (var movie in extractedData[id]['movies']) {
-      favoriteMovies.add(
-        Movie(
-          id: movie['id'],
-          title: movie['title'],
-          fullTitle: movie['fullTitle'],
-          crew: movie['crew'],
-          rate: movie['rate'],
-          year: movie['year'],
-          imageUrl: movie['imageUrl'],
-          plot: movie['plot'],
-          releaseDate: movie['releaseDate'],
-          directors: movie['directors'],
-        ),
-      );
+      favoriteMovies.add(Movie.fromJson(movie['id'], movie));
     }
   }
 

@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import '../../models/movie.dart';
 import '../../providers/favorites_provider.dart';
 import '../../providers/playlists_provider.dart';
-import '../new_playlist.dart';
-import '../playlist_menu.dart';
+import '../widgets/new_playlist.dart';
+import '../widgets/playlist_menu.dart';
 
 enum Options { create, addTo, rating }
 
